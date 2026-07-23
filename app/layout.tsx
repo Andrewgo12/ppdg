@@ -1,3 +1,4 @@
+import { Toaster } from 'sonner'
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Sora } from 'next/font/google'
@@ -47,6 +48,7 @@ export default function RootLayout({
     <html lang="es" className={`bg-background ${inter.variable} ${sora.variable}`}>
       <body className="antialiased font-sans">
         {children}
+        <Toaster position="top-right" richColors closeButton />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

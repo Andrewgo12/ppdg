@@ -1,7 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import { FileUp, CheckCircle2, Download, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { SignaturePad } from "@/components/ui/signature-pad"
+import { toast } from "sonner"
 
 interface UploadTesisModalProps {
   isOpen: boolean
@@ -20,6 +23,8 @@ export function UploadTesisModal({
   onUploadTesis,
   onGeneratePazSalvo,
 }: UploadTesisModalProps) {
+  const [signatureCaptured, setSignatureCaptured] = useState(false)
+
   if (!isOpen) return null
 
   return (
@@ -36,16 +41,16 @@ export function UploadTesisModal({
         <div className="flex items-center gap-3 border-b border-border pb-3">
           <FileUp className="size-6 text-primary" />
           <div>
-            <h3 className="text-base font-bold text-foreground">Trámite Grado: Carga Tesis PDF</h3>
+            <h3 className="text-base font-bold text-foreground">Trámite Grado: Carga Tesis & Firma</h3>
             <p className="text-xs text-muted-foreground">Estudiante Candidato a Grado</p>
           </div>
         </div>
 
         <p className="text-xs text-muted-foreground leading-relaxed">
-          Cargue su documento de grado en formato PDF para iniciar la validación de repositorio y generación automática de Paz y Salvo.
+          Cargue su documento de grado en formato PDF e ingrese su firma digital en pantalla para expedir el Paz y Salvo.
         </p>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <Button
             onClick={onUploadTesis}
             className="w-full rounded-full text-xs gap-1.5"
@@ -55,12 +60,23 @@ export function UploadTesisModal({
           </Button>
 
           {tesisCargada && (
+            <SignaturePad
+              label="Firma Digital del Graduando"
+              onSaveSignature={() => {
+                setSignatureCaptured(true)
+                toast.success("✍️ Firma Registrada", { description: "Firma capturada e incrustada en el certificado." })
+              }}
+            />
+          )}
+
+          {tesisCargada && (
             <Button
               onClick={onGeneratePazSalvo}
-              className="w-full rounded-full text-xs gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
+              disabled={!signatureCaptured}
+              className="w-full rounded-full text-xs gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-50"
             >
               <Download className="size-3.5" />
-              Generar Paz y Salvo Criptográfico
+              Generar y Descargar Paz y Salvo PDF
             </Button>
           )}
         </div>

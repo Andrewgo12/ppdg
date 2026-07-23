@@ -1,8 +1,10 @@
 "use client"
 
-import { BookOpen, QrCode, Check } from "lucide-react"
+import { BookOpen, QrCode, Check, FileText, Calculator } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Libro, Prestamo } from "@/lib/campus-data"
+import { generarComprobantePrestamoPDF } from "@/lib/pdf-ticket-generator"
+import { toast } from "sonner"
 
 interface UniBiblioViewProps {
   libros: Libro[]
@@ -11,6 +13,10 @@ interface UniBiblioViewProps {
 }
 
 export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioViewProps) {
+  const totalReservas = prestamos.length
+  const morosos = prestamos.filter((p) => new Date(p.fechaVencimiento) < new Date()).length
+  const tarifaMultaPorDia = 2500
+
   return (
     <section className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -21,6 +27,34 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
           </h2>
           <p className="text-xs text-muted-foreground">
             Reserva libros en 1 clic, presenta tu ticket QR en caja y firma el préstamo digital sin papel.
+          </p>
+        </div>
+      </div>
+
+      {/* Real-time Fine & Loan Statistics */}
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5">
+            <Calculator className="size-3.5 text-primary" />
+            Tarifa de Sanción / Mora por Día
+          </p>
+          <p className="text-xl font-bold text-foreground">$2.500 COP / Día</p>
+          <p className="text-[10px] text-muted-foreground">Calculado automáticamente sobre préstamos vencidos</p>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-muted-foreground">Préstamos Activos en Sistema</p>
+          <p className="text-xl font-bold text-primary">{totalReservas} Ejemplares</p>
+          <p className="text-[10px] text-muted-foreground">Con firma digital registrada</p>
+        </div>
+
+        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">Estado de Paz y Salvo</p>
+          <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
+            {morosos === 0 ? "100% CERO DEUDAS" : `$${morosos * tarifaMultaPorDia} COP PENDIENTE`}
+          </p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400">
+            {morosos === 0 ? "Habilitado para matrícula y diploma de grado" : `${morosos} préstamos en mora`}
           </p>
         </div>
       </div>
@@ -71,6 +105,7 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
                 <th className="p-3">Código QR</th>
                 <th className="p-3">Firma Digital</th>
                 <th className="p-3">Estado</th>
+                <th className="p-3">Comprobante PDF</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
@@ -97,6 +132,20 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
                     <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-600">
                       {p.estado.toUpperCase()}
                     </span>
+                  </td>
+                  <td className="p-3">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        generarComprobantePrestamoPDF(p)
+                        toast.success(`📜 Comprobante ${p.id} descargado`, { description: "PDF con código QR guardado en su equipo." })
+                      }}
+                      className="rounded-full text-[11px] h-7 gap-1"
+                    >
+                      <FileText className="size-3 text-primary" />
+                      PDF Tiquete
+                    </Button>
                   </td>
                 </tr>
               ))}

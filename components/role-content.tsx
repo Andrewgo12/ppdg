@@ -1,6 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { toast } from "sonner"
+import { generarPazYSalvoPDF } from "@/lib/pdf-generator"
+import { checkPermissionOrNotify } from "@/lib/permissions"
 import {
   SUB_ROLES,
   type RoleId,
@@ -38,6 +41,8 @@ import { UniBiblioView } from "@/components/views/UniBiblioView"
 import { TramiteGradoView } from "@/components/views/TramiteGradoView"
 import { AlmacenInventarioView } from "@/components/views/AlmacenInventarioView"
 import { UsuariosRbacView } from "@/components/views/UsuariosRbacView"
+import { IndicadoresKpiView } from "@/components/views/IndicadoresKpiView"
+import { EspaciosComunesView } from "@/components/views/EspaciosComunesView"
 
 // Modular Modals Component
 import { CampusModals } from "@/components/modals/CampusModals"
@@ -111,6 +116,7 @@ export function RoleContent({
 
   // --- HANDLERS ---
   const handleOpenCloseTicketModal = (tk: Ticket) => {
+    if (!checkPermissionOrNotify(currentSubRole, "TICKETS_RESOLVE", "cerrar reportes de mantenimiento")) return
     setSelectedTicket(tk)
     setCierreComentario("")
     setCierreEvidenceDone(false)
@@ -118,6 +124,8 @@ export function RoleContent({
   }
 
   const handleCloseTicket = (ticketId: string) => {
+    if (!checkPermissionOrNotify(currentSubRole, "TICKETS_RESOLVE", "resolver el ticket")) return
+
     setTickets((prev) =>
       prev.map((t) => (t.id === ticketId ? { ...t, estado: "resuelto" } : t))
     )
@@ -132,13 +140,18 @@ export function RoleContent({
       "TICKET_RESOLVE",
       `Ticket ${ticketId} resuelto. Nota: ${cierreComentario || "Evidencia verificada"}`
     )
+    toast.success("✅ Ticket Resuelto", { description: `Ticket ${ticketId} cerrado y salón liberado.` })
     setActiveModal(null)
   }
 
   const handleCreateTicket = (e: React.FormEvent) => {
     e.preventDefault()
+    if (!checkPermissionOrNotify(currentSubRole, "TICKETS_CREATE", "crear tickets de soporte")) return
+
     if (!evidenceUploaded) {
-      alert("⚠️ Debe capturar o subir la foto de evidencia obligatoria.")
+      toast.warning("⚠️ Evidencia obligatoria", {
+        description: "Debe capturar o subir la foto de evidencia de la falla."
+      })
       return
     }
 
@@ -166,6 +179,9 @@ export function RoleContent({
       "TICKET_CREATE",
       `Reportado ticket ${newTk.id} en ${newTk.salonNombre} (${reportCategory.toUpperCase()})`
     )
+    toast.success("✅ Ticket de soporte creado", {
+      description: `Ticket ${newTk.id} registrado para ${newTk.salonNombre}.`
+    })
     setReportDesc("")
     setEvidenceUploaded(false)
     setActiveModal(null)
@@ -173,13 +189,21 @@ export function RoleContent({
 
   const handleCreateReserva = (e: React.FormEvent) => {
     e.preventDefault()
-    alert(`✅ Solicitud enviada para ${eventSpace} el ${eventDate} (${eventAforo} personas). Logística: ${eventLogistics}`)
+    if (!checkPermissionOrNotify(currentSubRole, "SALON_EVENT_BOOKING", "reservar espacios para eventos")) return
+
+    toast.success("✅ Solicitud de Reserva Registrada", {
+      description: `Espacio ${eventSpace} reservado el ${eventDate} (${eventAforo} aforo). Logística: ${eventLogistics}`
+    })
     setActiveModal(null)
   }
 
   const handleReserveBook = (libro: Libro) => {
+    if (!checkPermissionOrNotify(currentSubRole, "LIBRARY_RESERVE", "reservar libros en biblioteca")) return
+
     if (libro.unidadesDisponibles <= 0) {
-      alert("⚠️ No hay unidades disponibles de este libro.")
+      toast.error("⚠️ Sin disponibilidad", {
+        description: `No hay unidades disponibles de "${libro.titulo}".`
+      })
       return
     }
     const newPrestamo: Prestamo = {
@@ -198,21 +222,33 @@ export function RoleContent({
     setLibros((prev) =>
       prev.map((l) => (l.id === libro.id ? { ...l, unidadesDisponibles: l.unidadesDisponibles - 1 } : l))
     )
-    alert(`🎉 Libro "${libro.titulo}" reservado. Presenta el código QR en caja: ${newPrestamo.qrCode}`)
+    toast.success(`🎉 Libro "${libro.titulo}" reservado`, {
+      description: `Código QR de entrega: ${newPrestamo.qrCode}`
+    })
   }
 
   const handleRequestExpressSupply = (item: string, salon: string) => {
-    alert(`⚡ Solicitud Express de "${item}" para ${salon} enviada con éxito. El técnico IT va en camino.`)
+    if (!checkPermissionOrNotify(currentSubRole, "INSUMOS_ORDER", "solicitar insumos express")) return
+
+    toast.info(`⚡ Solicitud Express despachada`, {
+      description: `Insumo "${item}" solicitado para ${salon}. El técnico IT va en camino.`
+    })
   }
 
   const handleEmergencyLockdown = (salonId: string) => {
+    if (!checkPermissionOrNotify(currentSubRole, "SALON_MAINTENANCE_TOGGLE", "aislar salones por emergencia RETIE")) return
+
     setSalones((prev) =>
       prev.map((s) => (s.id === salonId ? { ...s, estado: "mantenimiento" } : s))
     )
-    alert(`⚡ Aislamiento por riesgo eléctrico RETIE activado en ${salonId}. Aula fuera de servicio.`)
+    toast.error(`⚡ Aislamiento de Emergencia Activado`, {
+      description: `Protocolo RETIE activado en ${salonId}. Espacio fuera de servicio.`
+    })
   }
 
   const handleApproveDispatch = () => {
+    if (!checkPermissionOrNotify(currentSubRole, "INVENTORY_DISPATCH", "autorizar despachos de inventario")) return
+
     const newDespacho: Despacho = {
       id: `DESP-${Math.floor(100 + Math.random() * 900)}`,
       insumoId: "INS-001",
@@ -224,13 +260,17 @@ export function RoleContent({
       estado: "entregado",
     }
     setDespachos([newDespacho, ...despachos])
-    alert("📦 Despacho autorizado y registrado para el Ticket TK-2026-001.")
+    toast.success("📦 Despacho de Inventario Autorizado", {
+      description: "Entregado a Téc. Roberto Méndez para el Ticket TK-2026-001."
+    })
   }
 
   return (
     <div className="space-y-6">
       {/* RENDER DEDICATED INDIVIDUAL SUB-PROFILE PANEL */}
-      {currentSubRole === "estudiante_regular" && (
+      {activeView === "inicio" && (
+        <>
+          {currentSubRole === "estudiante_regular" && (
         <EstudianteRegularPanel
           subRoleInfo={subRoleInfo}
           onOpenCubiculoModal={() => setActiveModal("cubiculo")}
@@ -294,7 +334,7 @@ export function RoleContent({
           subRoleInfo={subRoleInfo}
           onOpenCloseTicketModal={() => {
             if (tickets.length > 0) handleOpenCloseTicketModal(tickets[0])
-            else alert("No hay tickets pendientes.")
+            else toast.info("No hay tickets pendientes.")
           }}
         />
       )}
@@ -333,9 +373,11 @@ export function RoleContent({
           onAuditLogs={() => setActiveModal("auditoria_logs")}
         />
       )}
+        </>
+      )}
 
       {/* RENDER VIEW ACCORDING TO NAVIGATION */}
-      {(activeView === "inicio" || activeView === "mapa") && (
+      {(activeView === "mapa" || activeView === "asistencia") && (
         <MapaSalonesView
           salones={salones}
           onSelectSalon={(s) => {
@@ -345,7 +387,7 @@ export function RoleContent({
         />
       )}
 
-      {(activeView === "reportar" || activeView === "tickets") && (
+      {(activeView === "reportar" || activeView === "tickets" || activeView === "atencion" || activeView === "mantenimiento_preventivo") && (
         <TicketsMantenimientoView
           tickets={tickets}
           subRoleInfo={subRoleInfo}
@@ -377,7 +419,7 @@ export function RoleContent({
         />
       )}
 
-      {(activeView === "inventario" || activeView === "despachos") && (
+      {(activeView === "inventario" || activeView === "despachos" || activeView === "alertas") && (
         <AlmacenInventarioView insumos={insumos} despachos={despachos} />
       )}
 
@@ -385,6 +427,14 @@ export function RoleContent({
         <UsuariosRbacView
           currentSubRoleId={currentSubRole}
           onSelectSubRole={onSelectSubRole}
+        />
+      )}
+
+      {(activeView === "indicadores" || activeView === "kpis") && <IndicadoresKpiView />}
+
+      {(activeView === "reservas" || activeView === "espacios" || activeView === "eventos" || activeView === "aprobaciones") && (
+        <EspaciosComunesView
+          onOpenReservaModal={() => setActiveModal("reserva_evento")}
         />
       )}
 
@@ -425,17 +475,23 @@ export function RoleContent({
         cubiculoDuration={cubiculoDuration}
         setCubiculoDuration={setCubiculoDuration}
         onConfirmCubiculo={() => {
-          alert(`✅ Cubículo de estudio reservado exitosamente por ${cubiculoDuration}.`)
+          toast.success(`✅ Cubículo de estudio reservado por ${cubiculoDuration}`, {
+            description: "Reserva activa en el módulo de biblioteca."
+          })
           setActiveModal(null)
         }}
         onConfirmScanQr={() => {
-          alert("✅ Código QR escaneado y validado. Préstamo registrado.")
+          toast.success("✅ Código QR validado", {
+            description: "Préstamo registrado en el sistema UniBiblio."
+          })
           setActiveModal(null)
         }}
         scannerEstudianteCode={scannerEstudianteCode}
         setScannerEstudianteCode={setScannerEstudianteCode}
         onConfirmAsistenciaLab={() => {
-          alert(`✅ Asistencia de estudiante ${scannerEstudianteCode || "2024100982"} registrada en laboratorio.`)
+          toast.success(`✅ Asistencia registrada`, {
+            description: `Estudiante ${scannerEstudianteCode || "2024100982"} registrado en laboratorio.`
+          })
           setActiveModal(null)
         }}
         origSalon={origSalon}
@@ -443,27 +499,39 @@ export function RoleContent({
         destSalon={destSalon}
         setDestSalon={setDestSalon}
         handleReasignacion={() => {
-          alert(`🔄 Clases reasignadas de ${origSalon} a ${destSalon}. Notificación enviada a estudiantes y docentes.`)
+          toast.info(`🔄 Reasignación de Clases Exitosa`, {
+            description: `Aulas reasignadas de ${origSalon} a ${destSalon}.`
+          })
           setActiveModal(null)
         }}
         selectedBook={selectedBook}
         onConfirmReserveBook={handleReserveBook}
         onRequestExpressSupply={handleRequestExpressSupply}
         onEmergencyLockdown={() => handleEmergencyLockdown("a101")}
-        onRespondExpress={() => alert("🚚 Alerta Express confirmada: 'Técnico en camino al Aula A-203'.")}
-        onCertifyClean={() => alert("✨ Certificación de sanitización registrada en sistema para Aula A-101.")}
-        onLockSpace={() => alert("🛡️ Auditorio Sede Principal bloqueado para ceremonia de grados.")}
+        onRespondExpress={() => toast.info("🚚 Soporte Express Confirmado", { description: "Técnico IT en camino al Aula A-203." })}
+        onCertifyClean={() => toast.success("✨ Sanitización Certificada", { description: "Certificado de aseo registrado para Aula A-101." })}
+        onLockSpace={() => toast.warning("🛡️ Espacio Bloqueado", { description: "Auditorio Sede Principal reservado para ceremonia de grados." })}
         onApproveDispatch={handleApproveDispatch}
-        onAuditLogs={() => alert("🛡️ Registro de auditoría exportado con 100% de transacciones firmas criptográficas.")}
+        onAuditLogs={() => toast.success("🛡️ Auditoría Exportada", { description: "Registro exportado con firmas criptográficas SHA-256." })}
         tesisCargada={tesisCargada}
         pazSalvoGenerado={pazSalvoGenerado}
         onUploadTesis={() => {
           setTesisCargada(true)
-          alert("✅ Documento de Tesis cargado exitosamente.")
+          toast.success("✅ Tesis PDF cargada correctamente", {
+            description: "Documento enviado a repositorio institucional."
+          })
         }}
         onGeneratePazSalvo={() => {
           setPazSalvoGenerado(true)
-          alert("📜 Paz y Salvo Criptográfico generado con éxito.")
+          generarPazYSalvoPDF({
+            estudianteNombre: subRoleInfo.fullName || "Kevin Alexander Gómez",
+            codigoEstudiantil: "2024100982",
+            programaAcademico: "Ingeniería de Sistemas",
+            cedula: "1.144.109.823",
+          })
+          toast.success("📜 Paz y Salvo Generado y Descargado", {
+            description: "Certificado PDF con firma digital guardado en su equipo."
+          })
         }}
       />
     </div>

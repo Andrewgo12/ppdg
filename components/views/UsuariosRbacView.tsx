@@ -1,8 +1,13 @@
 "use client"
 
-import { ShieldCheck, CheckCircle2, Lock } from "lucide-react"
+import { useRef } from "react"
+import { ShieldCheck, CheckCircle2, Download, Database, Upload } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { SUB_ROLES, type SubRoleId } from "@/lib/campus-data"
 import { getRolePermissions, PERMISSION_CATALOG } from "@/lib/permissions"
+import { exportarAuditoriaCSV } from "@/lib/csv-exporter"
+import { exportarRespaldoBD, importarRespaldoBD } from "@/lib/db-backup"
+import { toast } from "sonner"
 
 interface UsuariosRbacViewProps {
   currentSubRoleId: SubRoleId
@@ -10,8 +15,54 @@ interface UsuariosRbacViewProps {
 }
 
 export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: UsuariosRbacViewProps) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  const handleExportAuditCSV = () => {
+    exportarAuditoriaCSV()
+    toast.success("🛡️ Bitácora de Auditoría Exportada", {
+      description: "Archivo Bitacora_Auditoria_RBAC_UniCamacho.csv generado con firmas SHA-256."
+    })
+  }
+
+  const handleExportBackupJSON = () => {
+    exportarRespaldoBD()
+    toast.success("💾 Copia de Seguridad JSON Generada", {
+      description: "Base de Datos SmartCampus respaldada exitosamente."
+    })
+  }
+
+  const handleFileImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const content = event.target?.result as string
+      const success = importarRespaldoBD(content)
+      if (success) {
+        toast.success("✅ Base de Datos Restaurada", {
+          description: "Estado importado exitosamente. Recargando datos..."
+        })
+        setTimeout(() => window.location.reload(), 1200)
+      } else {
+        toast.error("❌ Error de Importación", {
+          description: "El archivo JSON no coincide con la estructura de SmartCampus."
+        })
+      }
+    }
+    reader.readAsText(file)
+  }
+
   return (
     <section className="space-y-6">
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileImport}
+        accept=".json"
+        className="hidden"
+      />
+
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
@@ -21,6 +72,21 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
           <p className="text-xs text-muted-foreground">
             Seleccione cualquier perfil individual para probar sus permisos granulares y vistas exclusivas.
           </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <Button onClick={handleExportAuditCSV} variant="outline" className="rounded-full gap-1.5 text-xs h-8">
+            <Download className="size-3.5 text-primary" />
+            Bitácora CSV
+          </Button>
+          <Button onClick={handleExportBackupJSON} variant="outline" className="rounded-full gap-1.5 text-xs h-8">
+            <Database className="size-3.5 text-primary" />
+            Respaldo JSON BD
+          </Button>
+          <Button onClick={() => fileInputRef.current?.click()} className="rounded-full gap-1.5 text-xs h-8 bg-primary">
+            <Upload className="size-3.5" />
+            Restaurar BD JSON
+          </Button>
         </div>
       </div>
 

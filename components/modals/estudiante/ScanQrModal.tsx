@@ -1,6 +1,7 @@
 "use client"
 
-import { QrCode, X } from "lucide-react"
+import { useState } from "react"
+import { QrCode, X, Sparkles, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface ScanQrModalProps {
@@ -10,6 +11,8 @@ interface ScanQrModalProps {
 }
 
 export function ScanQrModal({ isOpen, onClose, onConfirmScanQr }: ScanQrModalProps) {
+  const [scannedCode, setScannedCode] = useState("QR-LIBRO-L001-2026")
+
   if (!isOpen) return null
 
   return (
@@ -23,18 +26,76 @@ export function ScanQrModal({ isOpen, onClose, onConfirmScanQr }: ScanQrModalPro
           <X className="size-5" />
         </button>
 
-        <QrCode className="size-12 text-primary mx-auto animate-pulse" />
-        <h3 className="text-base font-bold text-foreground">Escáner Ticket QR Préstamo</h3>
-        <p className="text-xs text-muted-foreground">
-          Consola Monitor: Coloque el código QR del estudiante frente a la cámara.
-        </p>
+        <div className="space-y-1">
+          <h3 className="text-base font-bold text-foreground flex items-center justify-center gap-2">
+            <QrCode className="size-5 text-primary" />
+            Escáner de Ticket QR UniBiblio Flow
+          </h3>
+          <p className="text-xs text-muted-foreground">
+            Apunta la cámara o selecciona un código de prueba para validar el préstamo.
+          </p>
+        </div>
 
-        <div className="flex gap-2">
+        {/* Viewfinder Box with Laser Animation */}
+        <div className="relative mx-auto w-56 h-56 rounded-2xl border-2 border-primary/40 bg-slate-950/90 overflow-hidden flex flex-col items-center justify-center">
+          {/* Corner Markers */}
+          <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-primary" />
+          <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-primary" />
+          <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-primary" />
+          <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-primary" />
+
+          {/* Animated Laser Beam */}
+          <div className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_15px_#10b981] animate-bounce top-1/3" />
+
+          <QrCode className="size-24 text-white/30" />
+          <p className="mt-2 text-[10px] text-emerald-400 font-mono tracking-wider animate-pulse">
+            BUSCANDO TICKET...
+          </p>
+        </div>
+
+        {/* Quick Sample Selector */}
+        <div className="space-y-1 text-left">
+          <label className="text-[11px] font-semibold text-muted-foreground">Código Detectado:</label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={scannedCode}
+              onChange={(e) => setScannedCode(e.target.value)}
+              className="w-full rounded-xl border border-input bg-background px-3 py-1.5 text-xs font-mono text-foreground outline-none"
+            />
+          </div>
+          <div className="flex gap-1.5 pt-1">
+            <button
+              onClick={() => setScannedCode("QR-LIBRO-L001-2026")}
+              className="text-[10px] bg-muted px-2 py-1 rounded-lg hover:bg-primary/20 hover:text-primary transition-colors"
+            >
+              📖 Libro L001
+            </button>
+            <button
+              onClick={() => setScannedCode("QR-TESIS-2026-982")}
+              className="text-[10px] bg-muted px-2 py-1 rounded-lg hover:bg-primary/20 hover:text-primary transition-colors"
+            >
+              🎓 Tesis Grado
+            </button>
+            <button
+              onClick={() => setScannedCode("QR-LAB-A101-2026")}
+              className="text-[10px] bg-muted px-2 py-1 rounded-lg hover:bg-primary/20 hover:text-primary transition-colors"
+            >
+              💻 Lab A-101
+            </button>
+          </div>
+        </div>
+
+        <div className="flex gap-2 pt-2">
           <Button variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
             Cancelar
           </Button>
-          <Button onClick={onConfirmScanQr} className="w-1/2 rounded-full text-xs font-bold">
-            Simular Escaneo QR
+          <Button
+            onClick={onConfirmScanQr}
+            className="w-1/2 rounded-full text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white gap-1"
+          >
+            <CheckCircle2 className="size-3.5" />
+            Validar Código
           </Button>
         </div>
       </div>

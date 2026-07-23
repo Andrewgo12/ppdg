@@ -14,6 +14,9 @@ import {
 } from "@/lib/campus-data"
 import { RoleContent } from "@/components/role-content"
 import { SessionSimulatorModal } from "@/components/session-simulator-modal"
+import { CarnetDigitalModal } from "@/components/modals/CarnetDigitalModal"
+import { GlobalSearchModal } from "@/components/modals/GlobalSearchModal"
+import { CreditCard, MapPin } from "lucide-react"
 
 interface DashboardProps {
   roleId: RoleId
@@ -35,6 +38,9 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
   const [activeView, setActiveView] = useState<ViewKey>("inicio")
   const [notifOpen, setNotifOpen] = useState(false)
   const [simModalOpen, setSimModalOpen] = useState(false)
+  const [carnetOpen, setCarnetOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [activeSede, setActiveSede] = useState<string>("Sede Principal Av. 6")
   const [notificaciones, setNotificaciones] = useState<NotificacionPush[]>(INITIAL_NOTIFICACIONES)
 
   // Sub-role selection state
@@ -106,8 +112,17 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
         })}
       </nav>
 
-      <div className="border-t border-sidebar-border p-3">
-        <div className="flex items-center gap-3 rounded-2xl px-2 py-2">
+      <div className="border-t border-sidebar-border p-3 space-y-2">
+        <button
+          type="button"
+          onClick={() => setCarnetOpen(true)}
+          className="flex w-full items-center gap-2 rounded-xl bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition-colors"
+        >
+          <CreditCard className="size-4" />
+          <span>Ver Mi Carnet Digital</span>
+        </button>
+
+        <div className="flex items-center gap-3 rounded-2xl px-2 py-1.5">
           <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
             {activeSubRole ? activeSubRole.avatar : role.avatar}
           </div>
@@ -161,18 +176,31 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
           </button>
 
           <div className="relative hidden max-w-sm flex-1 sm:block">
-            <Search
-              className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-              aria-hidden="true"
-            />
-            <input
-              type="search"
-              placeholder="Buscar salón, ticket o insumo..."
-              className="w-full rounded-full border border-input bg-card py-2 pl-10 pr-3 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
-            />
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex w-full items-center justify-between rounded-full border border-input bg-card py-1.5 pl-3 pr-3 text-xs text-muted-foreground hover:border-primary transition-colors cursor-pointer"
+            >
+              <span className="flex items-center gap-2">
+                <Search className="size-3.5 text-primary" />
+                <span>Buscar salón, ticket o insumo...</span>
+              </span>
+              <kbd className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">Ctrl+K</kbd>
+            </button>
           </div>
 
           <div className="ml-auto flex items-center gap-2 relative">
+            {/* Campus Sede Selector */}
+            <div className="hidden md:flex items-center gap-1 bg-muted/50 p-1 rounded-full border border-border text-xs">
+              <MapPin className="size-3.5 text-primary ml-1.5" />
+              <select
+                value={activeSede}
+                onChange={(e) => setActiveSede(e.target.value)}
+                className="bg-transparent text-xs font-semibold text-foreground outline-none pr-2 cursor-pointer"
+              >
+                <option value="Sede Principal Av. 6">Sede Av. 6</option>
+                <option value="Sede Sur">Sede Sur</option>
+              </select>
+            </div>
             {/* Frontend Simulator & RBAC Console Button */}
             <button
               type="button"
@@ -319,10 +347,10 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
 
             {/* Role + view specific content */}
             <RoleContent
-              roleId={roleId}
-              view={activeView}
-              subRoleId={subRoleId}
-              onSubRoleChange={(newSubRole) => setSubRoleId(newSubRole)}
+              currentRole={roleId}
+              activeView={activeView}
+              currentSubRole={subRoleId}
+              onSelectSubRole={(newSubRole) => setSubRoleId(newSubRole)}
             />
           </div>
         </main>
@@ -338,6 +366,18 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
           }}
         />
       )}
+
+      <CarnetDigitalModal
+        isOpen={carnetOpen}
+        onClose={() => setCarnetOpen(false)}
+        subRoleInfo={activeSubRole || SUB_ROLES.estudiante_regular}
+      />
+
+      <GlobalSearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onSelectResult={(view) => setActiveView(view as ViewKey)}
+      />
     </div>
   )
 }

@@ -3,6 +3,8 @@
 import { FileCheck2, FileUp, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { SubRoleInfo } from "@/lib/campus-data"
+import { generarPazYSalvoPDF } from "@/lib/pdf-generator"
+import { toast } from "sonner"
 
 interface TramiteGradoViewProps {
   subRoleInfo: SubRoleInfo
@@ -19,6 +21,18 @@ export function TramiteGradoView({
   onUploadTesis,
   onGeneratePazSalvo,
 }: TramiteGradoViewProps) {
+  const handleDownloadPDF = () => {
+    onGeneratePazSalvo()
+    generarPazYSalvoPDF({
+      estudianteNombre: subRoleInfo.fullName || "Kevin Alexander Gómez",
+      codigoEstudiantil: "2024100982",
+      programaAcademico: "Ingeniería de Sistemas",
+      cedula: "1.144.109.823",
+    })
+    toast.success("📜 Documento PDF descargado exitosamente con sello criptográfico.", {
+      description: "Paz_y_Salvo_UniCamacho.pdf guardado en su dispositivo.",
+    })
+  }
   return (
     <section className="space-y-6">
       <div className="rounded-3xl border border-border bg-card p-6 space-y-4">
@@ -69,7 +83,7 @@ export function TramiteGradoView({
             </p>
             <Button
               size="sm"
-              onClick={onGeneratePazSalvo}
+              onClick={handleDownloadPDF}
               className="mt-3 w-full rounded-full text-xs gap-1 bg-emerald-600 hover:bg-emerald-700 text-white"
             >
               <Download className="size-3.5" />

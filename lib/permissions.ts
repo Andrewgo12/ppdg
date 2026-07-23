@@ -247,10 +247,23 @@ export const SUB_ROLE_PERMISSIONS: Record<SubRoleId, PermissionKey[]> = {
   ]
 }
 
+import { toast } from "sonner"
+
 export function hasPermission(subRole: SubRoleId, permission: PermissionKey): boolean {
   const allowed = SUB_ROLE_PERMISSIONS[subRole]
   if (!allowed) return false
   return allowed.includes(permission)
+}
+
+export function checkPermissionOrNotify(subRole: SubRoleId, permission: PermissionKey, actionName = "esta acción"): boolean {
+  if (hasPermission(subRole, permission)) return true
+
+  const permDef = PERMISSION_CATALOG[permission]
+  toast.error("🛡️ ACCESO DENEGADO (Control RBAC)", {
+    description: `Su subrol no posee el permiso '${permDef ? permDef.label : permission}' requerido para ${actionName}.`,
+    duration: 4000
+  })
+  return false
 }
 
 export function getRolePermissions(subRole: SubRoleId): PermissionKey[] {

@@ -1,7 +1,10 @@
 "use client"
 
-import { Boxes } from "lucide-react"
+import { Boxes, Download } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import type { Insumo, Despacho } from "@/lib/campus-data"
+import { exportarInventarioCSV } from "@/lib/csv-exporter"
+import { toast } from "sonner"
 
 interface AlmacenInventarioViewProps {
   insumos: Insumo[]
@@ -9,6 +12,13 @@ interface AlmacenInventarioViewProps {
 }
 
 export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioViewProps) {
+  const handleExportCSV = () => {
+    exportarInventarioCSV(insumos, despachos)
+    toast.success("📊 Inventario Exportado a CSV / Excel", {
+      description: "Archivo Inventario_UniCamacho.csv descargado a su equipo."
+    })
+  }
+
   return (
     <section className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -21,6 +31,11 @@ export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioV
             Despacho condicionado a Ticket ID activo. Alertas automáticas de reabastecimiento.
           </p>
         </div>
+
+        <Button onClick={handleExportCSV} variant="outline" className="rounded-full gap-2 text-xs">
+          <Download className="size-4 text-primary" />
+          Exportar Inventario Excel / CSV
+        </Button>
       </div>
 
       {/* Insumos Inventory Table */}

@@ -1,8 +1,10 @@
 "use client"
 
-import { AlertTriangle, Plus, CheckCircle2, Zap } from "lucide-react"
+import { AlertTriangle, Plus, CheckCircle2, Zap, FileText, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Ticket, SubRoleInfo } from "@/lib/campus-data"
+import { generarOrdenTrabajoPDF } from "@/lib/pdf-ticket-generator"
+import { toast } from "sonner"
 
 interface TicketsMantenimientoViewProps {
   tickets: Ticket[]
@@ -19,6 +21,9 @@ export function TicketsMantenimientoView({
   onOpenCloseTicketModal,
   onEmergencyLockdown,
 }: TicketsMantenimientoViewProps) {
+  const pendientes = tickets.filter((t) => t.estado === "pendiente").length
+  const resueltos = tickets.filter((t) => t.estado === "resuelto").length
+
   return (
     <section className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -36,6 +41,33 @@ export function TicketsMantenimientoView({
           <Plus className="size-4" />
           Reportar Nueva Falla con Foto/Video
         </Button>
+      </div>
+
+      {/* MTTR & Maintenance Statistics Bar */}
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5">
+            <Clock className="size-3.5 text-primary" />
+            Tiempo Medio de Respuesta (MTTR)
+          </p>
+          <p className="text-xl font-bold text-foreground">1.4 Horas</p>
+          <p className="text-[10px] text-emerald-600 font-medium">⚡ 25% más rápido que la meta de campus</p>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-muted-foreground">Tickets Pendientes</p>
+          <p className="text-xl font-bold text-amber-600 dark:text-amber-400">{pendientes} Incidencias</p>
+
+          <p className="text-[10px] text-muted-foreground">Esperando intervención técnica</p>
+        </div>
+
+        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">Tasa de Solución</p>
+          <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
+            {tickets.length > 0 ? Math.round((resueltos / tickets.length) * 100) : 100}%
+          </p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400">{resueltos} tickets resueltos con evidencia foto</p>
+        </div>
       </div>
 
       {/* Ticket List */}
@@ -85,16 +117,31 @@ export function TicketsMantenimientoView({
                   {tk.estado.replace("_", " ").toUpperCase()}
                 </span>
 
-                {subRoleInfo.parentRole === "tecnico" && !isRes && (
+                <div className="flex items-center gap-1.5 pt-1">
                   <Button
                     size="sm"
-                    onClick={() => onOpenCloseTicketModal(tk)}
-                    className="rounded-full text-xs gap-1.5"
+                    variant="outline"
+                    onClick={() => {
+                      generarOrdenTrabajoPDF(tk)
+                      toast.success(`📄 Orden de Trabajo ${tk.id} descargada`, { description: "PDF listo para impresión y firmado técnico." })
+                    }}
+                    className="rounded-full text-[11px] h-7 gap-1"
                   >
-                    <CheckCircle2 className="size-3.5" />
-                    Cerrar con Foto Evidencia
+                    <FileText className="size-3 text-primary" />
+                    Orden PDF
                   </Button>
-                )}
+
+                  {subRoleInfo.parentRole === "tecnico" && !isRes && (
+                    <Button
+                      size="sm"
+                      onClick={() => onOpenCloseTicketModal(tk)}
+                      className="rounded-full text-xs gap-1.5"
+                    >
+                      <CheckCircle2 className="size-3.5" />
+                      Cerrar con Foto Evidencia
+                    </Button>
+                  )}
+                </div>
 
                 {subRoleInfo.id === "tecnico_electrico" && (
                   <Button

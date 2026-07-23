@@ -19,6 +19,13 @@ export function MapaSalonesView({ salones, onSelectSalon }: MapaSalonesViewProps
       (bloqueFilter === "todos" || s.bloque === bloqueFilter)
   )
 
+  const totalSalones = filteredSalones.length
+  const disponibles = filteredSalones.filter((s) => s.estado === "disponible").length
+  const ocupados = filteredSalones.filter((s) => s.estado === "ocupado").length
+  const mantenimiento = filteredSalones.filter((s) => s.estado === "mantenimiento").length
+  const aforoTotal = filteredSalones.reduce((acc, s) => acc + (s.capacidad || 0), 0)
+  const tasaOcupacion = totalSalones > 0 ? Math.round((ocupados / totalSalones) * 100) : 0
+
   return (
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -55,6 +62,38 @@ export function MapaSalonesView({ salones, onSelectSalon }: MapaSalonesViewProps
             <option value="Biblioteca UniBiblio">Biblioteca</option>
             <option value="Zonas Comunes">Zonas Comunes</option>
           </select>
+        </div>
+      </div>
+
+      {/* Real-time Campus Metrics */}
+      <div className="grid gap-3 sm:grid-cols-4">
+        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-muted-foreground">Tasa de Ocupación</p>
+          <div className="flex items-baseline gap-2">
+            <span className="text-xl font-bold text-foreground">{tasaOcupacion}%</span>
+            <span className="text-[10px] text-muted-foreground">({ocupados} de {totalSalones} aulas)</span>
+          </div>
+          <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+            <div className="h-full bg-primary transition-all" style={{ width: `${tasaOcupacion}%` }} />
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">Aulas Libres</p>
+          <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">{disponibles} Disponibles</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400">Listas para clases o estudio</p>
+        </div>
+
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-amber-800 dark:text-amber-300">En Mantenimiento</p>
+          <p className="text-xl font-bold text-amber-700 dark:text-amber-400">{mantenimiento} Salones</p>
+          <p className="text-[10px] text-amber-600 dark:text-amber-400">Intervención técnica activa</p>
+        </div>
+
+        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+          <p className="text-[11px] font-semibold text-muted-foreground">Aforo Total Acumulado</p>
+          <p className="text-xl font-bold text-foreground">{aforoTotal} Personas</p>
+          <p className="text-[10px] text-muted-foreground">Capacidad en zonas seleccionadas</p>
         </div>
       </div>
 
