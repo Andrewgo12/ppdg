@@ -38,7 +38,7 @@ export function ReasignacionClasesModal({
         <div className="flex items-center gap-3 border-b border-border pb-3">
           <RefreshCw className="size-6 text-primary" />
           <div>
-            <h3 className="text-base font-bold text-foreground">Reasignación Masiva de Clases</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground">Reasignación Masiva de Clases</h3>
             <p className="text-xs text-muted-foreground">Director de Programa · Contingencia</p>
           </div>
         </div>

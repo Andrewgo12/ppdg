@@ -45,7 +45,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectResult }: GlobalSea
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-xl rounded-xl border border-border bg-card shadow-2xl overflow-hidden space-y-3 p-4">
+      <div className="relative w-full max-w-xl w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card shadow-2xl overflow-hidden space-y-3 p-4">
         {/* Input Bar */}
         <div className="flex items-center gap-3 border-b border-border pb-3 px-2">
           <Search className="size-5 text-primary shrink-0" />

@@ -30,7 +30,7 @@ export function InsumoExpressModal({
         <div className="flex items-center gap-3 border-b border-border pb-3">
           <Zap className="size-6 text-amber-500" />
           <div>
-            <h3 className="text-base font-bold text-foreground">Solicitar Insumo Express (Just-in-Time)</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground">Solicitar Insumo Express (Just-in-Time)</h3>
             <p className="text-xs text-muted-foreground">Consola Docente · Asistencia Inmediata</p>
           </div>
         </div>

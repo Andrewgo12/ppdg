@@ -17,7 +17,7 @@ export function TecnicoServiciosPanel({
     <div className="rounded-xl border border-border/60 bg-card p-4 space-y-4 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="flex size-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600">
+          <div className="flex size-9 items-center justify-center rounded-lg bg-zinc-700/10 text-zinc-800 dark:text-zinc-200">
             <Sparkles className="size-5" />
           </div>
           <div>
@@ -25,7 +25,7 @@ export function TecnicoServiciosPanel({
             <p className="text-xs text-muted-foreground">{subRoleInfo.title}</p>
           </div>
         </div>
-        <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600">
+        <span className="rounded-full bg-zinc-700/10 px-3 py-1 text-xs font-semibold text-zinc-800 dark:text-zinc-200">
           {subRoleInfo.badge}
         </span>
       </div>
@@ -38,7 +38,7 @@ export function TecnicoServiciosPanel({
         <Button
           size="sm"
           onClick={onCertifyClean}
-          className="rounded-full text-xs gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
+          className="rounded-full text-xs gap-1.5 bg-zinc-800 hover:bg-emerald-700 text-white"
         >
           <CheckCircle2 className="size-3.5" />
           Certificar Aseo & Sanitización de Aula

@@ -53,7 +53,7 @@ export function EstudianteGradoPanel({
         <Button
           size="sm"
           onClick={onGeneratePazSalvo}
-          className="rounded-full text-xs gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
+          className="rounded-full text-xs gap-1.5 bg-zinc-800 hover:bg-emerald-700 text-white"
         >
           <Download className="size-3.5" />
           Generar Paz y Salvo Criptográfico (PDF)

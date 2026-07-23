@@ -41,7 +41,7 @@ export function NuevoReporteModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl max-h-[90vh] overflow-y-auto space-y-4">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl max-h-[90vh] overflow-y-auto space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -52,11 +52,11 @@ export function NuevoReporteModal({
 
         <form onSubmit={handleCreateTicket} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-border pb-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-zinc-700/10 text-amber-600">
               <Camera className="size-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-foreground">Reportar Falla Técnica en Aula</h3>
+              <h3 className="text-xs sm:text-sm font-bold text-foreground">Reportar Falla Técnica en Aula</h3>
               <p className="text-xs text-muted-foreground">UNICAMACHO · Evidencia foto/video obligatoria</p>
             </div>
           </div>
@@ -139,7 +139,7 @@ export function NuevoReporteModal({
                 <Upload className="size-3.5" /> Capturar Foto/Video con Cámara
               </Button>
             ) : (
-              <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-600">
+              <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-zinc-800 dark:text-zinc-200">
                 <CheckCircle2 className="size-4" /> Foto de Evidencia Capturada Satisfactoriamente
               </div>
             )}
@@ -149,7 +149,7 @@ export function NuevoReporteModal({
             <Button type="button" variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
               Cancelar
             </Button>
-            <Button type="submit" className="w-1/2 h-10 rounded-full text-xs font-bold gap-2">
+            <Button type="submit" className="w-1/2 h-8 sm:h-9 rounded-full text-xs font-bold gap-2">
               <Send className="size-4" /> Enviar Reporte
             </Button>
           </div>

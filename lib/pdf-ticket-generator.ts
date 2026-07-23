@@ -192,7 +192,7 @@ export function generarComprobantePrestamoPDF(prestamo: Prestamo) {
 
   doc.setFont("helvetica", "normal")
   doc.text(prestamo.libroTitulo, 70, 71)
-  doc.text(prestamo.estudianteNombre, 70, 78)
+  doc.text(prestamo.estudiante || prestamo.estudianteNombre || "", 70, 78)
   doc.text(prestamo.fechaPrestamo, 70, 85)
   doc.setTextColor(200, 30, 30)
   doc.setFont("helvetica", "bold")

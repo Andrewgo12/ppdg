@@ -28,7 +28,7 @@ export function EmergenciaElectricaModal({
         </button>
 
         <Zap className="size-10 text-amber-500 mx-auto animate-bounce" />
-        <h3 className="text-base font-bold text-foreground">Protocolo Aislamiento RETIE (Riesgo Alto)</h3>
+        <h3 className="text-xs sm:text-sm font-bold text-foreground">Protocolo Aislamiento RETIE (Riesgo Alto)</h3>
         <p className="text-xs text-muted-foreground">
           Consola Técnico Eléctrico · Desconexión preventiva de la zona y bloqueo de seguridad del aula.
         </p>

@@ -1,7 +1,7 @@
 "use client"
 
 import { AlertCircle, CheckCircle, Info, X } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface ToastProps {
   type?: "success" | "error" | "info" | "warning"
@@ -27,7 +27,7 @@ const STYLES = {
 export function Toast({ type = "info", message, onClose, autoClose = 4000 }: ToastProps) {
   const [visible, setVisible] = useState(true)
 
-  useState(() => {
+  useEffect(() => {
     if (autoClose && visible) {
       const timer = setTimeout(() => {
         setVisible(false)

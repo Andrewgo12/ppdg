@@ -27,7 +27,7 @@ export function ScanQrModal({ isOpen, onClose, onConfirmScanQr }: ScanQrModalPro
         </button>
 
         <div className="space-y-1">
-          <h3 className="text-base font-bold text-foreground flex items-center justify-center gap-2">
+          <h3 className="text-xs sm:text-sm font-bold text-foreground flex items-center justify-center gap-2">
             <QrCode className="size-5 text-primary" />
             Escáner de Ticket QR UniBiblio Flow
           </h3>
@@ -92,7 +92,7 @@ export function ScanQrModal({ isOpen, onClose, onConfirmScanQr }: ScanQrModalPro
           </Button>
           <Button
             onClick={onConfirmScanQr}
-            className="w-1/2 rounded-full text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white gap-1"
+            className="w-1/2 rounded-full text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white gap-1"
           >
             <CheckCircle2 className="size-3.5" />
             Validar Código

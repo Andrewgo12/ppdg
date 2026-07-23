@@ -95,6 +95,7 @@ export interface NavItem {
 }
 
 export interface SubRoleInfo {
+  isTecnico?: boolean;
   id: SubRoleId
   parentRole: RoleId
   category: "A. Estudiantes" | "B. Docentes y Personal" | "C. Mantenimiento" | "D. Almacén" | "E. Administración"
@@ -574,6 +575,7 @@ export interface Libro {
 }
 
 export interface Prestamo {
+  estudianteNombre?: string;
   id: string
   estudiante: string
   libroId: string
@@ -627,6 +629,9 @@ export interface UsuarioRBAC {
 }
 
 export interface LogAuditoria {
+  subRole?: string;
+  timestamp?: string;
+  hashCriptografico?: string;
   id: string
   fecha: string
   usuario: string

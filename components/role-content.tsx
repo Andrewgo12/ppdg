@@ -165,8 +165,8 @@ export function RoleContent({
       descripcion: reportDesc,
       reportadoPor: subRoleInfo.fullName,
       fecha: new Date().toISOString().slice(0, 10),
-      estado: "pendiente",
-      evidenciaFoto: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=80",
+      estado: "pendiente_asignacion",
+      evidenciaAntesUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&q=80",
     }
 
     setTickets([newTk, ...tickets])
@@ -210,11 +210,13 @@ export function RoleContent({
       id: `PR-2026-${Math.floor(10 + Math.random() * 90)}`,
       libroId: libro.id,
       libroTitulo: libro.titulo,
+      estudiante: subRoleInfo.fullName,
       estudianteNombre: subRoleInfo.fullName,
       fechaPrestamo: new Date().toISOString().slice(0, 10),
       fechaVencimiento: "2026-08-05",
       qrCode: `QR-LIBRO-${libro.id.toUpperCase()}-2026`,
-      estado: "activo",
+      estado: "entregado",
+      multaCop: 0,
       firmadoDigitalmente: true,
     }
 
@@ -251,13 +253,12 @@ export function RoleContent({
 
     const newDespacho: Despacho = {
       id: `DESP-${Math.floor(100 + Math.random() * 900)}`,
-      insumoId: "INS-001",
       insumoNombre: "Cable HDMI V2.0 3mts",
       cantidad: 2,
       ticketId: "TK-2026-001",
       tecnicoNombre: "Téc. Roberto Méndez",
       fecha: new Date().toISOString().slice(0, 10),
-      estado: "entregado",
+      estado: "aprobado",
     }
     setDespachos([newDespacho, ...despachos])
     toast.success("📦 Despacho de Inventario Autorizado", {
@@ -430,9 +431,9 @@ export function RoleContent({
         />
       )}
 
-      {(activeView === "indicadores" || activeView === "kpis") && <IndicadoresKpiView />}
+      {(activeView === "indicadores" || activeView === "auditoria") && <IndicadoresKpiView />}
 
-      {(activeView === "reservas" || activeView === "espacios" || activeView === "eventos" || activeView === "aprobaciones") && (
+      {(activeView === "espacios" || activeView === "aprobaciones" || activeView === "reservas") && (
         <EspaciosComunesView
           onOpenReservaModal={() => setActiveModal("reserva_evento")}
         />

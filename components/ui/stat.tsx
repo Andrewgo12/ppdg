@@ -16,7 +16,7 @@ export function Stat({ label, value, change, icon }: StatProps) {
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-medium text-muted-foreground">{label}</p>
-          <p className="mt-2 text-2xl font-bold text-foreground">{value}</p>
+          <p className="mt-2 text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold text-foreground">{value}</p>
           {change && (
             <p
               className={`mt-1 text-xs font-medium ${

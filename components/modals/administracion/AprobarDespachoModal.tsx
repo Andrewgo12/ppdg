@@ -28,7 +28,7 @@ export function AprobarDespachoModal({
         </button>
 
         <Boxes className="size-10 text-primary mx-auto" />
-        <h3 className="text-base font-bold text-foreground">Autorización Despacho Insumo Almacén</h3>
+        <h3 className="text-xs sm:text-sm font-bold text-foreground">Autorización Despacho Insumo Almacén</h3>
         <p className="text-xs text-muted-foreground">
           Consola Almacenista · Verificación de Ticket ID previo a la entrega física de repuestos.
         </p>

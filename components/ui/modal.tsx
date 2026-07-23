@@ -14,7 +14,7 @@ interface ModalProps {
 const SIZES = {
   sm: "max-w-sm",
   md: "max-w-md",
-  lg: "max-w-lg",
+  lg: "max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto",
 }
 
 export function Modal({ isOpen, onClose, title, children, actions, size = "md" }: ModalProps) {

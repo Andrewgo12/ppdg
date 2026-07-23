@@ -24,7 +24,7 @@ export function CubiculoModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4 text-center">
         <Clock className="size-10 text-primary mx-auto" />
-        <h3 className="text-base font-bold text-foreground">Reserva Express Cubículo de Estudio</h3>
+        <h3 className="text-xs sm:text-sm font-bold text-foreground">Reserva Express Cubículo de Estudio</h3>
         <p className="text-xs text-muted-foreground">
           Biblioteca UniBiblio · Disponibilidad inmediata garantizada
         </p>

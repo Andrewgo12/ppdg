@@ -41,7 +41,7 @@ export function UploadTesisModal({
         <div className="flex items-center gap-3 border-b border-border pb-3">
           <FileUp className="size-6 text-primary" />
           <div>
-            <h3 className="text-base font-bold text-foreground">Trámite Grado: Carga Tesis & Firma</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground">Trámite Grado: Carga Tesis & Firma</h3>
             <p className="text-xs text-muted-foreground">Estudiante Candidato a Grado</p>
           </div>
         </div>
@@ -73,7 +73,7 @@ export function UploadTesisModal({
             <Button
               onClick={onGeneratePazSalvo}
               disabled={!signatureCaptured}
-              className="w-full rounded-full text-xs gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white disabled:opacity-50"
+              className="w-full rounded-full text-xs gap-1.5 bg-zinc-800 hover:bg-emerald-700 text-white disabled:opacity-50"
             >
               <Download className="size-3.5" />
               Generar y Descargar Paz y Salvo PDF
@@ -82,7 +82,7 @@ export function UploadTesisModal({
         </div>
 
         {pazSalvoGenerado && (
-          <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-600 bg-emerald-500/10 p-3 rounded-lg">
+          <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-zinc-800 dark:text-zinc-200 bg-zinc-700/10 p-3 rounded-lg">
             <CheckCircle2 className="size-4" /> Paz y Salvo Certificado Exitosamente
           </div>
         )}

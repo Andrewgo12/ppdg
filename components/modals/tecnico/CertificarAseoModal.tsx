@@ -27,8 +27,8 @@ export function CertificarAseoModal({
           <X className="size-5" />
         </button>
 
-        <Sparkles className="size-10 text-emerald-600 mx-auto" />
-        <h3 className="text-base font-bold text-foreground">Certificar Aseo & Sanitización</h3>
+        <Sparkles className="size-10 text-zinc-800 dark:text-zinc-200 mx-auto" />
+        <h3 className="text-xs sm:text-sm font-bold text-foreground">Certificar Aseo & Sanitización</h3>
         <p className="text-xs text-muted-foreground">
           Consola Técnico Servicios Generales · Registro de firma de aula higienizada y lista para clase.
         </p>
@@ -42,7 +42,7 @@ export function CertificarAseoModal({
               onConfirmCertify()
               onClose()
             }}
-            className="w-1/2 rounded-full text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white gap-1.5"
+            className="w-1/2 rounded-full text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white gap-1.5"
           >
             <CheckCircle2 className="size-3.5" /> Certificar Aula
           </Button>

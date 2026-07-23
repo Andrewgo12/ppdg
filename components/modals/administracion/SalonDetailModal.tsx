@@ -19,7 +19,7 @@ export function SalonDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -32,7 +32,7 @@ export function SalonDetailModal({
           <div className="flex items-center gap-2.5">
             <Building2 className="size-5 text-primary" />
             <div>
-              <h3 className="text-base font-bold text-foreground">{selectedSalon.nombre}</h3>
+              <h3 className="text-xs sm:text-sm font-bold text-foreground">{selectedSalon.nombre}</h3>
               <p className="text-xs text-muted-foreground">{selectedSalon.sede} · {selectedSalon.bloque} - {selectedSalon.piso}</p>
             </div>
           </div>

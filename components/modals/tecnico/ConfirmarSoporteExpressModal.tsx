@@ -28,7 +28,7 @@ export function ConfirmarSoporteExpressModal({
         </button>
 
         <Truck className="size-10 text-primary mx-auto" />
-        <h3 className="text-base font-bold text-foreground">Aceptar Solicitud Express de Insumo</h3>
+        <h3 className="text-xs sm:text-sm font-bold text-foreground">Aceptar Solicitud Express de Insumo</h3>
         <p className="text-xs text-muted-foreground">
           Consola Técnico IT · Notificará al docente que usted va en camino al aula con el insumo requerid.
         </p>

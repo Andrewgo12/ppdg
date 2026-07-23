@@ -67,7 +67,7 @@ export function SyncLoader({ roleId, subRoleId, onComplete }: SyncLoaderProps) {
             <Sparkles className="size-3.5" />
             <span>SmartCampus Core Engine</span>
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Cargando Entorno</h2>
+          <h2 className="text-xs sm:text-sm sm:text-lg font-medium font-bold tracking-tight">Cargando Entorno</h2>
           <p className="text-xs text-muted-foreground font-medium">
             Preparando permisos y datos en tiempo real
           </p>
@@ -83,7 +83,7 @@ export function SyncLoader({ roleId, subRoleId, onComplete }: SyncLoaderProps) {
               <p className="text-xs font-bold text-foreground truncate">{subInfo?.name || subRoleId}</p>
               <p className="text-[10px] text-muted-foreground truncate">{subInfo?.badge || "Perfil Verificado"}</p>
             </div>
-            <div className="flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg border border-emerald-500/20">
+            <div className="flex items-center gap-1 text-[10px] font-bold text-zinc-800 dark:text-zinc-200 dark:text-emerald-400 bg-zinc-700/10 px-2 py-1 rounded-lg border border-emerald-500/20">
               <Database className="size-3" />
               <span>BD Creada</span>
             </div>

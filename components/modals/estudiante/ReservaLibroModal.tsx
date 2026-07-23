@@ -33,7 +33,7 @@ export function ReservaLibroModal({
         <div className="flex items-center gap-3 border-b border-border pb-3">
           <BookOpen className="size-6 text-primary" />
           <div>
-            <h3 className="text-base font-bold text-foreground">Confirmar Reserva de Libro</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground">Confirmar Reserva de Libro</h3>
             <p className="text-xs text-muted-foreground">UniBiblio Flow · Préstamo con Ticket QR</p>
           </div>
         </div>

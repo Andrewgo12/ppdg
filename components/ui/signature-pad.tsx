@@ -86,7 +86,7 @@ export function SignaturePad({ onSaveSignature, label = "Firma Digital en Pantal
           {label}
         </label>
         {hasDrawn && (
-          <span className="text-[10px] font-bold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+          <span className="text-[10px] font-bold text-zinc-800 dark:text-zinc-200 bg-zinc-700/10 px-2 py-0.5 rounded-full">
             Firma Detectada
           </span>
         )}
@@ -129,7 +129,7 @@ export function SignaturePad({ onSaveSignature, label = "Firma Digital en Pantal
           size="sm"
           disabled={!hasDrawn}
           onClick={saveSignature}
-          className="h-7 text-xs rounded-full gap-1 bg-emerald-600 hover:bg-emerald-700 text-white"
+          className="h-7 text-xs rounded-full gap-1 bg-zinc-800 hover:bg-emerald-700 text-white"
         >
           <Check className="size-3" />
           Confirmar Firma

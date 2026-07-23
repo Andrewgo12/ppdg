@@ -17,7 +17,7 @@ export function TecnicoElectricoPanel({
     <div className="rounded-xl border border-border/60 bg-card p-4 space-y-4 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="flex size-9 items-center justify-center rounded-lg bg-amber-500/10 text-amber-500">
+          <div className="flex size-9 items-center justify-center rounded-lg bg-zinc-700/10 text-amber-500">
             <Zap className="size-5" />
           </div>
           <div>
@@ -25,7 +25,7 @@ export function TecnicoElectricoPanel({
             <p className="text-xs text-muted-foreground">{subRoleInfo.title}</p>
           </div>
         </div>
-        <span className="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600">
+        <span className="rounded-full bg-zinc-700/10 px-3 py-1 text-xs font-semibold text-amber-600">
           {subRoleInfo.badge}
         </span>
       </div>

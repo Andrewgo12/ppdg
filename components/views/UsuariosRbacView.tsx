@@ -63,7 +63,7 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
         className="hidden"
       />
 
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
             <ShieldCheck className="size-5 text-primary" />
@@ -90,7 +90,7 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-2 sm:gap-3 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {Object.values(SUB_ROLES).map((s) => {
           const isSel = currentSubRoleId === s.id
           const pKeys = getRolePermissions(s.id)

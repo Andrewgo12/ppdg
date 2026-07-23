@@ -118,7 +118,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
             <ShieldCheck className="size-3.5" />
             <span>Autenticación Granular · 13 Perfiles</span>
           </div>
-          <h2 className="text-balance text-2xl font-black tracking-tight text-foreground">
+          <h2 className="text-balance text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-black tracking-tight text-foreground">
             Control de Gestión e Infraestructura
           </h2>
           <p className="text-pretty text-xs text-muted-foreground leading-relaxed">
@@ -128,7 +128,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
       </section>
 
       {/* Login Form Panel (Right) */}
-      <section className="flex min-h-dvh items-center justify-center px-6 py-10">
+      <section className="flex min-h-dvh items-center justify-center px-3 sm:px-4 py-10">
         <div className="w-full max-w-md space-y-4">
           
           {/* Unified Single Title Header */}
@@ -137,7 +137,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
               <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
                 <Building2 className="size-5" />
               </div>
-              <h1 className="text-2xl font-black tracking-tight text-foreground">SmartCampus</h1>
+              <h1 className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-black tracking-tight text-foreground">SmartCampus</h1>
             </div>
             <p className="text-xs text-muted-foreground font-medium">
               Acceso Institucional · Seleccione un perfil para ingresar al sistema

@@ -28,7 +28,7 @@ export function AuditoriaLogsModal({
         </button>
 
         <ShieldCheck className="size-10 text-primary mx-auto" />
-        <h3 className="text-base font-bold text-foreground">Auditoría RBAC & Logs Criptográficos</h3>
+        <h3 className="text-xs sm:text-sm font-bold text-foreground">Auditoría RBAC & Logs Criptográficos</h3>
         <p className="text-xs text-muted-foreground">
           Consola SuperAdmin · Trazabilidad completa de permisos, cambios de rol e historial de firmas digital.
         </p>

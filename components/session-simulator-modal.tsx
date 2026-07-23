@@ -55,7 +55,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <div className="w-full max-w-2xl rounded-xl border border-border bg-card p-4 shadow-2xl space-y-3 animate-in zoom-in-95 duration-200">
+      <div className="w-full max-w-2xl w-[95vw] max-h-[88vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-3 animate-in zoom-in-95 duration-200">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border/60 pb-4">
@@ -219,7 +219,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
         {/* Tab 4: Security & Session Expire Simulator */}
         {activeTab === "security" && (
           <div className="space-y-4 text-xs">
-            <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 space-y-2 text-amber-800 dark:text-amber-200">
+            <div className="rounded-lg border border-amber-500/30 bg-zinc-700/10 p-4 space-y-2 text-amber-800 dark:text-amber-200">
               <h3 className="font-bold flex items-center gap-2">
                 <ShieldAlert className="size-4" />
                 Simulador de Expiración de Token JWT
@@ -227,7 +227,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
               <p className="text-[11px] opacity-90">
                 Prueba la reacción de la interfaz ante un evento HTTP 401 (Sesión Expirada). Al presionar, el sistema simulará el cierre de sesión seguro y retornará al Login.
               </p>
-              <Button size="sm" variant="outline" onClick={onExpireSession} className="rounded-xl text-xs border-amber-500/40 text-amber-800 dark:text-amber-200 hover:bg-amber-500/20">
+              <Button size="sm" variant="outline" onClick={onExpireSession} className="rounded-xl text-xs border-amber-500/40 text-amber-800 dark:text-amber-200 hover:bg-zinc-700/20">
                 Simular 401 Token Expired (Cerrar Sesión)
               </Button>
             </div>

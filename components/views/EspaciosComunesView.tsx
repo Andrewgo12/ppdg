@@ -51,7 +51,7 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
 
   return (
     <section className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
             <CalendarCheck className="size-5 text-primary" />
@@ -86,7 +86,7 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
       </div>
 
       {/* Spaces Grid */}
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-3 sm:gap-2 sm:gap-3 md:grid-cols-3">
         {filteredEspacios.map((esp) => (
           <div key={esp.id} className="group rounded-xl border border-border bg-card overflow-hidden flex flex-col justify-between transition-all hover:border-primary/50 hover:shadow-xl">
             <div>
@@ -98,7 +98,7 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
                 />
                 <span className={`absolute top-3 right-3 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${
                   esp.estado === "Disponible"
-                    ? "bg-emerald-500 text-white"
+                    ? "bg-zinc-700 text-white"
                     : "bg-rose-500 text-white"
                 }`}>
                   {esp.estado}
@@ -109,7 +109,7 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
                 <span className="text-[10px] font-bold uppercase text-primary bg-muted/40 px-2 py-0.5 rounded-full">
                   {esp.tipo}
                 </span>
-                <h3 className="text-base font-bold text-foreground">{esp.nombre}</h3>
+                <h3 className="text-xs sm:text-sm font-bold text-foreground">{esp.nombre}</h3>
                 <p className="text-xs text-muted-foreground flex items-center gap-1">
                   <MapPin className="size-3 text-primary" /> {esp.ubicacion}
                 </p>

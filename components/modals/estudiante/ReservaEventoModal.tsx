@@ -34,7 +34,7 @@ export function ReservaEventoModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -49,7 +49,7 @@ export function ReservaEventoModal({
               <CalendarCheck className="size-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-foreground">Solicitud Reserva Espacio Público</h3>
+              <h3 className="text-xs sm:text-sm font-bold text-foreground">Solicitud Reserva Espacio Público</h3>
               <p className="text-xs text-muted-foreground">Eventos culturales, deportivos y debates de representación</p>
             </div>
           </div>
@@ -105,7 +105,7 @@ export function ReservaEventoModal({
             <Button type="button" variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
               Cancelar
             </Button>
-            <Button type="submit" className="w-1/2 h-10 rounded-full text-xs font-bold gap-2">
+            <Button type="submit" className="w-1/2 h-8 sm:h-9 rounded-full text-xs font-bold gap-2">
               <Send className="size-4" /> Enviar Solicitud
             </Button>
           </div>

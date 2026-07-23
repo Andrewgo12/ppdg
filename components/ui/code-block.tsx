@@ -13,7 +13,7 @@ export function CodeBlock({ code, language = "javascript", showLineNumbers = fal
 
   return (
     <div className="rounded-lg border border-border bg-card overflow-hidden">
-      <div className="flex items-center justify-between bg-muted px-4 py-3">
+      <div className="flex items-center justify-between bg-muted px-4 py-1.5 sm:py-2">
         <span className="text-xs font-medium text-muted-foreground">{language}</span>
         <div className="flex gap-2">
           <button className="rounded p-1 text-muted-foreground hover:bg-card hover:text-foreground transition-colors">

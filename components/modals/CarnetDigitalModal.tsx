@@ -37,16 +37,16 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
         <div className="p-4 space-y-4 text-center">
           {/* Avatar y Badge */}
           <div className="relative mx-auto size-20 rounded-full bg-gradient-to-tr from-primary to-accent p-1 shadow-md">
-            <div className="flex size-full items-center justify-center rounded-full bg-card text-3xl font-bold">
+            <div className="flex size-full items-center justify-center rounded-full bg-card text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight font-bold">
               {subRoleInfo.avatar}
             </div>
-            <span className="absolute bottom-0 right-0 rounded-full bg-emerald-500 p-1 text-white shadow-xs">
+            <span className="absolute bottom-0 right-0 rounded-full bg-zinc-700 p-1 text-white shadow-xs">
               <ShieldCheck className="size-3.5" />
             </span>
           </div>
 
           <div>
-            <h4 className="text-base font-bold text-foreground">{subRoleInfo.fullName}</h4>
+            <h4 className="text-xs sm:text-sm font-bold text-foreground">{subRoleInfo.fullName}</h4>
             <p className="text-xs font-semibold text-primary">{subRoleInfo.name}</p>
             <p className="text-[11px] text-muted-foreground mt-0.5">{subRoleInfo.title}</p>
           </div>
@@ -62,7 +62,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Estado Académico:</span>
-              <span className="font-bold text-emerald-600 dark:text-emerald-400">ACTIVO ✓</span>
+              <span className="font-bold text-zinc-800 dark:text-zinc-200 dark:text-emerald-400">ACTIVO ✓</span>
             </div>
           </div>
 
@@ -70,7 +70,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
           <div className="rounded-lg border border-border/60 bg-primary/5 p-3 space-y-1 flex flex-col items-center">
             <QrCode className="size-16 text-primary" />
             <p className="font-mono text-[10px] text-muted-foreground">QR-ID-{subRoleInfo.id.toUpperCase()}-2026</p>
-            <span className="text-[9px] text-emerald-600 font-semibold flex items-center gap-1">
+            <span className="text-[9px] text-zinc-800 dark:text-zinc-200 font-semibold flex items-center gap-1">
               <Sparkles className="size-2.5" /> Firma Criptográfica Verificada
             </span>
           </div>

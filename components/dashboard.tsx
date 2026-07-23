@@ -165,7 +165,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col h-full overflow-hidden">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background/80 px-4 py-3 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background/80 px-4 py-1.5 sm:py-2 backdrop-blur sm:px-3 sm:px-4">
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
@@ -275,18 +275,18 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-10">
+        <main className="flex-1 overflow-y-auto px-4 py-2.5 sm:py-1.5 sm:py-2.5 sm:px-3 sm:px-4 lg:px-10">
           <div className="mx-auto max-w-6xl space-y-4">
             {isHome && (
               <>
                 {/* Greeting */}
-                <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="flex flex-wrap items-start justify-between gap-2 sm:gap-3">
                   <div className="flex items-start gap-3">
                     <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted/40 text-primary">
                       <RoleIcon className="size-6" aria-hidden="true" />
                     </span>
                     <div>
-                      <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                      <h1 className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-semibold tracking-tight text-foreground sm:text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight">
                         Hola, {activeSubRole ? activeSubRole.fullName.split(" ")[0] : role.fullName.split(" ")[0]}
                       </h1>
                       <p className="mt-0.5 text-sm text-muted-foreground">
@@ -300,7 +300,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2 sm:gap-3 lg:grid-cols-4">
                   {role.stats.map((stat) => (
                     <div
                       key={stat.label}
@@ -308,7 +308,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                     >
                       <p className="text-xs font-medium text-muted-foreground">{stat.label}</p>
                       <p
-                        className={`mt-1 text-3xl font-semibold tracking-tight ${TONE_STYLES[stat.tone]}`}
+                        className={`mt-1 text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight font-semibold tracking-tight ${TONE_STYLES[stat.tone]}`}
                       >
                         {stat.value}
                       </p>

@@ -28,7 +28,7 @@ export function BloquearEspacioModal({
         </button>
 
         <Shield className="size-10 text-primary mx-auto" />
-        <h3 className="text-base font-bold text-foreground">Bloqueo Institucional de Espacio</h3>
+        <h3 className="text-xs sm:text-sm font-bold text-foreground">Bloqueo Institucional de Espacio</h3>
         <p className="text-xs text-muted-foreground">
           Consola Funcionario de Eventos · Reserva prioritaria para grados, ceremonia o procesos de admisiones.
         </p>

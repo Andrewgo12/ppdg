@@ -18,7 +18,7 @@ function Panel({
   return (
     <section className={`rounded-xl border border-border bg-card p-4 sm:p-4 ${className}`}>
       <div className="mb-5 flex items-center justify-between gap-3">
-        <h2 className="text-base font-semibold tracking-tight text-foreground">{title}</h2>
+        <h2 className="text-xs sm:text-sm font-semibold tracking-tight text-foreground">{title}</h2>
         {action && (
           <button type="button" className="text-sm font-medium text-primary hover:underline">
             {action}
@@ -49,7 +49,7 @@ function StatusChip({ label, tone }: { label: string; tone: Tone }) {
 function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div className="mb-2">
-      <h1 className="text-balance text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+      <h1 className="text-balance text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-semibold tracking-tight text-foreground sm:text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight">
         {title}
       </h1>
       <p className="mt-1 text-pretty text-sm leading-relaxed text-muted-foreground">{subtitle}</p>
@@ -82,7 +82,7 @@ function GhostBtn({ children }: { children: React.ReactNode }) {
 /* Access note reused across role pages */
 function AccessNote({ children }: { children: React.ReactNode }) {
   return (
-    <p className="rounded-lg bg-secondary px-4 py-3 text-xs leading-relaxed text-secondary-foreground">
+    <p className="rounded-lg bg-secondary px-4 py-1.5 sm:py-2 text-xs leading-relaxed text-secondary-foreground">
       {children}
     </p>
   )
@@ -101,7 +101,7 @@ const ROOMS = [
 
 function StudentHome() {
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-2 sm:gap-3 lg:grid-cols-3">
       <Panel title="Salones disponibles ahora" action="Ver mapa" className="lg:col-span-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {ROOMS.map((r) => (
@@ -170,7 +170,7 @@ function StudentReservas() {
         title="Reservar espacio de estudio"
         subtitle="Aparta salas individuales o grupales por franja horaria."
       />
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-2 sm:gap-3 lg:grid-cols-3">
         <Panel title="Elige una franja · Sala-E1" className="lg:col-span-2">
           <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
             {slots.map((s, i) => (
@@ -178,7 +178,7 @@ function StudentReservas() {
                 key={s}
                 type="button"
                 disabled={i === 2}
-                className="rounded-lg border border-border py-3 text-sm font-medium text-foreground transition-colors enabled:hover:border-primary enabled:hover:text-primary disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
+                className="rounded-lg border border-border py-1.5 sm:py-2 text-sm font-medium text-foreground transition-colors enabled:hover:border-primary enabled:hover:text-primary disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
               >
                 {s}
               </button>
@@ -262,10 +262,10 @@ function ReportsTable() {
         <tbody className="divide-y divide-border">
           {REPORTS.map((r) => (
             <tr key={r.id}>
-              <td className="py-3 font-medium text-foreground">{r.id}</td>
-              <td className="py-3 text-muted-foreground">{r.room}</td>
-              <td className="py-3 text-muted-foreground">{r.issue}</td>
-              <td className="py-3">
+              <td className="py-1.5 sm:py-2 font-medium text-foreground">{r.id}</td>
+              <td className="py-1.5 sm:py-2 text-muted-foreground">{r.room}</td>
+              <td className="py-1.5 sm:py-2 text-muted-foreground">{r.issue}</td>
+              <td className="py-1.5 sm:py-2">
                 <StatusChip label={r.status} tone={r.tone} />
               </td>
             </tr>
@@ -278,7 +278,7 @@ function ReportsTable() {
 
 function TeacherHome() {
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-2 sm:gap-3 lg:grid-cols-3">
       <Panel title="Mis reportes de falla" action="Nuevo reporte" className="lg:col-span-2">
         <ReportsTable />
       </Panel>
@@ -306,7 +306,7 @@ function TeacherReportar() {
         title="Reportar falla del aula"
         subtitle="Describe el daño y adjunta evidencia. Se asigna al técnico por especialidad."
       />
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-2 sm:gap-3 lg:grid-cols-3">
         <Panel title="Nuevo reporte" className="lg:col-span-2">
           <div className="space-y-4">
             <div>
@@ -361,7 +361,7 @@ function TeacherInsumos() {
         title="Solicitar insumos"
         subtitle="Pide materiales directamente al almacén; requieren aprobación."
       />
-      <div className="grid gap-4 lg:grid-cols-1 sm:grid-cols-2">
+      <div className="grid gap-2 sm:gap-3 lg:grid-cols-1 sm:grid-cols-2">
         <Panel title="Solicitud rápida">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {["Marcadores", "Cable HDMI", "Borrador", "Adaptador VGA"].map((i) => (
@@ -539,10 +539,10 @@ function InventoryTable({ rows }: { rows: typeof INVENTORY }) {
         <tbody className="divide-y divide-border">
           {rows.map((i) => (
             <tr key={i.name}>
-              <td className="py-3 font-medium text-foreground">{i.name}</td>
-              <td className="py-3 text-muted-foreground">{i.stock}</td>
-              <td className="py-3 text-muted-foreground">{i.min}</td>
-              <td className="py-3">
+              <td className="py-1.5 sm:py-2 font-medium text-foreground">{i.name}</td>
+              <td className="py-1.5 sm:py-2 text-muted-foreground">{i.stock}</td>
+              <td className="py-1.5 sm:py-2 text-muted-foreground">{i.min}</td>
+              <td className="py-1.5 sm:py-2">
                 <StatusChip
                   label={i.stock < i.min ? "Bajo mínimo" : "OK"}
                   tone={i.stock < i.min ? i.tone : "free"}
@@ -558,7 +558,7 @@ function InventoryTable({ rows }: { rows: typeof INVENTORY }) {
 
 function WarehouseHome() {
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-2 sm:gap-3 lg:grid-cols-3">
       <Panel title="Inventario · niveles de stock" action="Exportar" className="lg:col-span-2">
         <InventoryTable rows={INVENTORY.slice(0, 4)} />
       </Panel>
@@ -714,7 +714,7 @@ function ApprovalList() {
 
 function AdminHome() {
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-2 sm:gap-3 lg:grid-cols-3">
       <Panel title="Ocupación por sede" action="Ver indicadores" className="lg:col-span-2">
         <UsageBars />
       </Panel>
@@ -742,7 +742,7 @@ function AdminIndicadores() {
         {kpis.map((k) => (
           <div key={k.l} className="rounded-xl border border-border bg-card p-4">
             <p className="text-xs font-medium text-muted-foreground">{k.l}</p>
-            <p className="mt-1 text-2xl font-semibold tracking-tight text-foreground">{k.v}</p>
+            <p className="mt-1 text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-semibold tracking-tight text-foreground">{k.v}</p>
             <p className="mt-0.5 text-xs text-muted-foreground">{k.h}</p>
           </div>
         ))}
@@ -780,9 +780,9 @@ function AdminUsuarios() {
             <tbody className="divide-y divide-border">
               {users.map((u) => (
                 <tr key={u.n}>
-                  <td className="py-3 font-medium text-foreground">{u.n}</td>
-                  <td className="py-3 text-muted-foreground">{u.r}</td>
-                  <td className="py-3">
+                  <td className="py-1.5 sm:py-2 font-medium text-foreground">{u.n}</td>
+                  <td className="py-1.5 sm:py-2 text-muted-foreground">{u.r}</td>
+                  <td className="py-1.5 sm:py-2">
                     <StatusChip label="Activo" tone="free" />
                   </td>
                 </tr>

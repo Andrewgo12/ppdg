@@ -33,7 +33,7 @@ export function AsistenciaLabModal({
 
         <div className="flex items-center gap-3 border-b border-border pb-3">
           <UserCheck className="size-6 text-primary" />
-          <h3 className="text-base font-bold text-foreground">Registro de Asistencia Lab</h3>
+          <h3 className="text-xs sm:text-sm font-bold text-foreground">Registro de Asistencia Lab</h3>
         </div>
 
         <div>

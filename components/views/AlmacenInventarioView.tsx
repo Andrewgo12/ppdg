@@ -14,14 +14,14 @@ interface AlmacenInventarioViewProps {
 export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioViewProps) {
   const handleExportCSV = () => {
     exportarInventarioCSV(insumos, despachos)
-    toast.success("📊 Inventario Exportado a CSV / Excel", {
+    toast("📊 Inventario Exportado a CSV / Excel", {
       description: "Archivo Inventario_UniCamacho.csv descargado a su equipo."
     })
   }
 
   return (
     <section className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
             <Boxes className="size-5 text-primary" />
@@ -39,40 +39,42 @@ export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioV
       </div>
 
       {/* Insumos Inventory Table */}
-      <div className="rounded-xl border border-border bg-card p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-foreground">Inventario de Componentes & Insumos</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-foreground">
-            <thead className="border-b border-border bg-muted/40 text-muted-foreground">
+      <div className="space-y-2">
+        <h3 className="text-[13px] font-semibold text-foreground uppercase tracking-wider flex items-center gap-2">
+          Inventario de Componentes & Insumos
+        </h3>
+        <div className="overflow-x-auto border border-border/50 rounded-md">
+          <table className="w-full text-left text-[11px] text-foreground">
+            <thead className="border-b border-border/50 bg-muted/20 text-muted-foreground uppercase tracking-wider">
               <tr>
-                <th className="p-3">Código</th>
-                <th className="p-3">Insumo</th>
-                <th className="p-3">Categoría</th>
-                <th className="p-3">Stock Actual</th>
-                <th className="p-3">Stock Mínimo</th>
-                <th className="p-3">Ubicación</th>
-                <th className="p-3">Estado</th>
+                <th className="px-3 py-2 font-medium">Código</th>
+                <th className="px-3 py-2 font-medium">Insumo</th>
+                <th className="px-3 py-2 font-medium">Categoría</th>
+                <th className="px-3 py-2 font-medium">Stock Actual</th>
+                <th className="px-3 py-2 font-medium">Stock Mínimo</th>
+                <th className="px-3 py-2 font-medium">Ubicación</th>
+                <th className="px-3 py-2 font-medium">Estado</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/30 bg-background">
               {insumos.map((i) => {
                 const isCrit = i.stockActual <= i.stockMinimo
                 return (
-                  <tr key={i.id}>
-                    <td className="p-3 font-semibold text-primary">{i.id}</td>
-                    <td className="p-3 font-medium">{i.nombre}</td>
-                    <td className="p-3 capitalize">{i.categoria}</td>
-                    <td className="p-3 font-bold">{i.stockActual} {i.unidad}</td>
-                    <td className="p-3 text-muted-foreground">{i.stockMinimo} {i.unidad}</td>
-                    <td className="p-3">{i.ubicacionEstante}</td>
-                    <td className="p-3">
+                  <tr key={i.id} className="hover:bg-muted/10 transition-colors">
+                    <td className="px-3 py-1.5 font-mono text-muted-foreground">{i.id}</td>
+                    <td className="px-3 py-1.5 font-medium">{i.nombre}</td>
+                    <td className="px-3 py-1.5 capitalize text-muted-foreground">{i.categoria}</td>
+                    <td className="px-3 py-1.5 font-bold">{i.stockActual} <span className="font-normal text-muted-foreground">{i.unidad}</span></td>
+                    <td className="px-3 py-1.5 text-muted-foreground">{i.stockMinimo} {i.unidad}</td>
+                    <td className="px-3 py-1.5">{i.ubicacion}</td>
+                    <td className="px-3 py-1.5">
                       {isCrit ? (
-                        <span className="rounded-full bg-rose-500/20 text-rose-700 dark:text-rose-300 px-2.5 py-0.5 text-[10px] font-bold">
-                          ⚠️ ALERTA REABASTECIMIENTO
+                        <span className="flex items-center gap-1 text-rose-600 dark:text-rose-400 font-bold">
+                          <span className="size-1.5 rounded-full bg-rose-500 animate-pulse"></span> Alerta
                         </span>
                       ) : (
-                        <span className="rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-2.5 py-0.5 text-[10px] font-bold">
-                          ÓPTIMO
+                        <span className="flex items-center gap-1 text-zinc-800 dark:text-zinc-200 dark:text-emerald-400">
+                          <span className="size-1.5 rounded-full bg-zinc-700"></span> Óptimo
                         </span>
                       )}
                     </td>
@@ -85,32 +87,34 @@ export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioV
       </div>
 
       {/* Despachos Table */}
-      <div className="rounded-xl border border-border bg-card p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-foreground">Historial de Despachos para Mantenimiento</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-foreground">
-            <thead className="border-b border-border bg-muted/40 text-muted-foreground">
+      <div className="space-y-2 pt-4">
+        <h3 className="text-[13px] font-semibold text-foreground uppercase tracking-wider flex items-center gap-2">
+          Historial de Despachos para Mantenimiento
+        </h3>
+        <div className="overflow-x-auto border border-border/50 rounded-md">
+          <table className="w-full text-left text-[11px] text-foreground">
+            <thead className="border-b border-border/50 bg-muted/20 text-muted-foreground uppercase tracking-wider">
               <tr>
-                <th className="p-3">ID Despacho</th>
-                <th className="p-3">Insumo</th>
-                <th className="p-3">Cantidad</th>
-                <th className="p-3">Ticket ID</th>
-                <th className="p-3">Técnico Receptor</th>
-                <th className="p-3">Fecha</th>
-                <th className="p-3">Estado</th>
+                <th className="px-3 py-2 font-medium">ID Despacho</th>
+                <th className="px-3 py-2 font-medium">Insumo</th>
+                <th className="px-3 py-2 font-medium">Cantidad</th>
+                <th className="px-3 py-2 font-medium">Ticket ID</th>
+                <th className="px-3 py-2 font-medium">Técnico Receptor</th>
+                <th className="px-3 py-2 font-medium">Fecha</th>
+                <th className="px-3 py-2 font-medium">Estado</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/30 bg-background">
               {despachos.map((d) => (
-                <tr key={d.id}>
-                  <td className="p-3 font-semibold text-primary">{d.id}</td>
-                  <td className="p-3 font-medium">{d.insumoNombre}</td>
-                  <td className="p-3">{d.cantidad}</td>
-                  <td className="p-3 font-mono">{d.ticketId}</td>
-                  <td className="p-3">{d.tecnicoNombre}</td>
-                  <td className="p-3 text-muted-foreground">{d.fecha}</td>
-                  <td className="p-3">
-                    <span className="rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 text-[10px] font-bold uppercase">
+                <tr key={d.id} className="hover:bg-muted/10 transition-colors">
+                  <td className="px-3 py-1.5 font-mono text-muted-foreground">{d.id}</td>
+                  <td className="px-3 py-1.5 font-medium">{d.insumoNombre}</td>
+                  <td className="px-3 py-1.5 font-bold">{d.cantidad}</td>
+                  <td className="px-3 py-1.5 font-mono text-primary">{d.ticketId}</td>
+                  <td className="px-3 py-1.5">{d.tecnicoNombre}</td>
+                  <td className="px-3 py-1.5 text-muted-foreground">{d.fecha}</td>
+                  <td className="px-3 py-1.5">
+                    <span className="rounded-sm bg-muted/50 border border-border/50 px-1.5 py-0.5 font-medium">
                       {d.estado}
                     </span>
                   </td>

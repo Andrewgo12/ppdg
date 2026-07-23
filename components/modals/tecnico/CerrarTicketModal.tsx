@@ -29,7 +29,7 @@ export function CerrarTicketModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -39,11 +39,11 @@ export function CerrarTicketModal({
         </button>
 
         <div className="flex items-center gap-3 border-b border-border pb-3">
-          <div className="flex size-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600">
+          <div className="flex size-10 items-center justify-center rounded-lg bg-zinc-700/10 text-zinc-800 dark:text-zinc-200">
             <CheckCircle2 className="size-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-foreground">Cierre de Ticket Mantenimiento</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground">Cierre de Ticket Mantenimiento</h3>
             <p className="text-xs text-muted-foreground">ID: {selectedTicket.id} · {selectedTicket.salonNombre}</p>
           </div>
         </div>
@@ -63,8 +63,8 @@ export function CerrarTicketModal({
           />
         </div>
 
-        <div className="rounded-lg border border-dashed border-emerald-500/40 bg-emerald-500/5 p-4 text-center space-y-2">
-          <Camera className="size-6 text-emerald-600 mx-auto" />
+        <div className="rounded-lg border border-dashed border-emerald-500/40 bg-zinc-700/5 p-4 text-center space-y-2">
+          <Camera className="size-6 text-zinc-800 dark:text-zinc-200 mx-auto" />
           <p className="text-xs font-bold text-foreground">Foto Evidencia de Reparación Final</p>
           <p className="text-[11px] text-muted-foreground">
             Tome la foto del equipo operando nítidamente para certificar el cierre.
@@ -74,12 +74,12 @@ export function CerrarTicketModal({
             <Button
               type="button"
               onClick={() => setCierreEvidenceDone(true)}
-              className="rounded-full text-xs gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="rounded-full text-xs gap-1.5 bg-zinc-800 hover:bg-emerald-700 text-white"
             >
               <Upload className="size-3.5" /> Capturar Foto de Reparación Final
             </Button>
           ) : (
-            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-emerald-600">
+            <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-zinc-800 dark:text-zinc-200">
               <CheckCircle2 className="size-4" /> Foto Final Validada
             </div>
           )}
@@ -91,7 +91,7 @@ export function CerrarTicketModal({
           </Button>
           <Button
             onClick={() => onCloseTicket(selectedTicket.id)}
-            className="w-1/2 h-10 rounded-full text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white"
+            className="w-1/2 h-8 sm:h-9 rounded-full text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white"
           >
             Confirmar Cierre & Habilitar
           </Button>

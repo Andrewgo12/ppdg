@@ -22,7 +22,7 @@ export function DocumentPreviewModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -34,7 +34,7 @@ export function DocumentPreviewModal({
         <div className="flex items-center gap-3 border-b border-border pb-3">
           <FileCheck2 className="size-6 text-primary" />
           <div>
-            <h3 className="text-base font-bold text-foreground">Vista Previa de Documento Oficial</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-foreground">Vista Previa de Documento Oficial</h3>
             <p className="text-xs text-muted-foreground">Pre-visualización antes de generar archivo PDF</p>
           </div>
         </div>
@@ -45,7 +45,7 @@ export function DocumentPreviewModal({
           <div className="text-center border-b border-slate-300 dark:border-slate-700 pb-3 space-y-0.5">
             <p className="font-extrabold text-sm text-[#0F2043] dark:text-blue-400">INSTITUCIÓN UNIVERSITARIA ANTONIO JOSÉ CAMACHO</p>
             <p className="text-[10px] text-slate-500">Sede Principal Av. 6 Norte | Santiago de Cali, Colombia</p>
-            <p className="text-[10px] font-bold text-emerald-600">CERTIFICADO DIGITAL DE PAZ Y SALVO N° 2026-892</p>
+            <p className="text-[10px] font-bold text-zinc-800 dark:text-zinc-200">CERTIFICADO DIGITAL DE PAZ Y SALVO N° 2026-892</p>
           </div>
 
           {/* Datos Estudiante */}
@@ -59,10 +59,10 @@ export function DocumentPreviewModal({
           <div className="space-y-1">
             <p className="font-bold text-[11px] text-primary">Verificación de Paz y Salvos:</p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
-              <li className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Biblioteca UniBiblio: Cero Deudas</li>
-              <li className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Tesorería: Paz y Salvo Matrícula</li>
-              <li className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Decanatura: Plan Aprobado</li>
-              <li className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Laboratorios: Insumos al Día</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Biblioteca UniBiblio: Cero Deudas</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Tesorería: Paz y Salvo Matrícula</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Decanatura: Plan Aprobado</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Laboratorios: Insumos al Día</li>
             </ul>
           </div>
 
@@ -72,7 +72,7 @@ export function DocumentPreviewModal({
               <QrCode className="size-4 text-primary" />
               <span>HASH: SHA256-UNICAMACHO-982</span>
             </div>
-            <span className="font-bold text-emerald-600 flex items-center gap-1">
+            <span className="font-bold text-zinc-800 dark:text-zinc-200 flex items-center gap-1">
               <ShieldCheck className="size-3.5" /> Sello Validador
             </span>
           </div>
@@ -84,7 +84,7 @@ export function DocumentPreviewModal({
           </Button>
           <Button
             onClick={onConfirmDownload}
-            className="w-1/2 rounded-full text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white gap-1"
+            className="w-1/2 rounded-full text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white gap-1"
           >
             <Download className="size-3.5" />
             Descargar PDF Oficial

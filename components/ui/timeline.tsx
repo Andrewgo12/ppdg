@@ -22,12 +22,12 @@ export function Timeline({ items }: TimelineProps) {
   return (
     <div className="space-y-4">
       {items.map((item, index) => (
-        <div key={index} className="flex gap-4">
+        <div key={index} className="flex gap-2 sm:gap-3">
           <div className="flex flex-col items-center">
             <div className={`rounded-full p-3 ${STATUS_STYLES[item.status]}`}>
               {item.icon}
             </div>
-            {index < items.length - 1 && <div className="mt-1 h-12 w-0.5 bg-border" />}
+            {index < items.length - 1 && <div className="mt-1 h-9 sm:h-8 sm:h-9 w-0.5 bg-border" />}
           </div>
           <div className="pb-4">
             <p className="text-sm font-semibold text-foreground">{item.title}</p>

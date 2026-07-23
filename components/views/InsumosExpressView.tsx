@@ -20,7 +20,7 @@ export function InsumosExpressView({ onRequestExpressSupply }: InsumosExpressVie
             <PackageSearch className="size-5" />
           </div>
           <div>
-            <h2 className="text-base font-semibold text-foreground">
+            <h2 className="text-xs sm:text-sm font-semibold text-foreground">
               Solicitud Express de Insumos para Clase (Just-in-Time)
             </h2>
             <p className="text-xs text-muted-foreground">
@@ -61,7 +61,7 @@ export function InsumosExpressView({ onRequestExpressSupply }: InsumosExpressVie
           <div className="flex items-end">
             <Button
               onClick={() => onRequestExpressSupply(expressItem, expressSalon)}
-              className="w-full h-10 rounded-full text-xs gap-2"
+              className="w-full h-8 sm:h-9 rounded-full text-xs gap-2"
             >
               <Send className="size-4" />
               Solicitar Insumo Inmediato

@@ -24,7 +24,7 @@ export function Steps({ items, currentStep, onStepClick }: StepsProps) {
             onClick={() => onStepClick?.(index + 1)}
             className="w-full text-left"
           >
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-2 sm:gap-3">
               <div
                 className={`flex size-10 shrink-0 items-center justify-center rounded-full font-semibold transition-colors ${
                   isCompleted
