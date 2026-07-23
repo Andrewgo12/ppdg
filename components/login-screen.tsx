@@ -1,8 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import Image from "next/image"
-import { Building2, Mail, ShieldCheck, Check, ArrowRight, UserCheck, Layers, Sparkles } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { Building2, Mail, ArrowRight, Layers, ChevronRight, Sparkles, ShieldCheck, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ROLES, ROLE_ORDER, SUB_ROLES, INITIAL_USUARIOS_RBAC, type RoleId, type SubRoleId, type UsuarioRBAC } from "@/lib/campus-data"
 
@@ -11,17 +10,84 @@ interface LoginScreenProps {
 }
 
 export function LoginScreen({ onLogin }: LoginScreenProps) {
-  // Login steps: "email" | "manual"
   const [step, setStep] = useState<"email" | "manual">("email")
-  
-  // Email input state
   const [emailInput, setEmailInput] = useState("monica.salazar@smartcampus.edu.co")
 
-  // Manual selector state
   const [selectedRole, setSelectedRole] = useState<RoleId>("admin")
   const [selectedSubRole, setSelectedSubRole] = useState<SubRoleId>("super_admin")
 
-  // Find user in database by email or match custom
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  // Lightweight Particle Canvas Animation (Gemini / Antigravity Style)
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    let animationFrameId: number
+    let width = (canvas.width = canvas.offsetWidth)
+    let height = (canvas.height = canvas.offsetHeight)
+
+    const handleResize = () => {
+      if (!canvas) return
+      width = canvas.width = canvas.offsetWidth
+      height = canvas.height = canvas.offsetHeight
+    }
+    window.addEventListener("resize", handleResize)
+
+    const particles = Array.from({ length: 35 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      size: Math.random() * 2 + 1,
+      alpha: Math.random() * 0.5 + 0.2,
+    }))
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height)
+
+      particles.forEach((p, i) => {
+        p.x += p.vx
+        p.y += p.vy
+
+        if (p.x < 0 || p.x > width) p.vx *= -1
+        if (p.y < 0 || p.y > height) p.vy *= -1
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(59, 130, 246, ${p.alpha})`
+        ctx.fill()
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j]
+          const dx = p.x - p2.x
+          const dy = p.y - p2.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+
+          if (dist < 100) {
+            ctx.beginPath()
+            ctx.moveTo(p.x, p.y)
+            ctx.lineTo(p2.x, p2.y)
+            ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 * (1 - dist / 100)})`
+            ctx.lineWidth = 0.8
+            ctx.stroke()
+          }
+        }
+      })
+
+      animationFrameId = requestAnimationFrame(render)
+    }
+
+    render()
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [])
+
   function findUserByEmail(email: string): { user: UsuarioRBAC; subRole: SubRoleId; parentRole: RoleId } {
     const cleanEmail = email.trim().toLowerCase()
     const found = INITIAL_USUARIOS_RBAC.find((u) => u.email.toLowerCase() === cleanEmail)
@@ -35,7 +101,6 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
       }
     }
 
-    // Default heuristics if typing custom email
     if (cleanEmail.includes("admin") || cleanEmail.includes("monica") || cleanEmail.includes("director")) {
       const u = INITIAL_USUARIOS_RBAC.find((x) => x.subRole === "super_admin")!
       return { user: u, subRole: "super_admin", parentRole: "admin" }
@@ -53,12 +118,10 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
       return { user: u, subRole: "almacenista", parentRole: "almacen" }
     }
 
-    // Default fallback to Estudiante Regular
     const defaultStudent = INITIAL_USUARIOS_RBAC.find((x) => x.subRole === "estudiante_regular")!
     return { user: defaultStudent, subRole: "estudiante_regular", parentRole: "estudiante" }
   }
 
-  // Handle direct login from email submit
   function handleEmailSubmit(e?: React.FormEvent) {
     if (e) e.preventDefault()
     if (!emailInput.trim()) return
@@ -67,7 +130,6 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
     onLogin(match.parentRole, match.subRole)
   }
 
-  // Quick account selection - DIRECT 1-CLICK LOGIN
   function handleSelectQuickAccount(email: string) {
     const match = findUserByEmail(email)
     const subInfo = SUB_ROLES[match.subRole]
@@ -78,7 +140,6 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
     }
   }
 
-  // Manual role picker helpers
   const activeRole = ROLES[selectedRole]
   const availableSubRoles = Object.values(SUB_ROLES).filter((sr) => sr.parentRole === selectedRole)
 
@@ -91,103 +152,125 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   }
 
   return (
-    <main className="min-h-dvh w-full bg-background lg:grid lg:grid-cols-1 sm:grid-cols-2">
-      {/* Visual Editorial Hero Side (Left) */}
-      <section className="relative hidden flex-col justify-between overflow-hidden p-12 lg:flex">
-        <Image
-          src="/campus-hero.png"
-          alt="Campus UNICAMACHO"
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+    <main className="h-screen max-h-screen w-full bg-[#070B14] text-slate-100 grid grid-cols-1 lg:grid-cols-12 font-sans antialiased overflow-hidden">
+      
+      {/* COLUMNA IZQUIERDA: HERO ANIMADO COMPACTO (7 COLS) */}
+      <section className="relative hidden lg:flex lg:col-span-7 flex-col justify-between p-8 bg-gradient-to-br from-[#0A0F1D] via-[#0D152A] to-[#070B14] border-r border-slate-800/60 overflow-hidden h-full">
+        {/* Canvas Animado de Partículas */}
+        <canvas ref={canvasRef} className="absolute inset-0 size-full pointer-events-none opacity-60" />
 
-        <div className="relative flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg">
-            <Building2 className="size-5" aria-hidden="true" />
+        {/* Halo de Luz animado */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-72 rounded-full bg-blue-600/10 blur-3xl animate-pulse pointer-events-none" />
+
+        {/* Header Minimalista */}
+        <div className="relative z-10 flex items-center gap-2.5">
+          <div className="flex size-9 items-center justify-center rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-400 backdrop-blur-md shadow-md shadow-blue-500/10">
+            <Building2 className="size-4" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">UNICAMACHO</p>
-            <p className="text-sm font-extrabold text-foreground">Plataforma de Campus Inteligente</p>
+            <p className="text-[9px] font-mono tracking-widest text-blue-400 font-bold uppercase">
+              UNICAMACHO
+            </p>
+            <h1 className="text-xs font-bold text-white tracking-tight">
+              SmartCampus
+            </h1>
           </div>
         </div>
 
-        <div className="relative max-w-md space-y-3">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-muted/40 px-3 py-1 text-xs font-semibold text-primary backdrop-blur">
-            <ShieldCheck className="size-3.5" />
-            <span>Autenticación Granular · 13 Perfiles</span>
+        {/* Emblema Central Animado (Escudo 3D Institucional de Gran Tamaño) */}
+        <div className="relative z-10 my-auto flex flex-col items-center justify-center text-center space-y-6">
+          <div className="relative flex items-center justify-center">
+            {/* Aura de Luz Externa */}
+            <div className="absolute size-52 rounded-full bg-gradient-to-tr from-blue-600/20 via-indigo-500/10 to-[#D4A017]/10 blur-2xl animate-pulse" />
+            
+            {/* Anillos Giratorios de Alta Precisión */}
+            <div className="absolute size-48 rounded-full border border-blue-500/30 border-t-[#D4A017] animate-spin transition-all shadow-lg" style={{ animationDuration: "14s" }} />
+            <div className="absolute size-36 rounded-full border border-indigo-400/20 border-b-blue-400 animate-spin" style={{ animationDuration: "9s", animationDirection: "reverse" }} />
+            
+            {/* Escudo Metalizado de Alta Seguridad */}
+            <div className="relative flex size-28 items-center justify-center rounded-2xl bg-gradient-to-tr from-[#0F2043] via-[#1E293B] to-[#0F172A] border-2 border-[#D4A017]/60 text-white shadow-2xl shadow-blue-900/50 transition-all duration-300 hover:scale-105 group backdrop-blur-md">
+              <div className="absolute inset-1 rounded-xl border border-white/10" />
+              <div className="flex flex-col items-center justify-center space-y-1">
+                <Building2 className="size-10 text-[#D4A017] group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-[8px] font-mono font-bold tracking-widest text-white/90 uppercase">UNICAMACHO</span>
+              </div>
+            </div>
           </div>
-          <h2 className="text-balance text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-black tracking-tight text-foreground">
-            Control de Gestión e Infraestructura
-          </h2>
-          <p className="text-pretty text-xs text-muted-foreground leading-relaxed">
-            Aulas, biblioteca, servicios IT, inventario y solicitudes académicas sincronizados en un solo sistema.
-          </p>
+
+          <div className="space-y-1.5 max-w-sm">
+            <h2 className="text-2xl font-black tracking-tight text-white leading-tight">
+              Plataforma de Campus Inteligente
+            </h2>
+            <p className="text-xs text-slate-300 font-medium">
+              Gestión Operativa & Acceso Institucional Granular
+            </p>
+          </div>
+        </div>
+
+        {/* Footer Sutil */}
+        <div className="relative z-10 flex items-center justify-between text-[10px] text-slate-400 font-mono border-t border-slate-800/80 pt-3 pl-12 pr-4">
+          <span className="flex items-center gap-1.5 text-[#D4A017] font-bold truncate">
+            <ShieldCheck className="size-3.5 shrink-0" /> CONEXIÓN SEGURA ENCRIPTADA (JWT RBAC)
+          </span>
+          <span className="shrink-0">Sedes: Av. 6 | Sur · Cali</span>
         </div>
       </section>
 
-      {/* Login Form Panel (Right) */}
-      <section className="flex min-h-dvh items-center justify-center px-3 sm:px-4 py-10">
-        <div className="w-full max-w-md space-y-4">
+      {/* SECCIÓN DERECHA: FORMULARIO RESPONSIVO COMPACTO (5 COLS) */}
+      <section className="col-span-1 lg:col-span-5 flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#0A0E1A] h-full overflow-hidden">
+        <div className="w-full max-w-md space-y-3.5 flex flex-col justify-center max-h-full">
           
-          {/* Unified Single Title Header */}
-          <div className="space-y-1.5 text-left border-b border-border/60 pb-5">
-            <div className="flex items-center gap-2.5">
-              <div className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-                <Building2 className="size-5" />
-              </div>
-              <h1 className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-black tracking-tight text-foreground">SmartCampus</h1>
-            </div>
-            <p className="text-xs text-muted-foreground font-medium">
-              Acceso Institucional · Seleccione un perfil para ingresar al sistema
+          {/* Header Formulario */}
+          <div className="space-y-0.5 text-left border-b border-slate-800/80 pb-3 shrink-0">
+            <h3 className="text-sm sm:text-base font-bold tracking-tight text-slate-100">
+              Iniciar Sesión
+            </h3>
+            <p className="text-[11px] text-slate-400">
+              Seleccione una cuenta de usuario o ingrese su correo institucional.
             </p>
           </div>
 
-          {/* STEP 1: EMAIL INPUT & DIRECT QUICK ACCOUNT SELECT */}
+          {/* STEP 1: EMAIL INPUT & SELECCIÓN DE CUENTAS */}
           {step === "email" && (
-            <div className="space-y-3 animate-in fade-in duration-200">
-              <form onSubmit={handleEmailSubmit} className="space-y-3">
-                <div className="space-y-1.5">
-                  <label htmlFor="email" className="text-xs font-semibold text-foreground">
+            <div className="space-y-3 animate-in fade-in duration-300 overflow-hidden flex flex-col">
+              <form onSubmit={handleEmailSubmit} className="space-y-2 shrink-0">
+                <div className="space-y-1">
+                  <label htmlFor="email" className="text-[11px] font-semibold text-slate-300">
                     Correo Institucional
                   </label>
                   <div className="relative">
-                    <Mail
-                      className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
-                      aria-hidden="true"
-                    />
+                    <Mail className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-500" />
                     <input
                       id="email"
                       type="email"
                       value={emailInput}
                       onChange={(e) => setEmailInput(e.target.value)}
-                      placeholder="usuario@smartcampus.edu.co"
+                      placeholder="usuario@unicamacho.edu.co"
                       required
-                      className="w-full rounded-lg border border-input bg-background py-2.5 pl-10 pr-4 text-xs font-medium text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm"
+                      className="w-full h-8 px-2.5 pl-8 rounded-lg border border-slate-800 bg-slate-900/90 text-xs text-slate-100 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 transition-all duration-200 shadow-xs"
                     />
                   </div>
                 </div>
 
-                <Button type="submit" className="h-11 w-full rounded-lg text-xs font-semibold shadow" size="lg">
-                  <span>Ingresar con Correo</span>
-                  <ArrowRight className="size-4 ml-1.5" />
+                <Button
+                  type="submit"
+                  className="h-8.5 w-full rounded-lg text-xs font-bold bg-blue-600 text-white hover:bg-blue-500 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 shadow-md shadow-blue-600/20 gap-1.5"
+                >
+                  <span>Ingresar al Sistema</span>
+                  <ArrowRight className="size-3.5" />
                 </Button>
               </form>
 
-              {/* Quick Select Accounts Grid (Direct 1-Click Login) */}
-              <div className="space-y-2.5 pt-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-foreground flex items-center gap-1.5">
-                    <UserCheck className="size-3.5 text-primary" />
-                    Perfiles de Prueba (Ingreso Directo):
-                  </span>
-                  <span className="text-[10px] font-bold text-primary bg-muted/40 px-2 py-0.5 rounded-md">
-                    13 Sub-Roles RBAC
+              {/* Lista de Cuentas Directas en 2 Columnas Compactas para Enfitar la Ventana */}
+              <div className="space-y-1.5 pt-2 border-t border-slate-800/80 overflow-hidden flex flex-col">
+                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-400 shrink-0">
+                  <span>Directorio de Cuentas RBAC:</span>
+                  <span className="text-[9px] text-blue-400 font-bold bg-blue-500/10 border border-blue-500/20 px-1.5 py-0.2 rounded-full">
+                    13 Perfiles
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-1 sm:grid-cols-2 max-h-64 overflow-y-auto pr-1">
+                <div className="grid grid-cols-2 gap-1.5 overflow-y-auto max-h-[38vh] pr-1">
                   {INITIAL_USUARIOS_RBAC.map((usr) => {
                     const subInfo = SUB_ROLES[usr.subRole]
                     return (
@@ -195,19 +278,22 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                         key={usr.id}
                         type="button"
                         onClick={() => handleSelectQuickAccount(usr.email)}
-                        className="flex items-center gap-2.5 rounded-lg border border-border/80 bg-card p-2 text-left hover:border-primary hover:bg-primary/5 transition-all group shadow-xs"
+                        className="flex items-center justify-between p-1.5 rounded-lg border border-slate-800/80 bg-slate-900/40 hover:bg-slate-800/60 hover:border-blue-500/50 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 text-left group shadow-xs"
                       >
-                        <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-muted/40 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-xs font-bold">
-                          {usr.nombre.split(' ').map(n=>n[0]).join('').slice(0,2)}
+                        <div className="flex items-center gap-2 min-w-0">
+                          <div className="size-6 shrink-0 rounded-md bg-blue-600/10 border border-blue-500/20 text-blue-400 font-bold text-[10px] flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
+                            {usr.nombre.split(' ').map(n=>n[0]).join('').slice(0,2)}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-[11px] font-bold text-slate-200 truncate group-hover:text-white transition-colors leading-tight">
+                              {usr.nombre.split(' ')[0]} {usr.nombre.split(' ')[1]?.[0]}.
+                            </p>
+                            <p className="text-[9px] text-slate-400 truncate leading-tight">
+                              {subInfo ? subInfo.name : usr.subRole}
+                            </p>
+                          </div>
                         </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs font-bold text-foreground truncate group-hover:text-primary transition-colors">
-                            {usr.nombre}
-                          </p>
-                          <p className="text-[10px] text-muted-foreground truncate">
-                            {subInfo ? subInfo.name : usr.subRole}
-                          </p>
-                        </div>
+                        <ChevronRight className="size-3 text-slate-500 group-hover:text-blue-400 transition-all shrink-0" />
                       </button>
                     )
                   })}
@@ -216,31 +302,31 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 <button
                   type="button"
                   onClick={() => setStep("manual")}
-                  className="w-full py-2.5 text-center text-xs font-semibold text-primary hover:underline flex items-center justify-center gap-1.5 bg-primary/5 rounded-xl border border-border/60"
+                  className="w-full py-1.5 text-center text-[11px] font-semibold text-slate-400 hover:text-white hover:bg-slate-800/50 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-1 bg-slate-900/50 rounded-lg border border-slate-800 mt-1 shrink-0"
                 >
                   <Layers className="size-3.5" />
-                  <span>Ver Todos los Perfiles por Categoría (Catálogo)</span>
+                  <span>Ver Catálogo Completo por Roles</span>
                 </button>
               </div>
             </div>
           )}
 
-          {/* STEP MANUAL: CATALOG EXPLORER */}
+          {/* STEP 2: CATÁLOGO MANUAL DE ROLES */}
           {step === "manual" && (
-            <div className="space-y-4 animate-in fade-in duration-200">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-foreground">Catálogo de Permisos RBAC</span>
+            <div className="space-y-3 animate-in fade-in duration-300 text-xs">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                <span className="font-bold text-slate-200">Matriz de Roles RBAC</span>
                 <button
                   type="button"
                   onClick={() => setStep("email")}
-                  className="text-xs font-semibold text-primary hover:underline"
+                  className="text-[11px] font-semibold text-blue-400 hover:underline"
                 >
-                  ← Volver a prueba rápida
+                  ← Volver
                 </button>
               </div>
 
               {/* Main Role picker */}
-              <div className="grid grid-cols-5 gap-1.5">
+              <div className="grid grid-cols-5 gap-1">
                 {ROLE_ORDER.map((id) => {
                   const role = ROLES[id]
                   const Icon = role.icon
@@ -250,64 +336,54 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                       key={id}
                       type="button"
                       onClick={() => handleManualRoleSelect(id)}
-                      className={`flex flex-col items-center gap-1 rounded-lg border p-2 text-center transition-all ${
+                      className={`flex flex-col items-center justify-center p-1.5 rounded-lg border text-center transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] ${
                         isActive
-                          ? "border-primary bg-muted/40 text-primary font-bold shadow-xs"
-                          : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                          ? "bg-blue-600 text-white border-blue-500 font-bold shadow-md shadow-blue-600/20"
+                          : "border-slate-800 bg-slate-900/40 text-slate-400 hover:bg-slate-800"
                       }`}
                     >
-                      <Icon className="size-4" />
-                      <span className="text-[10px] font-medium leading-tight truncate w-full">{role.name}</span>
+                      <Icon className="size-3.5 mb-0.5" />
+                      <span className="text-[9px] leading-tight">{role.name}</span>
                     </button>
                   )
                 })}
               </div>
 
-              {/* Sub-Role Selector */}
-              <div className="space-y-2">
-                <p className="text-xs font-semibold text-foreground">
-                  Sub-Perfiles para {activeRole.name}:
-                </p>
-                <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
-                  {availableSubRoles.map((sub) => {
-                    const isSelected = sub.id === selectedSubRole
-                    const SubIcon = sub.icon
-                    return (
-                      <button
-                        key={sub.id}
-                        type="button"
-                        onClick={() => setSelectedSubRole(sub.id)}
-                        className={`w-full flex items-center gap-3 rounded-lg p-2.5 text-left border text-xs transition-all ${
-                          isSelected
-                            ? "border-primary bg-primary/5 text-foreground ring-1 ring-primary font-semibold"
-                            : "border-border/60 bg-card/60 text-muted-foreground hover:bg-muted"
-                        }`}
-                      >
-                        <SubIcon className={`size-4 shrink-0 ${isSelected ? "text-primary" : ""}`} />
-                        <div className="min-w-0 flex-1">
-                          <p className="font-bold text-foreground truncate">{sub.name}</p>
-                          <p className="text-[10px] text-muted-foreground truncate">{sub.badge}</p>
-                        </div>
-                        {isSelected && <Check className="size-4 text-primary shrink-0" />}
-                      </button>
-                    )
-                  })}
+              {/* Subrole picker */}
+              <div className="space-y-1 pt-1">
+                <span className="text-[11px] text-slate-400 font-semibold">Sub-Roles Disponibles:</span>
+                <div className="space-y-1 max-h-[30vh] overflow-y-auto pr-1">
+                  {availableSubRoles.map((sr) => (
+                    <button
+                      key={sr.id}
+                      type="button"
+                      onClick={() => setSelectedSubRole(sr.id)}
+                      className={`w-full p-2 text-left rounded-lg border transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] flex items-center justify-between ${
+                        selectedSubRole === sr.id
+                          ? "border-blue-500 bg-blue-600/10 text-white font-bold"
+                          : "border-slate-800 bg-slate-900/40 text-slate-300 hover:bg-slate-800/50"
+                      }`}
+                    >
+                      <div>
+                        <span className="block font-bold text-xs">{sr.name}</span>
+                        <span className="text-[9px] text-slate-400 block">{sr.tagline}</span>
+                      </div>
+                      {selectedSubRole === sr.id && <CheckCircle2 className="size-3.5 text-blue-400 shrink-0" />}
+                    </button>
+                  ))}
                 </div>
               </div>
 
               <Button
-                type="button"
                 onClick={() => onLogin(selectedRole, selectedSubRole)}
-                className="h-11 w-full rounded-lg text-xs font-semibold shadow" size="lg"
+                className="w-full h-8.5 rounded-lg text-xs font-bold bg-blue-600 text-white hover:bg-blue-500 hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 shadow-md shadow-blue-600/20 mt-1"
               >
-                Ingresar como {SUB_ROLES[selectedSubRole].name}
+                Ingresar como {SUB_ROLES[selectedSubRole]?.name}
               </Button>
             </div>
           )}
-
         </div>
       </section>
     </main>
   )
 }
-

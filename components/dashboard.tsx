@@ -15,6 +15,8 @@ import {
 import { RoleContent } from "@/components/role-content"
 import { CarnetDigitalModal } from "@/components/modals/CarnetDigitalModal"
 import { GlobalSearchModal } from "@/components/modals/GlobalSearchModal"
+import CountUp from "@/components/reactbits/CountUp/CountUp"
+import BlurText from "@/components/reactbits/BlurText/BlurText"
 import { CreditCard, MapPin } from "lucide-react"
 
 interface DashboardProps {
@@ -41,159 +43,130 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
   const [activeSede, setActiveSede] = useState<string>("Sede Principal Av. 6")
   const [notificaciones, setNotificaciones] = useState<NotificacionPush[]>(INITIAL_NOTIFICACIONES)
 
-  // Sub-role selection state
   const [subRoleId, setSubRoleId] = useState<SubRoleId>(
-    initialSubRoleId ||
-      (roleId === "estudiante"
-        ? "estudiante_regular"
-        : roleId === "docente"
-        ? "docente_regular"
-        : roleId === "tecnico"
-        ? "tecnico_it"
-        : roleId === "almacen"
-        ? "almacenista"
-        : "super_admin")
+    initialSubRoleId || (role.defaultSubRole as SubRoleId)
   )
 
   const activeSubRole = SUB_ROLES[subRoleId]
-  const RoleIcon = role.icon
   const isHome = activeView === "inicio"
-  const unreadCount = notificaciones.filter((n) => !n.leida).length
-
-  function markAllNotifsRead() {
-    setNotificaciones(notificaciones.map((n) => ({ ...n, leida: true })))
-  }
-
-  const sidebar = (
-    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
-      <div className="flex items-center gap-3 px-5 py-5">
-        <div className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Building2 className="size-5" aria-hidden="true" />
-        </div>
-        <div className="min-w-0">
-          <p className="truncate text-sm font-semibold tracking-tight">SmartCampus</p>
-          <p className="truncate text-xs text-muted-foreground">SmartCampus Platform</p>
-        </div>
-        <button
-          type="button"
-          onClick={() => setMobileOpen(false)}
-          className="ml-auto rounded-lg p-1 text-muted-foreground hover:bg-sidebar-accent lg:hidden"
-          aria-label="Cerrar menú"
-        >
-          <X className="size-5" />
-        </button>
-      </div>
-
-      <nav className="flex-1 space-y-1 px-3">
-        {(activeSubRole?.nav || role.nav).map((item) => {
-          const Icon = item.icon
-          const isActive = item.view === activeView
-          return (
-            <button
-              key={item.view}
-              type="button"
-              onClick={() => {
-                setActiveView(item.view)
-                setMobileOpen(false)
-              }}
-              aria-current={isActive ? "page" : undefined}
-              className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-              }`}
-            >
-              <Icon className="size-5 shrink-0" aria-hidden="true" />
-              {item.label}
-            </button>
-          )
-        })}
-      </nav>
-
-      <div className="border-t border-sidebar-border p-3 space-y-2">
-        <button
-          type="button"
-          onClick={() => setCarnetOpen(true)}
-          className="flex w-full items-center gap-2 rounded-xl bg-muted/40 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition-colors"
-        >
-          <CreditCard className="size-4" />
-          <span>Ver Mi Carnet Digital</span>
-        </button>
-
-        <div className="flex items-center gap-3 rounded-lg px-2 py-1.5">
-          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
-            {activeSubRole ? activeSubRole.avatar : role.avatar}
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium">{activeSubRole ? activeSubRole.fullName : role.fullName}</p>
-            <p className="truncate text-xs text-muted-foreground">{activeSubRole ? activeSubRole.name : role.title}</p>
-          </div>
-          <button
-            type="button"
-            onClick={onLogout}
-            className="rounded-lg p-1.5 text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-            aria-label="Cerrar sesión"
-          >
-            <LogOut className="size-5" />
-          </button>
-        </div>
-      </div>
-    </div>
-  )
+  const RoleIcon = activeSubRole ? activeSubRole.icon : role.icon
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-background">
-      {/* Desktop sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-sidebar-border lg:block h-full">
-        <div className="h-full w-64 border-r border-sidebar-border">{sidebar}</div>
-      </aside>
-
-      {/* Mobile drawer */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-foreground/30 backdrop-blur-sm"
-            onClick={() => setMobileOpen(false)}
-            aria-hidden="true"
-          />
-          <div className="absolute inset-y-0 left-0 w-72 shadow-2xl">{sidebar}</div>
-        </div>
-      )}
-
-      {/* Main */}
-      <div className="flex min-w-0 flex-1 flex-col h-full overflow-hidden">
-        {/* Top bar */}
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background/80 px-4 py-1.5 sm:py-2 backdrop-blur sm:px-3 sm:px-4">
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className="rounded-xl p-2 text-foreground hover:bg-muted lg:hidden"
-            aria-label="Abrir menú"
-          >
-            <Menu className="size-5" />
-          </button>
-
-          <div className="relative hidden max-w-sm flex-1 sm:block">
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="flex w-full items-center justify-between rounded-full border border-input bg-card py-1.5 pl-3 pr-3 text-xs text-muted-foreground hover:border-primary transition-colors cursor-pointer"
-            >
-              <span className="flex items-center gap-2">
-                <Search className="size-3.5 text-primary" />
-                <span>Buscar salón, ticket o insumo...</span>
+    <div className="flex h-screen bg-background font-sans text-foreground overflow-hidden">
+      {/* Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 w-64 transform border-r border-border/60 bg-card transition-transform duration-200 lg:static lg:translate-x-0 ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex h-full flex-col">
+          {/* Brand Header */}
+          <div className="flex items-center justify-between border-b border-border/60 p-4">
+            <div className="flex items-center gap-2.5">
+              <span className="flex size-8 items-center justify-center rounded-sm bg-primary text-primary-foreground shadow-xs">
+                <Building2 className="size-4" aria-hidden="true" />
               </span>
-              <kbd className="rounded bg-muted px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">Ctrl+K</kbd>
+              <div>
+                <p className="text-[10px] font-mono font-bold tracking-widest text-primary uppercase">
+                  UNICAMACHO
+                </p>
+                <p className="text-xs font-bold text-foreground">SmartCampus</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-sm p-1 text-muted-foreground hover:bg-muted lg:hidden"
+            >
+              <X className="size-4" />
             </button>
           </div>
 
-          <div className="ml-auto flex items-center gap-2 relative">
-            {/* Campus Sede Selector */}
-            <div className="hidden md:flex items-center gap-1 bg-muted/50 p-1 rounded-full border border-border text-xs">
-              <MapPin className="size-3.5 text-primary ml-1.5" />
+          {/* Navigation */}
+          <nav className="flex-1 overflow-y-auto p-3 space-y-1 text-xs">
+            <div className="px-2 py-1 text-[10px] font-mono text-muted-foreground uppercase">
+              Vistas ({activeSubRole ? activeSubRole.name : role.name})
+            </div>
+            {(activeSubRole?.nav || role.nav).map((item) => {
+              const Icon = item.icon
+              const isActive = activeView === item.key
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  onClick={() => {
+                    setActiveView(item.key)
+                    setMobileOpen(false)
+                  }}
+                  className={`flex w-full items-center gap-2.5 rounded-sm px-2.5 py-2 font-semibold transition-all ${
+                    isActive
+                      ? "bg-primary text-primary-foreground shadow-2xs"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  }`}
+                >
+                  <Icon className="size-4 shrink-0" aria-hidden="true" />
+                  <span>{item.label}</span>
+                </button>
+              )
+            })}
+          </nav>
+
+          {/* User profile & Carnet trigger */}
+          <div className="border-t border-border/60 p-3 space-y-2">
+            <button
+              onClick={() => setCarnetOpen(true)}
+              className="w-full flex items-center justify-between p-2 rounded-sm bg-muted/40 border border-border/60 text-xs text-foreground hover:bg-muted transition-all"
+            >
+              <div className="flex items-center gap-2 truncate">
+                <CreditCard className="size-4 text-primary shrink-0" />
+                <span className="truncate font-bold">Ver Carnet & ARL</span>
+              </div>
+              <span className="text-[10px] text-primary font-mono font-bold">→</span>
+            </button>
+
+            <button
+              onClick={onLogout}
+              className="w-full flex items-center justify-between p-2 rounded-sm text-xs font-bold text-destructive hover:bg-destructive/10 transition-all"
+            >
+              <span className="flex items-center gap-2">
+                <LogOut className="size-4" />
+                <span>Cerrar Sesión</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Container */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Top Header */}
+        <header className="flex h-14 items-center justify-between border-b border-border/60 bg-card px-4 sm:px-6">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              className="rounded-sm p-1 text-muted-foreground hover:bg-muted lg:hidden"
+            >
+              <Menu className="size-5" />
+            </button>
+            
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 rounded-sm border border-border/60 bg-muted/30 px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted transition-all"
+            >
+              <Search className="size-3.5" />
+              <span>Buscar salones, usuarios, libros...</span>
+              <kbd className="rounded-xs bg-muted px-1.5 py-0.5 text-[9px] font-mono">⌘K</kbd>
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
+              <MapPin className="size-3.5 text-primary" />
               <select
                 value={activeSede}
                 onChange={(e) => setActiveSede(e.target.value)}
-                className="bg-transparent text-xs font-semibold text-foreground outline-none pr-2 cursor-pointer"
+                className="bg-transparent border-none text-xs font-bold text-foreground outline-none cursor-pointer"
               >
                 <option value="Sede Principal Av. 6">Sede Av. 6</option>
                 <option value="Sede Sur">Sede Sur</option>
@@ -204,52 +177,13 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
             <button
               type="button"
               onClick={() => setNotifOpen(!notifOpen)}
-              className="relative rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
-              aria-label="Notificaciones"
+              className="relative rounded-sm p-1.5 text-muted-foreground hover:bg-muted transition-all"
             >
-              <Bell className="size-5" />
-              {unreadCount > 0 && (
-                <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-white">
-                  {unreadCount}
-                </span>
+              <Bell className="size-4" />
+              {notificaciones.some((n) => !n.leida) && (
+                <span className="absolute top-1 right-1 size-2 rounded-full bg-primary animate-pulse" />
               )}
             </button>
-
-            {/* Notification Popover Panel */}
-            {notifOpen && (
-              <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 rounded-xl border border-border bg-card p-4 shadow-2xl space-y-3">
-                <div className="flex items-center justify-between border-b border-border pb-2">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
-                    <Sparkles className="size-4 text-primary" /> Notificaciones Push Campus
-                  </h3>
-                  {unreadCount > 0 && (
-                    <button
-                      onClick={markAllNotifsRead}
-                      className="text-[11px] font-semibold text-primary hover:underline"
-                    >
-                      Marcar leídas
-                    </button>
-                  )}
-                </div>
-
-                <div className="space-y-2 max-h-72 overflow-y-auto">
-                  {notificaciones.map((n) => (
-                    <div
-                      key={n.id}
-                      className={`p-3 rounded-lg border text-xs space-y-1 transition-all ${
-                        !n.leida ? "bg-primary/5 border-primary/30" : "bg-muted/20 border-border"
-                      }`}
-                    >
-                      <p className="font-semibold text-foreground flex items-center justify-between">
-                        <span>{n.titulo}</span>
-                        <span className="text-[10px] text-muted-foreground">{n.fecha}</span>
-                      </p>
-                      <p className="text-muted-foreground leading-relaxed">{n.mensaje}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Role User Badge */}
             <div className="flex items-center gap-2 rounded-sm bg-card py-1 pl-1 pr-3 border border-border/60">
@@ -276,7 +210,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                     </span>
                     <div>
                       <h1 className="text-sm font-bold text-foreground">
-                        Bienvenido, {activeSubRole ? activeSubRole.fullName : role.fullName}
+                        <BlurText text={`Bienvenido, ${activeSubRole ? activeSubRole.fullName : role.fullName}`} />
                       </h1>
                       <p className="mt-0.5 text-[11px] text-muted-foreground">
                         {activeSubRole ? activeSubRole.tagline : role.tagline}
@@ -288,24 +222,32 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                   </span>
                 </div>
 
-                {/* Stats */}
+                {/* Stats con CountUp de React Bits */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
-                  {role.stats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="rounded-sm border border-border/60 bg-card p-3 space-y-1"
-                    >
-                      <p className="text-[10px] font-mono text-muted-foreground uppercase">{stat.label}</p>
-                      <p
-                        className={`text-base font-bold font-mono ${TONE_STYLES[stat.tone]}`}
-                      >
-                        {stat.value}
-                      </p>
-                      <p className="text-[9px] text-muted-foreground font-mono">{stat.hint}</p>
-                    </div>
-                  ))}
-                </div>
+                  {role.stats.map((stat) => {
+                    const numMatch = stat.value.match(/\d+/)
+                    const numVal = numMatch ? parseInt(numMatch[0]) : 0
+                    const prefix = stat.value.includes("$") ? "$" : ""
+                    const suffix = stat.value.includes("%") ? "%" : stat.value.includes("min") ? " min" : ""
 
+                    return (
+                      <div
+                        key={stat.label}
+                        className="rounded-sm border border-border/60 bg-card p-3 space-y-1 hover:border-primary/40 transition-colors"
+                      >
+                        <p className="text-[10px] font-mono text-muted-foreground uppercase">{stat.label}</p>
+                        <p className={`text-base font-bold font-mono ${TONE_STYLES[stat.tone]}`}>
+                          {numVal > 0 ? (
+                            <CountUp to={numVal} prefix={prefix} suffix={suffix} duration={1.5} />
+                          ) : (
+                            stat.value
+                          )}
+                        </p>
+                        <p className="text-[9px] text-muted-foreground font-mono">{stat.hint}</p>
+                      </div>
+                    )
+                  })}
+                </div>
               </>
             )}
 

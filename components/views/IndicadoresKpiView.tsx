@@ -1,6 +1,8 @@
 "use client"
 
 import { BarChart3, TrendingUp, Clock, ShieldCheck, Zap, BookOpen } from "lucide-react"
+import CountUp from "@/components/reactbits/CountUp/CountUp"
+import ShinyText from "@/components/reactbits/ShinyText/ShinyText"
 
 export function IndicadoresKpiView() {
   return (
@@ -9,7 +11,7 @@ export function IndicadoresKpiView() {
         <div>
           <h2 className="text-[13px] font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
             <BarChart3 className="size-4 text-primary" />
-            Cuadro de Mando Ejecutivo & Telemetría KPI
+            <ShinyText text="Cuadro de Mando Ejecutivo & Telemetría KPI" />
           </h2>
           <p className="text-[10px] text-muted-foreground font-mono">
             MÉTRICAS EN TIEMPO REAL // RENDIMIENTO OPERATIVO CAMPUS
@@ -24,7 +26,9 @@ export function IndicadoresKpiView() {
             <span>DISPONIBILIDAD</span>
             <Zap className="size-3 text-emerald-500" />
           </div>
-          <p className="text-base font-bold text-foreground">94.2%</p>
+          <p className="text-base font-bold text-foreground">
+            <CountUp to={94} suffix=".2%" duration={1.5} />
+          </p>
           <div className="h-1 w-full rounded-xs bg-muted overflow-hidden">
             <div className="h-full bg-emerald-500" style={{ width: "94.2%" }} />
           </div>
@@ -36,7 +40,9 @@ export function IndicadoresKpiView() {
             <span>MTTR RESPUESTA</span>
             <Clock className="size-3 text-primary" />
           </div>
-          <p className="text-base font-bold text-foreground">1.4 HRS</p>
+          <p className="text-base font-bold text-foreground">
+            <CountUp to={1} suffix=".4 HRS" duration={1.2} />
+          </p>
           <div className="h-1 w-full rounded-xs bg-muted overflow-hidden">
             <div className="h-full bg-primary" style={{ width: "85%" }} />
           </div>
@@ -48,6 +54,9 @@ export function IndicadoresKpiView() {
             <span>UNIBIBLIO LOANS</span>
             <BookOpen className="size-3 text-purple-500" />
           </div>
+          <p className="text-base font-bold text-foreground">
+            <CountUp to={142} suffix=" ACT" duration={1.8} />
+          </p>
           <p className="text-base font-bold text-foreground">1,420</p>
           <div className="h-1 w-full rounded-xs bg-muted overflow-hidden">
             <div className="h-full bg-purple-500" style={{ width: "78%" }} />
