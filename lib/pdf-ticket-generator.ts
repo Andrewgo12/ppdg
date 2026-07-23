@@ -1,7 +1,8 @@
-import jsPDF from "jspdf"
 import type { Ticket, Prestamo } from "./campus-data"
 
-export function generarOrdenTrabajoPDF(ticket: Ticket) {
+export async function generarOrdenTrabajoPDF(ticket: Ticket) {
+  const { default: jsPDF } = await import("jspdf")
+
   const doc = new jsPDF({
     orientation: "portrait",
     unit: "mm",
@@ -116,7 +117,7 @@ export function generarOrdenTrabajoPDF(ticket: Ticket) {
   doc.setFont("helvetica", "bold")
   doc.text("Firma Técnico Responsable", 60, 225, { align: "center" })
   doc.setFont("helvetica", "normal")
-  doc.text(ticket.tecnicoAsignado || "Técnico Especialista UniCamacho", 60, 229, { align: "center" })
+  doc.text(ticket.tecnicoAsignado || "Técnico Especialista UniCamacho", 60, 229, { align: "center font-normal" })
 
   doc.setFont("helvetica", "bold")
   doc.text("Firma Docente / Administrador Aula", 150, 225, { align: "center" })
@@ -142,7 +143,9 @@ export function generarOrdenTrabajoPDF(ticket: Ticket) {
   doc.save(`Orden_Trabajo_${ticket.id}_UniCamacho.pdf`)
 }
 
-export function generarComprobantePrestamoPDF(prestamo: Prestamo) {
+export async function generarComprobantePrestamoPDF(prestamo: Prestamo) {
+  const { default: jsPDF } = await import("jspdf")
+
   const doc = new jsPDF({
     orientation: "portrait",
     unit: "mm",

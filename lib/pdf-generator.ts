@@ -1,5 +1,3 @@
-import jsPDF from "jspdf"
-
 export interface PazYSalvoData {
   estudianteNombre: string
   codigoEstudiantil: string
@@ -9,7 +7,9 @@ export interface PazYSalvoData {
   hashVerificacion?: string
 }
 
-export function generarPazYSalvoPDF(data: PazYSalvoData) {
+export async function generarPazYSalvoPDF(data: PazYSalvoData) {
+  const { default: jsPDF } = await import("jspdf")
+
   const doc = new jsPDF({
     orientation: "portrait",
     unit: "mm",
@@ -28,153 +28,135 @@ export function generarPazYSalvoPDF(data: PazYSalvoData) {
   doc.setFillColor(15, 32, 67) // Azul institucional #0F2043
   doc.rect(0, 0, 210, 35, "F")
 
-  // Título blanco en encabezado
   doc.setTextColor(255, 255, 255)
   doc.setFont("helvetica", "bold")
-  doc.setFontSize(16)
+  doc.setFontSize(15)
   doc.text("INSTITUCIÓN UNIVERSITARIA ANTONIO JOSÉ CAMACHO", 105, 14, { align: "center" })
-
   doc.setFontSize(10)
   doc.setFont("helvetica", "normal")
-  doc.text("Sede Principal Av. 6 Norte | Santiago de Cali, Colombia | Vigilada Mineducación", 105, 22, { align: "center" })
-  doc.text("SISTEMA INTEGRADO DE GESTIÓN DE GRADOS Y CERTIFICACIONES DIGITALES", 105, 28, { align: "center" })
+  doc.text("OFICINA DE ADMISIONES, REGISTRO Y CONTROL ACADÉMICO", 105, 22, { align: "center" })
+  doc.text("SISTEMA INTEGRADO SMARTCAMPUS UNICAMACHO", 105, 28, { align: "center" })
 
   // Título del Certificado
   doc.setTextColor(15, 32, 67)
   doc.setFontSize(18)
   doc.setFont("helvetica", "bold")
-  doc.text("CERTIFICADO DE PAZ Y SALVO INSTITUCIONAL", 105, 52, { align: "center" })
+  doc.text("CERTIFICADO OFICIAL DE PAZ Y SALVO INSTITUCIONAL", 105, 50, { align: "center" })
 
   doc.setLineWidth(0.8)
   doc.setDrawColor(212, 160, 23) // Dorado #D4A017
-  doc.line(35, 56, 175, 56)
+  doc.line(30, 54, 180, 54)
 
   // Subtítulo
-  doc.setTextColor(80, 80, 80)
-  doc.setFontSize(11)
-  doc.setFont("helvetica", "italic")
-  doc.text("DOCUMENTO OFICIAL DE REQUISITOS DE EGRESADO", 105, 62, { align: "center" })
-
-  // Cuerpo del texto
-  doc.setTextColor(40, 40, 40)
-  doc.setFontSize(11)
-  doc.setFont("helvetica", "normal")
-
-  const textoIntroductorio = 
-    `La Secretaría General y la Dirección de Registro y Control de la Institución Universitaria Antonio José Camacho (UniCamacho), ` +
-    `hacen constar que el(la) estudiante mencionado(a) a continuación se encuentra a PAZ Y SALVO ` +
-    `por todo concepto administrativo, financiero, bibliotecario, académico y de infraestructura con la Institución.`
-
-  doc.text(doc.splitTextToSize(textoIntroductorio, 170), 20, 75)
-
-  // Cuadro de datos del estudiante
-  doc.setFillColor(245, 247, 250)
-  doc.rect(20, 92, 170, 48, "F")
-  doc.setDrawColor(200, 210, 225)
-  doc.setLineWidth(0.3)
-  doc.rect(20, 92, 170, 48, "S")
-
-  doc.setFont("helvetica", "bold")
-  doc.setTextColor(15, 32, 67)
-  doc.text("DATOS DEL GRADUANDO", 25, 100)
-
   doc.setFontSize(10)
   doc.setFont("helvetica", "bold")
-  doc.text("Estudiante:", 25, 108)
-  doc.text("Cédula / ID:", 25, 115)
-  doc.text("Código Estudiantil:", 25, 122)
-  doc.text("Programa Académico:", 25, 129)
+  doc.setTextColor(80, 80, 80)
+  doc.text("VÁLIDO PARA TRÁMITE DE GRADO Y MATRÍCULA ACADÉMICA", 105, 61, { align: "center" })
 
+  // Cuerpo del Certificado
+  doc.setFontSize(11)
   doc.setFont("helvetica", "normal")
-  doc.setTextColor(50, 50, 50)
-  doc.text(data.estudianteNombre, 65, 108)
-  doc.text(data.cedula || "1.144.109.823", 65, 115)
-  doc.text(data.codigoEstudiantil || "2024100982", 65, 122)
-  doc.text(data.programaAcademico || "Ingeniería de Sistemas", 65, 129)
+  doc.setTextColor(40, 40, 40)
 
-  // Tabla de Verificación de Paz y Salvos por Dependencia
+  const line1 = `La suscrita Oficina de Admisiones, Registro y Control Académico de la Institución Universitaria Antonio José Camacho, hace constar que el(la) estudiante:`
+  const line1Split = doc.splitTextToSize(line1, 160)
+  doc.text(line1Split, 25, 75)
+
+  // Cuadro de Datos del Estudiante
+  doc.setFillColor(245, 247, 250)
+  doc.rect(25, 87, 160, 42, "F")
+  doc.setDrawColor(210, 215, 225)
+  doc.rect(25, 87, 160, 42, "S")
+
   doc.setFont("helvetica", "bold")
   doc.setTextColor(15, 32, 67)
   doc.setFontSize(11)
-  doc.text("VERIFICACIÓN DE DEPENDENCIAS Y UNIDADES OPERATIVAS", 20, 150)
+  doc.text(`NOMBRES Y APELLIDOS:`, 30, 97)
+  doc.text(`DOCUMENTO DE IDENTIDAD:`, 30, 105)
+  doc.text(`CÓDIGO ESTUDIANTIL:`, 30, 113)
+  doc.text(`PROGRAMA ACADÉMICO:`, 30, 121)
 
+  doc.setFont("helvetica", "normal")
+  doc.setTextColor(30, 30, 30)
+  doc.text(data.estudianteNombre.toUpperCase(), 90, 97)
+  doc.text(`C.C. ${data.cedula}`, 90, 105)
+  doc.text(data.codigoEstudiantil, 90, 113)
+  doc.text(data.programaAcademico, 90, 121)
+
+  // Declaración de paz y salvo por módulos
+  doc.setFontSize(10.5)
+  const line2 = `Se encuentra a la fecha EN PAZ Y SALVO por todo concepto financiero, académico, bibliotecario, de laboratorios e insumos en las dependencias de la Institución:`
+  const line2Split = doc.splitTextToSize(line2, 160)
+  doc.text(line2Split, 25, 140)
+
+  // Tabla de comprobaciones
   const dependencias = [
-    { dep: "UniBiblio Flow (Biblioteca)", resp: "Paz y Salvo de Libros, Tesis y Devoluciones", est: "APROBADO ✓" },
-    { dep: "Financiera y Tesorería", resp: "Derechos de Grado y Paz y Salvo Matrículas", est: "APROBADO ✓" },
-    { dep: "Decanatura de Ingeniería", resp: "Revisión de Plan de Estudios y Crts Académicos", est: "APROBADO ✓" },
-    { dep: "Planta Física y Laboratorios", resp: "Paz y Salvo de Equipos e Insumos de Aula", est: "APROBADO ✓" },
+    { dep: "Biblioteca Central UniBiblio", estado: "SIN DEUDAS / SIN LIBROS PENDIENTES", ok: "PAZ Y SALVO" },
+    { dep: "Laboratorios de Mecatrónica & Sistemas", estado: "INSUMOS Y HERRAMIENTAS DEVUELTAS", ok: "PAZ Y SALVO" },
+    { dep: "Tesorería y Servicios Financieros", estado: "MATRÍCULA Y DERECHOS PAGADOS", ok: "PAZ Y SALVO" },
+    { dep: "Planta Física y Almacén de Equipos", estado: "SIN REGISTRO DE INCIDENCIAS", ok: "PAZ Y SALVO" },
   ]
 
-  let startY = 156
-  doc.setFillColor(15, 32, 67)
-  doc.rect(20, startY, 170, 8, "F")
-  doc.setTextColor(255, 255, 255)
-  doc.setFontSize(9)
-  doc.setFont("helvetica", "bold")
-  doc.text("DEPENDENCIA", 23, startY + 5.5)
-  doc.text("CONCEPTO Y VERIFICACIÓN", 75, startY + 5.5)
-  doc.text("ESTADO", 160, startY + 5.5)
+  let y = 156
+  dependencias.forEach((d) => {
+    doc.setFillColor(238, 243, 238)
+    doc.rect(25, y, 160, 10, "F")
+    doc.setDrawColor(200, 220, 200)
+    doc.rect(25, y, 160, 10, "S")
 
-  startY += 8
-
-  dependencias.forEach((d, index) => {
-    doc.setFillColor(index % 2 === 0 ? 255 : 245, index % 2 === 0 ? 255 : 247, index % 2 === 0 ? 255 : 250)
-    doc.rect(20, startY, 170, 8, "F")
-    doc.setDrawColor(220, 220, 220)
-    doc.rect(20, startY, 170, 8, "S")
-
-    doc.setTextColor(30, 30, 30)
     doc.setFont("helvetica", "bold")
-    doc.setFontSize(8.5)
-    doc.text(d.dep, 23, startY + 5.5)
+    doc.setFontSize(9)
+    doc.setTextColor(15, 32, 67)
+    doc.text(d.dep, 29, y + 6.5)
 
     doc.setFont("helvetica", "normal")
-    doc.text(d.resp, 75, startY + 5.5)
+    doc.setFontSize(8)
+    doc.setTextColor(70, 70, 70)
+    doc.text(d.estado, 95, y + 6.5)
 
-    doc.setTextColor(16, 124, 65) // Verde #107C41
     doc.setFont("helvetica", "bold")
-    doc.text(d.est, 160, startY + 5.5)
+    doc.setTextColor(16, 124, 65)
+    doc.text(`✓ ${d.ok}`, 155, y + 6.5)
 
-    startY += 8
+    y += 13
   })
 
-  // Firma y Sello Digital
-  doc.setDrawColor(180, 180, 180)
-  doc.setLineWidth(0.4)
-  doc.line(30, 220, 90, 220)
-  doc.line(120, 220, 180, 220)
-
+  // Fecha y Hash
+  doc.setFontSize(9.5)
+  doc.setFont("helvetica", "normal")
   doc.setTextColor(50, 50, 50)
-  doc.setFontSize(9)
-  doc.setFont("helvetica", "bold")
-  doc.text("Dra. Patricia Salamanca H.", 60, 225, { align: "center" })
-  doc.setFont("helvetica", "normal")
-  doc.text("Secretaria General UNICAMACHO", 60, 229, { align: "center" })
+  doc.text(`Dado en Santiago de Cali, a los ${fecha}.`, 25, 218)
+
+  // Firma Digital Institucional
+  doc.setDrawColor(15, 32, 67)
+  doc.setLineWidth(0.5)
+  doc.line(70, 245, 140, 245)
 
   doc.setFont("helvetica", "bold")
-  doc.text("Ing. Carlos Eduardo Rivas", 150, 225, { align: "center" })
+  doc.setFontSize(9.5)
+  doc.setTextColor(15, 32, 67)
+  doc.text("DRA. MARÍA FERNANDA CABAL C.", 105, 250, { align: "center" })
   doc.setFont("helvetica", "normal")
-  doc.text("Director de Registro y Control", 150, 229, { align: "center" })
+  doc.setFontSize(8.5)
+  doc.setTextColor(80, 80, 80)
+  doc.text("Directora de Admisiones y Registro Académico", 105, 254, { align: "center" })
 
-  // Pie de página y Hash de Firma Criptográfica
+  // Pie de Página
   doc.setFillColor(240, 243, 248)
-  doc.rect(0, 260, 210, 37, "F")
-  doc.setDrawColor(200, 210, 225)
-  doc.line(0, 260, 210, 260)
+  doc.rect(0, 265, 210, 32, "F")
+  doc.setDrawColor(210, 215, 225)
+  doc.line(0, 265, 210, 265)
 
   doc.setTextColor(15, 32, 67)
   doc.setFontSize(8)
   doc.setFont("helvetica", "bold")
-  doc.text("VALIDEZ DIGITAL Y FIRMA CRIPTOGRÁFICA DE SEGURIDAD", 105, 266, { align: "center" })
+  doc.text("INSTITUCIÓN UNIVERSITARIA ANTONIO JOSÉ CAMACHO - VIGILADA MINEDUCACIÓN", 105, 273, { align: "center" })
 
-  doc.setTextColor(80, 80, 80)
+  doc.setTextColor(90, 90, 90)
   doc.setFont("helvetica", "normal")
   doc.setFontSize(7.5)
-  doc.text(`Fecha de Expedición: ${fecha} | Válido para trámite de grado presencial y virtual`, 105, 271, { align: "center" })
-  doc.text(`Firma Criptográfica (Hash SHA-256): ${hash}`, 105, 276, { align: "center" })
-  doc.text("Este documento electrónico cuenta con validez legal según la Ley 527 de 1999 y normatividad de UniCamacho Cali.", 105, 281, { align: "center" })
+  doc.text(`Código de Verificación Electrónica: ${hash}`, 105, 279, { align: "center" })
+  doc.text("Este documento incluye firma digital con validez jurídica según la Ley 527 de 1999.", 105, 284, { align: "center" })
 
-  // Guardar archivo PDF
-  const filename = `Paz_y_Salvo_${data.estudianteNombre.replace(/\s+/g, "_")}_UniCamacho.pdf`
-  doc.save(filename)
+  doc.save(`Paz_y_Salvo_${data.estudianteNombre.replace(/\s+/g, "_")}_UniCamacho.pdf`)
 }

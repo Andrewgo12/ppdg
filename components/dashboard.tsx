@@ -265,7 +265,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
 
         {/* Content */}
         <main className="flex-1 overflow-y-auto px-4 py-3 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-6xl space-y-4">
+          <div className="mx-auto max-w-7xl space-y-4">
             {isHome && (
               <>
                 {/* Greeting */}
@@ -306,31 +306,6 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                   ))}
                 </div>
 
-                {/* Quick modules */}
-                <section>
-                  <h2 className="mb-3 text-sm font-semibold tracking-tight text-foreground">
-                    Tus Módulos de Operación
-                  </h2>
-                  <div className="grid gap-3 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {role.modules.map((mod) => {
-                      const Icon = mod.icon
-                      return (
-                        <div
-                          key={mod.title}
-                          className="group flex flex-col items-start gap-3 rounded-xl border border-border bg-card p-4 text-left transition-all hover:-translate-y-0.5 hover:shadow-md"
-                        >
-                          <span className="flex size-9 items-center justify-center rounded-lg bg-muted/40 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                            <Icon className="size-5" aria-hidden="true" />
-                          </span>
-                          <span className="font-medium text-foreground">{mod.title}</span>
-                          <span className="text-sm leading-relaxed text-muted-foreground">
-                            {mod.description}
-                          </span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </section>
               </>
             )}
 
