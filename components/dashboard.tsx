@@ -1,12 +1,23 @@
 "use client"
 
 import { useState } from "react"
-import { Building2, Bell, LogOut, Menu, Search, X } from "lucide-react"
-import { ROLES, type RoleId, type StatTone, type ViewKey } from "@/lib/campus-data"
+import { Building2, Bell, LogOut, Menu, Search, X, Check, AlertCircle, Info, Sparkles, Cpu, ShieldCheck } from "lucide-react"
+import {
+  ROLES,
+  SUB_ROLES,
+  INITIAL_NOTIFICACIONES,
+  type RoleId,
+  type SubRoleId,
+  type StatTone,
+  type ViewKey,
+  type NotificacionPush,
+} from "@/lib/campus-data"
 import { RoleContent } from "@/components/role-content"
+import { SessionSimulatorModal } from "@/components/session-simulator-modal"
 
 interface DashboardProps {
   roleId: RoleId
+  initialSubRoleId?: SubRoleId
   onLogout: () => void
 }
 
@@ -18,12 +29,36 @@ const TONE_STYLES: Record<StatTone, string> = {
   neutral: "text-foreground",
 }
 
-export function Dashboard({ roleId, onLogout }: DashboardProps) {
+export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps) {
   const role = ROLES[roleId]
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeView, setActiveView] = useState<ViewKey>("inicio")
+  const [notifOpen, setNotifOpen] = useState(false)
+  const [simModalOpen, setSimModalOpen] = useState(false)
+  const [notificaciones, setNotificaciones] = useState<NotificacionPush[]>(INITIAL_NOTIFICACIONES)
+
+  // Sub-role selection state
+  const [subRoleId, setSubRoleId] = useState<SubRoleId>(
+    initialSubRoleId ||
+      (roleId === "estudiante"
+        ? "estudiante_regular"
+        : roleId === "docente"
+        ? "docente_regular"
+        : roleId === "tecnico"
+        ? "tecnico_it"
+        : roleId === "almacen"
+        ? "almacenista"
+        : "super_admin")
+  )
+
+  const activeSubRole = SUB_ROLES[subRoleId]
   const RoleIcon = role.icon
   const isHome = activeView === "inicio"
+  const unreadCount = notificaciones.filter((n) => !n.leida).length
+
+  function markAllNotifsRead() {
+    setNotificaciones(notificaciones.map((n) => ({ ...n, leida: true })))
+  }
 
   const sidebar = (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
@@ -33,7 +68,7 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
         </div>
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold tracking-tight">SmartCampus</p>
-          <p className="truncate text-xs text-muted-foreground">UNICAMACHO</p>
+          <p className="truncate text-xs text-muted-foreground">SmartCampus Platform</p>
         </div>
         <button
           type="button"
@@ -74,11 +109,11 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
       <div className="border-t border-sidebar-border p-3">
         <div className="flex items-center gap-3 rounded-2xl px-2 py-2">
           <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
-            {role.avatar}
+            {activeSubRole ? activeSubRole.avatar : role.avatar}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium">{role.fullName}</p>
-            <p className="truncate text-xs text-muted-foreground">{role.title}</p>
+            <p className="truncate text-sm font-medium">{activeSubRole ? activeSubRole.fullName : role.fullName}</p>
+            <p className="truncate text-xs text-muted-foreground">{activeSubRole ? activeSubRole.name : role.title}</p>
           </div>
           <button
             type="button"
@@ -94,10 +129,10 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
   )
 
   return (
-    <div className="flex min-h-dvh bg-background">
+    <div className="flex h-screen w-full overflow-hidden bg-background">
       {/* Desktop sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-sidebar-border lg:block">
-        <div className="fixed inset-y-0 w-64 border-r border-sidebar-border">{sidebar}</div>
+      <aside className="hidden w-64 shrink-0 border-r border-sidebar-border lg:block h-full">
+        <div className="h-full w-64 border-r border-sidebar-border">{sidebar}</div>
       </aside>
 
       {/* Mobile drawer */}
@@ -113,7 +148,7 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
       )}
 
       {/* Main */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col h-full overflow-hidden">
         {/* Top bar */}
         <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background/80 px-4 py-3 backdrop-blur sm:px-6">
           <button
@@ -137,28 +172,82 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
             />
           </div>
 
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex items-center gap-2 relative">
+            {/* Frontend Simulator & RBAC Console Button */}
             <button
               type="button"
+              onClick={() => setSimModalOpen(true)}
+              className="flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary/20 transition-all shadow-2xs"
+            >
+              <Cpu className="size-3.5" />
+              <span className="hidden sm:inline">Consola RBAC & BD</span>
+            </button>
+
+            {/* Notification Bell */}
+            <button
+              type="button"
+              onClick={() => setNotifOpen(!notifOpen)}
               className="relative rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
               aria-label="Notificaciones"
             >
               <Bell className="size-5" />
-              <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-destructive" />
+              {unreadCount > 0 && (
+                <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-white">
+                  {unreadCount}
+                </span>
+              )}
             </button>
-            <div className="flex items-center gap-2 rounded-full bg-card py-1 pl-1 pr-3">
+
+            {/* Notification Popover Panel */}
+            {notifOpen && (
+              <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 rounded-3xl border border-border bg-card p-4 shadow-2xl space-y-3">
+                <div className="flex items-center justify-between border-b border-border pb-2">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
+                    <Sparkles className="size-4 text-primary" /> Notificaciones Push Campus
+                  </h3>
+                  {unreadCount > 0 && (
+                    <button
+                      onClick={markAllNotifsRead}
+                      className="text-[11px] font-semibold text-primary hover:underline"
+                    >
+                      Marcar leídas
+                    </button>
+                  )}
+                </div>
+
+                <div className="space-y-2 max-h-72 overflow-y-auto">
+                  {notificaciones.map((n) => (
+                    <div
+                      key={n.id}
+                      className={`p-3 rounded-2xl border text-xs space-y-1 transition-all ${
+                        !n.leida ? "bg-primary/5 border-primary/30" : "bg-muted/20 border-border"
+                      }`}
+                    >
+                      <p className="font-semibold text-foreground flex items-center justify-between">
+                        <span>{n.titulo}</span>
+                        <span className="text-[10px] text-muted-foreground">{n.fecha}</span>
+                      </p>
+                      <p className="text-muted-foreground leading-relaxed">{n.mensaje}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Sub-role User Badge */}
+            <div className="flex items-center gap-2 rounded-full bg-card py-1 pl-1 pr-3 border border-border">
               <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
-                {role.avatar}
+                {activeSubRole ? activeSubRole.avatar : role.avatar}
               </span>
-              <span className="hidden text-sm font-medium text-foreground sm:inline">
-                {role.name}
+              <span className="hidden text-xs font-semibold text-foreground sm:inline">
+                {activeSubRole ? activeSubRole.name : role.name}
               </span>
             </div>
           </div>
         </header>
 
         {/* Content */}
-        <main className="flex-1 px-4 py-6 sm:px-6 lg:px-10">
+        <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-10">
           <div className="mx-auto max-w-6xl space-y-6">
             {isHome && (
               <>
@@ -170,13 +259,15 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
                     </span>
                     <div>
                       <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                        Hola, {role.fullName.split(" ").slice(-1)[0]}
+                        Hola, {activeSubRole ? activeSubRole.fullName.split(" ")[0] : role.fullName.split(" ")[0]}
                       </h1>
-                      <p className="mt-0.5 text-sm text-muted-foreground">{role.tagline}</p>
+                      <p className="mt-0.5 text-sm text-muted-foreground">
+                        {activeSubRole ? activeSubRole.tagline : role.tagline}
+                      </p>
                     </div>
                   </div>
-                  <span className="rounded-full bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-                    {role.title}
+                  <span className="rounded-full bg-card px-3.5 py-1.5 text-xs font-semibold text-primary border border-border shadow-sm">
+                    {activeSubRole ? activeSubRole.badge : role.title}
                   </span>
                 </div>
 
@@ -201,15 +292,14 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
                 {/* Quick modules */}
                 <section>
                   <h2 className="mb-3 text-sm font-semibold tracking-tight text-foreground">
-                    Tus módulos
+                    Tus Módulos de Operación
                   </h2>
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {role.modules.map((mod) => {
                       const Icon = mod.icon
                       return (
-                        <button
+                        <div
                           key={mod.title}
-                          type="button"
                           className="group flex flex-col items-start gap-3 rounded-3xl border border-border bg-card p-5 text-left transition-all hover:-translate-y-0.5 hover:shadow-md"
                         >
                           <span className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
@@ -219,7 +309,7 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
                           <span className="text-sm leading-relaxed text-muted-foreground">
                             {mod.description}
                           </span>
-                        </button>
+                        </div>
                       )
                     })}
                   </div>
@@ -228,10 +318,26 @@ export function Dashboard({ roleId, onLogout }: DashboardProps) {
             )}
 
             {/* Role + view specific content */}
-            <RoleContent roleId={roleId} view={activeView} />
+            <RoleContent
+              roleId={roleId}
+              view={activeView}
+              subRoleId={subRoleId}
+              onSubRoleChange={(newSubRole) => setSubRoleId(newSubRole)}
+            />
           </div>
         </main>
       </div>
+
+      {simModalOpen && (
+        <SessionSimulatorModal
+          subRole={subRoleId}
+          onClose={() => setSimModalOpen(false)}
+          onExpireSession={() => {
+            setSimModalOpen(false)
+            onLogout()
+          }}
+        />
+      )}
     </div>
   )
 }
