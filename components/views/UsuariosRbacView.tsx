@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { ShieldCheck, CheckCircle2, Download, Database, Upload } from "lucide-react"
+import { ShieldCheck, Download, Database, Upload, Check, X, ShieldAlert } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SUB_ROLES, type SubRoleId } from "@/lib/campus-data"
 import { getRolePermissions, PERMISSION_CATALOG } from "@/lib/permissions"
@@ -19,16 +19,12 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
 
   const handleExportAuditCSV = () => {
     exportarAuditoriaCSV()
-    toast.success("🛡️ Bitácora de Auditoría Exportada", {
-      description: "Archivo Bitacora_Auditoria_RBAC_UniCamacho.csv generado con firmas SHA-256."
-    })
+    toast("🛡️ Bitácora de Auditoría Exportada (CSV)")
   }
 
   const handleExportBackupJSON = () => {
     exportarRespaldoBD()
-    toast.success("💾 Copia de Seguridad JSON Generada", {
-      description: "Base de Datos SmartCampus respaldada exitosamente."
-    })
+    toast("💾 Copia de Seguridad JSON Generada")
   }
 
   const handleFileImport = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,21 +36,19 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
       const content = event.target?.result as string
       const success = importarRespaldoBD(content)
       if (success) {
-        toast.success("✅ Base de Datos Restaurada", {
-          description: "Estado importado exitosamente. Recargando datos..."
-        })
+        toast("✅ Base de Datos Restaurada Exitosamente")
         setTimeout(() => window.location.reload(), 1200)
       } else {
-        toast.error("❌ Error de Importación", {
-          description: "El archivo JSON no coincide con la estructura de SmartCampus."
-        })
+        toast("❌ Archivo JSON Inválido")
       }
     }
     reader.readAsText(file)
   }
 
+  const permissionsList = Object.keys(PERMISSION_CATALOG) as (keyof typeof PERMISSION_CATALOG)[]
+
   return (
-    <section className="space-y-4">
+    <section className="space-y-4 font-sans text-xs">
       <input
         type="file"
         ref={fileInputRef}
@@ -63,82 +57,93 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
         className="hidden"
       />
 
-      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-            <ShieldCheck className="size-5 text-primary" />
-            Matriz de Control de Acceso Basado en Roles (RBAC) - 13 Sub-Perfiles
+          <h2 className="text-[13px] font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
+            <ShieldCheck className="size-4 text-primary" />
+            Matriz de Control de Acceso (RBAC Security)
           </h2>
-          <p className="text-xs text-muted-foreground">
-            Seleccione cualquier perfil individual para probar sus permisos granulares y vistas exclusivas.
+          <p className="text-[10px] text-muted-foreground font-mono">
+            SISTEMA DE SEGURIDAD GRANULAR // 13 PERFILES ACTIVOS
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <Button onClick={handleExportAuditCSV} variant="outline" className="rounded-full gap-1.5 text-xs h-8">
-            <Download className="size-3.5 text-primary" />
-            Bitácora CSV
+        <div className="flex items-center gap-2">
+          <Button onClick={handleExportAuditCSV} variant="outline" className="h-7 px-2 text-[10px] rounded-sm gap-1">
+            <Download className="size-3" /> Bitácora
           </Button>
-          <Button onClick={handleExportBackupJSON} variant="outline" className="rounded-full gap-1.5 text-xs h-8">
-            <Database className="size-3.5 text-primary" />
-            Respaldo JSON BD
+          <Button onClick={handleExportBackupJSON} variant="outline" className="h-7 px-2 text-[10px] rounded-sm gap-1">
+            <Database className="size-3" /> Respaldo JSON
           </Button>
-          <Button onClick={() => fileInputRef.current?.click()} className="rounded-full gap-1.5 text-xs h-8 bg-primary">
-            <Upload className="size-3.5" />
-            Restaurar BD JSON
+          <Button onClick={() => fileInputRef.current?.click()} className="h-7 px-2 text-[10px] rounded-sm gap-1 bg-primary text-primary-foreground">
+            <Upload className="size-3" /> Importar
           </Button>
         </div>
       </div>
 
-      <div className="grid gap-2 sm:gap-3 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Role Selection Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-1.5">
         {Object.values(SUB_ROLES).map((s) => {
           const isSel = currentSubRoleId === s.id
-          const pKeys = getRolePermissions(s.id)
           return (
-            <div
+            <button
               key={s.id}
               onClick={() => onSelectSubRole(s.id)}
-              className={`rounded-xl border p-4 transition-all cursor-pointer ${
+              className={`p-1.5 rounded-sm border text-left transition-colors font-mono ${
                 isSel
-                  ? "border-primary bg-muted/40 shadow-md ring-2 ring-primary/20"
-                  : "border-border bg-card hover:border-primary/50"
+                  ? "border-primary bg-primary/10 text-primary font-bold shadow-xs"
+                  : "border-border/40 bg-card hover:bg-muted/30 text-muted-foreground"
               }`}
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold uppercase text-primary bg-muted/40 px-2 py-0.5 rounded-full">
-                  {s.category}
-                </span>
-                {isSel && (
-                  <span className="text-xs font-bold text-primary flex items-center gap-1">
-                    ✓ Activo
-                  </span>
-                )}
-              </div>
-
-              <h3 className="text-sm font-bold text-foreground">{s.name}</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">{s.fullName} · {s.title}</p>
-              <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">{s.tagline}</p>
-
-              <div className="mt-3 pt-3 border-t border-border/60 text-[10px] space-y-1 text-muted-foreground">
-                <p className="font-semibold text-foreground flex items-center justify-between">
-                  <span>Acciones Otorgadas en BD:</span>
-                  <span className="font-mono text-primary font-bold">{pKeys.length} permisos</span>
-                </p>
-                <div className="space-y-0.5 max-h-20 overflow-y-auto pr-1">
-                  {pKeys.map((pk) => {
-                    const def = PERMISSION_CATALOG[pk]
-                    return (
-                      <p key={pk} className="flex items-center gap-1 text-[10px] text-foreground/80">
-                        <CheckCircle2 className="size-3 text-emerald-500 shrink-0" />
-                        <span className="truncate">{def?.label || pk}</span>
-                      </p>
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
+              <div className="text-[9px] truncate">{s.name}</div>
+              <div className="text-[8px] opacity-70 truncate">{s.category.split(".")[1]?.trim()}</div>
+            </button>
           )
         })}
+      </div>
+
+      {/* Matrix Table */}
+      <div className="border border-border/60 rounded-sm overflow-hidden bg-card">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse text-[10px]">
+            <thead>
+              <tr className="border-b border-border/60 bg-muted/20 font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                <th className="p-2 border-r border-border/40 min-w-[200px]">Permiso / Capacidad</th>
+                <th className="p-2 border-r border-border/40">Descripción de Seguridad</th>
+                <th className="p-2 text-center min-w-[100px]">Estado Perfil Activo</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border/40 font-mono">
+              {permissionsList.map((pKey) => {
+                const currentPerms = getRolePermissions(currentSubRoleId)
+                const hasPerm = currentPerms.includes(pKey)
+                const meta = PERMISSION_CATALOG[pKey]
+
+                return (
+                  <tr key={pKey} className="hover:bg-muted/10 transition-colors">
+                    <td className="p-2 font-bold text-foreground border-r border-border/40">
+                      {pKey}
+                    </td>
+                    <td className="p-2 text-muted-foreground border-r border-border/40 font-sans text-[11px]">
+                      {meta?.description || "Control de acceso granular"}
+                    </td>
+                    <td className="p-2 text-center font-bold">
+                      {hasPerm ? (
+                        <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded-xs">
+                          <Check className="size-3" /> AUTORIZADO
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-muted-foreground/40">
+                          <X className="size-3" /> DENEGADO
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   )

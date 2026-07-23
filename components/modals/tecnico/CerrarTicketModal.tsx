@@ -28,18 +28,18 @@ export function CerrarTicketModal({
   if (!isOpen || !selectedTicket) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-sm border border-border bg-card p-3 shadow-2xl space-y-2.5">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="absolute right-4 top-3 rounded-sm p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           aria-label="Cerrar modal"
         >
           <X className="size-5" />
         </button>
 
         <div className="flex items-center gap-3 border-b border-border pb-3">
-          <div className="flex size-10 items-center justify-center rounded-lg bg-zinc-700/10 text-zinc-800 dark:text-zinc-200">
+          <div className="flex size-10 items-center justify-center rounded-sm bg-zinc-700/10 text-zinc-800 dark:text-zinc-200">
             <CheckCircle2 className="size-5" />
           </div>
           <div>
@@ -59,11 +59,11 @@ export function CerrarTicketModal({
             value={cierreComentario}
             onChange={(e) => setCierreComentario(e.target.value)}
             placeholder="Describe la labor realizada y repuestos utilizados..."
-            className="mt-1 w-full rounded-lg border border-input bg-card p-3 text-xs text-foreground outline-none"
+            className="mt-1 w-full rounded-sm border border-input bg-card p-3 text-xs text-foreground outline-none"
           />
         </div>
 
-        <div className="rounded-lg border border-dashed border-emerald-500/40 bg-zinc-700/5 p-4 text-center space-y-2">
+        <div className="rounded-sm border border-dashed border-emerald-500/40 bg-zinc-700/5 p-3 text-center space-y-2">
           <Camera className="size-6 text-zinc-800 dark:text-zinc-200 mx-auto" />
           <p className="text-xs font-bold text-foreground">Foto Evidencia de Reparación Final</p>
           <p className="text-[11px] text-muted-foreground">
@@ -74,7 +74,7 @@ export function CerrarTicketModal({
             <Button
               type="button"
               onClick={() => setCierreEvidenceDone(true)}
-              className="rounded-full text-xs gap-1.5 bg-zinc-800 hover:bg-emerald-700 text-white"
+              className="rounded-sm text-xs gap-1.5 bg-zinc-800 hover:bg-emerald-700 text-white"
             >
               <Upload className="size-3.5" /> Capturar Foto de Reparación Final
             </Button>
@@ -86,12 +86,12 @@ export function CerrarTicketModal({
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
+          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-sm text-xs">
             Cancelar
           </Button>
           <Button
             onClick={() => onCloseTicket(selectedTicket.id)}
-            className="w-1/2 h-8 sm:h-9 rounded-full text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white"
+            className="w-1/2 h-8 sm:h-9 rounded-sm text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white"
           >
             Confirmar Cierre & Habilitar
           </Button>

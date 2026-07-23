@@ -17,11 +17,11 @@ export function ConfirmarSoporteExpressModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4 text-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md rounded-sm border border-border bg-card p-3 shadow-2xl space-y-2.5 text-center">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="absolute right-4 top-3 rounded-sm p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           aria-label="Cerrar modal"
         >
           <X className="size-5" />
@@ -34,7 +34,7 @@ export function ConfirmarSoporteExpressModal({
         </p>
 
         <div className="flex gap-2">
-          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
+          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-sm text-xs">
             Cancelar
           </Button>
           <Button
@@ -42,7 +42,7 @@ export function ConfirmarSoporteExpressModal({
               onConfirm()
               onClose()
             }}
-            className="w-1/2 rounded-full text-xs font-bold gap-1.5"
+            className="w-1/2 rounded-sm text-xs font-bold gap-1.5"
           >
             <CheckCircle2 className="size-3.5" />
             Notificar "En Camino"

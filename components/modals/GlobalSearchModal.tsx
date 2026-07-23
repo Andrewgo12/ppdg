@@ -44,8 +44,8 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectResult }: GlobalSea
   )
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-xl w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card shadow-2xl overflow-hidden space-y-3 p-4">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-xl w-[95vw] max-h-[85vh] overflow-y-auto rounded-sm border border-border bg-card shadow-2xl overflow-hidden space-y-3 p-3">
         {/* Input Bar */}
         <div className="flex items-center gap-3 border-b border-border pb-3 px-2">
           <Search className="size-5 text-primary shrink-0" />
@@ -59,7 +59,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectResult }: GlobalSea
           />
           <button
             onClick={onClose}
-            className="rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="rounded-sm p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <X className="size-5" />
           </button>
@@ -68,7 +68,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectResult }: GlobalSea
         {/* Results List */}
         <div className="max-h-72 overflow-y-auto space-y-1 pr-1">
           {filtered.length === 0 ? (
-            <p className="text-xs text-muted-foreground p-4 text-center">No se encontraron resultados para "{query}"</p>
+            <p className="text-xs text-muted-foreground p-3 text-center">No se encontraron resultados para "{query}"</p>
           ) : (
             filtered.map((item, index) => {
               const Icon = item.icon
@@ -79,10 +79,10 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectResult }: GlobalSea
                     onSelectResult(item.view)
                     onClose()
                   }}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/40 hover:text-primary transition-colors cursor-pointer group"
+                  className="flex items-center justify-between p-3 rounded-sm hover:bg-muted/40 hover:text-primary transition-colors cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-muted group-hover:bg-primary/20 text-primary">
+                    <div className="p-2 rounded-sm bg-muted group-hover:bg-primary/20 text-primary">
                       <Icon className="size-4" />
                     </div>
                     <div>

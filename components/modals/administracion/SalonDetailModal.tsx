@@ -18,11 +18,11 @@ export function SalonDetailModal({
   if (!isOpen || !selectedSalon) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-sm border border-border bg-card p-3 shadow-2xl space-y-2.5">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="absolute right-4 top-3 rounded-sm p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           aria-label="Cerrar modal"
         >
           <X className="size-5" />
@@ -36,12 +36,12 @@ export function SalonDetailModal({
               <p className="text-xs text-muted-foreground">{selectedSalon.sede} · {selectedSalon.bloque} - {selectedSalon.piso}</p>
             </div>
           </div>
-          <span className="rounded-full bg-muted/40 px-3 py-1 text-xs font-bold uppercase text-primary">
+          <span className="rounded-sm bg-muted/40 px-3 py-1 text-xs font-bold uppercase text-primary">
             {selectedSalon.estado}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-muted/20 p-4 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-muted/20 p-3 rounded-sm">
           <div>
             <p className="text-muted-foreground">Capacidad Máxima</p>
             <p className="font-semibold text-foreground">{selectedSalon.capacidad} Personas</p>
@@ -59,7 +59,7 @@ export function SalonDetailModal({
         </div>
 
         <div className="flex justify-end">
-          <Button variant="outline" onClick={onClose} className="rounded-full text-xs">
+          <Button variant="outline" onClick={onClose} className="rounded-sm text-xs">
             Cerrar Ventana
           </Button>
         </div>

@@ -14,23 +14,23 @@ export function TecnicoElectricoPanel({
   onEmergencyLockdown,
 }: TecnicoElectricoPanelProps) {
   return (
-    <div className="rounded-xl border border-border/60 bg-card p-4 space-y-4 shadow-sm">
+    <div className="rounded-sm border border-border/60 bg-card p-3 space-y-2.5 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="flex size-9 items-center justify-center rounded-lg bg-zinc-700/10 text-amber-500">
-            <Zap className="size-5" />
+          <div className="flex size-6 items-center justify-center rounded-sm bg-zinc-700/10 text-amber-500">
+            <Zap className="size-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-foreground">Consola: {subRoleInfo.name}</h3>
-            <p className="text-xs text-muted-foreground">{subRoleInfo.title}</p>
+            <h3 className="text-[12px] font-bold uppercase tracking-wider font-mono text-foreground">Perfil: {subRoleInfo.name}</h3>
+            <p className="text-[10px] text-muted-foreground font-mono">{subRoleInfo.title}</p>
           </div>
         </div>
-        <span className="rounded-full bg-zinc-700/10 px-3 py-1 text-xs font-semibold text-amber-600">
+        <span className="rounded-sm bg-zinc-700/10 px-3 py-1 text-[10px] font-semibold text-amber-600">
           {subRoleInfo.badge}
         </span>
       </div>
 
-      <p className="text-xs text-muted-foreground leading-relaxed">
+      <p className="text-[10px] text-muted-foreground font-mono leading-relaxed">
         {subRoleInfo.tagline}
       </p>
 
@@ -39,14 +39,14 @@ export function TecnicoElectricoPanel({
           size="sm"
           variant="destructive"
           onClick={onEmergencyLockdown}
-          className="rounded-full text-xs gap-1.5"
+          className="rounded-sm text-[10px] gap-1.5"
         >
           <Zap className="size-3.5" />
           Activar Aislamiento RETIE (Riesgo Eléctrico Alto)
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] bg-muted/30 p-3 rounded-lg pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] bg-muted/30 p-3 rounded-sm pt-2">
         {subRoleInfo.permissions.map((perm, idx) => (
           <div key={idx} className="flex items-center gap-1.5 text-muted-foreground">
             <CheckCircle2 className="size-3 text-emerald-500 shrink-0" />

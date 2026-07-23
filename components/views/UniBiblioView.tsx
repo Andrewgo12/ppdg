@@ -1,6 +1,7 @@
 "use client"
 
-import { BookOpen, QrCode, Check, FileText, Calculator } from "lucide-react"
+import { useState } from "react"
+import { BookOpen, QrCode, FileText, Search, Filter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Libro, Prestamo } from "@/lib/campus-data"
 import { generarComprobantePrestamoPDF } from "@/lib/pdf-ticket-generator"
@@ -13,138 +14,138 @@ interface UniBiblioViewProps {
 }
 
 export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioViewProps) {
-  const totalReservas = prestamos.length
-  const morosos = prestamos.filter((p) => new Date(p.fechaVencimiento) < new Date()).length
-  const tarifaMultaPorDia = 2500
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCat, setSelectedCat] = useState("todas")
+
+  const categories = ["todas", ...Array.from(new Set(libros.map((l) => l.categoria.toLowerCase())))]
+
+  const filteredLibros = libros.filter((l) => {
+    const matchCat = selectedCat === "todas" || l.categoria.toLowerCase() === selectedCat
+    const matchText = l.titulo.toLowerCase().includes(searchTerm.toLowerCase()) || l.autor.toLowerCase().includes(searchTerm.toLowerCase())
+    return matchCat && matchText
+  })
 
   return (
-    <section className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+    <section className="space-y-4 text-xs font-sans">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-            <BookOpen className="size-5 text-primary" />
-            UniBiblio Flow · Catálogo & Préstamo Digital por QR
+          <h2 className="text-[13px] font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
+            <BookOpen className="size-4 text-primary" />
+            Catálogo Digital UniBiblio Flow
           </h2>
-          <p className="text-xs text-muted-foreground">
-            Reserva libros en 1 clic, presenta tu ticket QR en caja y firma el préstamo digital sin papel.
+          <p className="text-[10px] text-muted-foreground font-mono">
+            RESERVA INSTANTÁNEA POR QR // PRÉSTAMO DIGITAL
           </p>
         </div>
-      </div>
 
-      {/* Real-time Fine & Loan Statistics */}
-      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
-          <p className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5">
-            <Calculator className="size-3.5 text-primary" />
-            Tarifa de Sanción / Mora por Día
-          </p>
-          <p className="text-xs sm:text-sm sm:text-lg font-medium font-bold text-foreground">$2.500 COP / Día</p>
-          <p className="text-[10px] text-muted-foreground">Calculado automáticamente sobre préstamos vencidos</p>
-        </div>
-
-        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
-          <p className="text-[11px] font-semibold text-muted-foreground">Préstamos Activos en Sistema</p>
-          <p className="text-xs sm:text-sm sm:text-lg font-medium font-bold text-primary">{totalReservas} Ejemplares</p>
-          <p className="text-[10px] text-muted-foreground">Con firma digital registrada</p>
-        </div>
-
-        <div className="rounded-lg border border-emerald-500/30 bg-zinc-700/10 p-3 space-y-1">
-          <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">Estado de Paz y Salvo</p>
-          <p className="text-xs sm:text-sm sm:text-lg font-medium font-bold text-emerald-700 dark:text-emerald-400">
-            {morosos === 0 ? "100% CERO DEUDAS" : `$${morosos * tarifaMultaPorDia} COP PENDIENTE`}
-          </p>
-          <p className="text-[10px] text-zinc-800 dark:text-zinc-200 dark:text-emerald-400">
-            {morosos === 0 ? "Habilitado para matrícula y diploma de grado" : `${morosos} préstamos en mora`}
-          </p>
-        </div>
-      </div>
-
-      {/* Libros Catalog Grid */}
-      <div className="grid gap-2 sm:gap-3 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        {libros.map((libro) => (
-          <div key={libro.id} className="rounded-xl border border-border bg-card p-4 flex flex-col justify-between">
-            <div>
-              <span className="text-[10px] font-bold uppercase text-primary bg-muted/40 px-2 py-0.5 rounded-full">
-                {libro.categoria}
-              </span>
-              <h3 className="text-sm font-semibold text-foreground mt-2">{libro.titulo}</h3>
-              <p className="text-xs text-muted-foreground">{libro.autor}</p>
-              <p className="text-[11px] text-muted-foreground mt-1">Ubicación: {libro.ubicacion}</p>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
-              <span className="text-xs font-medium text-foreground">
-                Disponibles: {libro.unidadesDisponibles}/{libro.totalUnidades}
-              </span>
-              <Button
-                size="sm"
-                onClick={() => onReserveBook(libro)}
-                className="rounded-full text-[11px] px-3"
-              >
-                Reservar QR
-              </Button>
-            </div>
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <Search className="size-3.5 absolute left-2 top-2 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Buscar título o autor..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-7 pl-7 pr-2 rounded-sm border border-border/60 bg-card text-[10px] outline-none w-48"
+            />
           </div>
-        ))}
+        </div>
+      </div>
+
+      {/* Main Layout with Sidebar */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-start">
+        {/* Sidebar Facets */}
+        <div className="border border-border/60 rounded-sm bg-card p-3 space-y-3">
+          <h3 className="text-[11px] font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5 border-b border-border/40 pb-2">
+            <Filter className="size-3 text-primary" /> Categorías
+          </h3>
+          <div className="space-y-1">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCat(cat)}
+                className={`w-full text-left px-2 py-1 text-[10px] font-mono uppercase rounded-sm transition-colors ${
+                  selectedCat === cat
+                    ? "bg-primary/10 text-primary font-bold border border-primary/40"
+                    : "text-muted-foreground hover:bg-muted/20"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Books Grid */}
+        <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          {filteredLibros.map((libro) => (
+            <div key={libro.id} className="border border-border/60 rounded-sm bg-card p-3 flex flex-col justify-between gap-2 hover:border-primary/40 transition-colors">
+              <div>
+                <span className="text-[8px] font-mono font-bold uppercase px-1.5 py-0.5 rounded-sm bg-muted/40 text-muted-foreground border border-border/40">
+                  {libro.categoria}
+                </span>
+                <h4 className="text-[12px] font-bold text-foreground leading-tight mt-1.5">{libro.titulo}</h4>
+                <p className="text-[10px] text-muted-foreground">{libro.autor}</p>
+                <p className="text-[9px] font-mono text-muted-foreground/70 mt-1">UBICACIÓN: {libro.ubicacion}</p>
+              </div>
+
+              <div className="border-t border-border/40 pt-2 flex items-center justify-between">
+                <span className="text-[10px] font-mono">
+                  STOCK: <span className="font-bold">{libro.unidadesDisponibles}/{libro.totalUnidades}</span>
+                </span>
+                <Button
+                  size="sm"
+                  onClick={() => onReserveBook(libro)}
+                  className="h-6 px-2 text-[9px] rounded-sm bg-primary text-primary-foreground font-mono"
+                >
+                  RESERVAR QR
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Active Loans Table */}
-      <div className="rounded-xl border border-border bg-card p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
-          <QrCode className="size-4 text-primary" />
-          Tus Préstamos y Tickets QR Activos
+      <div className="space-y-2 pt-2 border-t border-border/60">
+        <h3 className="text-[11px] font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
+          <QrCode className="size-3.5 text-primary" /> Préstamos y Tickets QR Activos
         </h3>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-foreground">
-            <thead className="border-b border-border bg-muted/40 text-muted-foreground">
-              <tr>
-                <th className="p-3">ID Préstamo</th>
-                <th className="p-3">Libro</th>
-                <th className="p-3">Vencimiento</th>
-                <th className="p-3">Código QR</th>
-                <th className="p-3">Firma Digital</th>
-                <th className="p-3">Estado</th>
-                <th className="p-3">Comprobante PDF</th>
+        <div className="overflow-x-auto border border-border/60 rounded-sm bg-card">
+          <table className="w-full text-left border-collapse text-[10px]">
+            <thead>
+              <tr className="border-b border-border/60 bg-muted/20 font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+                <th className="p-2 border-r border-border/40">Ticket QR</th>
+                <th className="p-2 border-r border-border/40">Libro</th>
+                <th className="p-2 border-r border-border/40">Fecha Vencimiento</th>
+                <th className="p-2 border-r border-border/40">Estado</th>
+                <th className="p-2 text-center">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/40 font-mono">
               {prestamos.map((p) => (
-                <tr key={p.id}>
-                  <td className="p-3 font-semibold text-primary">{p.id}</td>
-                  <td className="p-3 font-medium">{p.libroTitulo}</td>
-                  <td className="p-3">{p.fechaVencimiento}</td>
-                  <td className="p-3">
-                    <span className="inline-flex items-center gap-1 font-mono text-[11px] bg-muted px-2 py-1 rounded-lg">
-                      <QrCode className="size-3" /> {p.qrCode}
-                    </span>
-                  </td>
-                  <td className="p-3">
-                    {p.firmadoDigitalmente ? (
-                      <span className="text-zinc-800 dark:text-zinc-200 font-semibold flex items-center gap-1">
-                        <Check className="size-3" /> Firmado
-                      </span>
-                    ) : (
-                      <span className="text-amber-600 font-semibold">Pendiente Firma</span>
-                    )}
-                  </td>
-                  <td className="p-3">
-                    <span className="rounded-full bg-zinc-700/10 px-2 py-0.5 text-[10px] font-bold text-zinc-800 dark:text-zinc-200">
+                <tr key={p.id} className="hover:bg-muted/10 transition-colors">
+                  <td className="p-2 font-bold text-primary border-r border-border/40">{p.qrCode}</td>
+                  <td className="p-2 border-r border-border/40 font-sans font-medium text-[11px]">{p.libroTitulo}</td>
+                  <td className="p-2 border-r border-border/40 text-muted-foreground">{p.fechaVencimiento}</td>
+                  <td className="p-2 border-r border-border/40">
+                    <span className="px-1.5 py-0.5 rounded-sm bg-emerald-500/10 text-emerald-600 font-bold border border-emerald-500/20 text-[8px]">
                       {p.estado.toUpperCase()}
                     </span>
                   </td>
-                  <td className="p-3">
+                  <td className="p-2 text-center">
                     <Button
                       size="sm"
                       variant="outline"
                       onClick={() => {
                         generarComprobantePrestamoPDF(p)
-                        toast.success(`📜 Comprobante ${p.id} descargado`, { description: "PDF con código QR guardado en su equipo." })
+                        toast("📄 Comprobante PDF Descargado")
                       }}
-                      className="rounded-full text-[11px] h-7 gap-1"
+                      className="h-6 px-2 text-[9px] rounded-sm gap-1"
                     >
-                      <FileText className="size-3 text-primary" />
-                      PDF Tiquete
+                      <FileText className="size-3" /> PDF
                     </Button>
                   </td>
                 </tr>

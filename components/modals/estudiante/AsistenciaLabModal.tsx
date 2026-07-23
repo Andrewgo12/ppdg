@@ -21,11 +21,11 @@ export function AsistenciaLabModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md rounded-sm border border-border bg-card p-3 shadow-2xl space-y-2.5">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="absolute right-4 top-3 rounded-sm p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           aria-label="Cerrar modal"
         >
           <X className="size-5" />
@@ -43,15 +43,15 @@ export function AsistenciaLabModal({
             value={scannerEstudianteCode}
             onChange={(e) => setScannerEstudianteCode(e.target.value)}
             placeholder="Ej. 2024100982"
-            className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+            className="mt-1 w-full rounded-sm border border-input bg-card p-2.5 text-xs text-foreground outline-none"
           />
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
+          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-sm text-xs">
             Cancelar
           </Button>
-          <Button onClick={onConfirmAsistenciaLab} className="w-1/2 rounded-full text-xs font-bold">
+          <Button onClick={onConfirmAsistenciaLab} className="w-1/2 rounded-sm text-xs font-bold">
             Registrar Asistencia
           </Button>
         </div>

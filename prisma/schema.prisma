@@ -1,0 +1,126 @@
+// Prisma Schema for SmartCampus University System
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id           String   @id @default(uuid())
+  nombre       String
+  email        String   @unique
+  subRole      String
+  dependencia  String
+  estado       String   @default("activo")
+  ultimoAcceso String?
+  createdAt    DateTime @default(now())
+}
+
+model Salon {
+  id           String   @id
+  nombre       String
+  bloque       String
+  piso         String
+  sede         String
+  capacidad    Int
+  estado       String   @default("disponible") // disponible, ocupado, mantenimiento, reservado, riesgo_electrico
+  tipo         String   // aula, laboratorio, comun, cubiculo, auditorio
+  responsable  String?
+  temperatura  String?  @default("22°C")
+  ultimoAseo   String?
+  tickets      Ticket[]
+}
+
+model Ticket {
+  id                  String   @id
+  salonId             String
+  salon               Salon    @relation(fields: [salonId], references: [id])
+  salonNombre         String
+  categoria           String   // infraestructura, electrico, it, aseo
+  prioridad           String   // alta, media, baja, express
+  reportadoPor        String
+  fecha               String
+  descripcion         String
+  estado              String   @default("pendiente_asignacion") // pendiente_asignacion, asignado, en_proceso, resuelto
+  tecnicoAsignado     String?
+  evidenciaAntesUrl   String?
+  evidenciaDespuesUrl String?
+  createdAt           DateTime @default(now())
+}
+
+model Reserva {
+  id                 String   @id
+  espacioNombre      String
+  solicitante        String
+  rolSolicitante     String
+  fecha              String
+  horaInicio         String
+  horaFin            String
+  aforoEstimado      Int
+  estado             String   @default("pendiente_aprobacion") // pendiente_aprobacion, aprobado, rechazado
+  motivoRechazo      String?
+  createdAt          DateTime @default(now())
+}
+
+model Insumo {
+  id            String   @id
+  codigo        String   @unique
+  nombre        String
+  categoria     String   // tecnologia, electrico, infraestructura, aseo
+  stockActual   Int
+  stockMinimo   Int
+  unidad        String
+  ubicacion     String
+}
+
+model Despacho {
+  id            String   @id
+  insumoNombre  String
+  cantidad      Int
+  ticketId      String
+  tecnicoNombre String
+  fecha         String
+  estado        String   @default("pendiente")
+}
+
+model Libro {
+  id                  String   @id
+  codigo              String   @unique
+  titulo              String
+  autor               String
+  categoria           String
+  unidadesDisponibles Int
+  totalUnidades       Int
+  ubicacion           String
+  prestamos           Prestamo[]
+}
+
+model Prestamo {
+  id                  String   @id
+  estudiante          String
+  libroId             String
+  libro               Libro    @relation(fields: [libroId], references: [id])
+  libroTitulo         String
+  fechaPrestamo       String
+  fechaVencimiento    String
+  qrCode              String   @unique
+  estado              String   @default("entregado") // reservado, entregado, devuelto_exitoso, devuelto_mora
+  multaCop            Int      @default(0)
+  firmadoDigitalmente Boolean  @default(true)
+}
+
+model LogAuditoria {
+  id                 String   @id @default(uuid())
+  fecha              String
+  usuario            String
+  subRole            String?
+  accion             String
+  recurso            String
+  detalles           String
+  timestamp          String?
+  hashCriptografico String?
+}

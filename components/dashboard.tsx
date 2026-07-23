@@ -13,7 +13,6 @@ import {
   type NotificacionPush,
 } from "@/lib/campus-data"
 import { RoleContent } from "@/components/role-content"
-import { SessionSimulatorModal } from "@/components/session-simulator-modal"
 import { CarnetDigitalModal } from "@/components/modals/CarnetDigitalModal"
 import { GlobalSearchModal } from "@/components/modals/GlobalSearchModal"
 import { CreditCard, MapPin } from "lucide-react"
@@ -37,7 +36,6 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeView, setActiveView] = useState<ViewKey>("inicio")
   const [notifOpen, setNotifOpen] = useState(false)
-  const [simModalOpen, setSimModalOpen] = useState(false)
   const [carnetOpen, setCarnetOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [activeSede, setActiveSede] = useState<string>("Sede Principal Av. 6")
@@ -87,7 +85,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
       </div>
 
       <nav className="flex-1 space-y-1 px-3">
-        {role.nav.map((item) => {
+        {(activeSubRole?.nav || role.nav).map((item) => {
           const Icon = item.icon
           const isActive = item.view === activeView
           return (
@@ -201,15 +199,6 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                 <option value="Sede Sur">Sede Sur</option>
               </select>
             </div>
-            {/* Frontend Simulator & RBAC Console Button */}
-            <button
-              type="button"
-              onClick={() => setSimModalOpen(true)}
-              className="flex items-center gap-1.5 rounded-full bg-muted/40 border border-border/60 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary/20 transition-all shadow-2xs"
-            >
-              <Cpu className="size-3.5" />
-              <span className="hidden sm:inline">Consola RBAC & BD</span>
-            </button>
 
             {/* Notification Bell */}
             <button
@@ -262,57 +251,57 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
               </div>
             )}
 
-            {/* Sub-role User Badge */}
-            <div className="flex items-center gap-2 rounded-full bg-card py-1 pl-1 pr-3 border border-border">
-              <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
+            {/* Role User Badge */}
+            <div className="flex items-center gap-2 rounded-sm bg-card py-1 pl-1 pr-3 border border-border/60">
+              <span className="flex size-6 items-center justify-center rounded-sm bg-primary text-[10px] font-bold text-primary-foreground">
                 {activeSubRole ? activeSubRole.avatar : role.avatar}
               </span>
-              <span className="hidden text-xs font-semibold text-foreground sm:inline">
-                {activeSubRole ? activeSubRole.name : role.name}
+              <span className="hidden text-[11px] font-bold text-foreground sm:inline">
+                {activeSubRole ? activeSubRole.fullName : role.fullName}
               </span>
             </div>
           </div>
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto px-4 py-2.5 sm:py-1.5 sm:py-2.5 sm:px-3 sm:px-4 lg:px-10">
+        <main className="flex-1 overflow-y-auto px-4 py-3 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl space-y-4">
             {isHome && (
               <>
                 {/* Greeting */}
-                <div className="flex flex-wrap items-start justify-between gap-2 sm:gap-3">
-                  <div className="flex items-start gap-3">
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted/40 text-primary">
-                      <RoleIcon className="size-6" aria-hidden="true" />
+                <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border/40 pb-3">
+                  <div className="flex items-start gap-2.5">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-sm bg-primary/10 text-primary">
+                      <RoleIcon className="size-4" aria-hidden="true" />
                     </span>
                     <div>
-                      <h1 className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-semibold tracking-tight text-foreground sm:text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight">
-                        Hola, {activeSubRole ? activeSubRole.fullName.split(" ")[0] : role.fullName.split(" ")[0]}
+                      <h1 className="text-sm font-bold text-foreground">
+                        Bienvenido, {activeSubRole ? activeSubRole.fullName : role.fullName}
                       </h1>
-                      <p className="mt-0.5 text-sm text-muted-foreground">
+                      <p className="mt-0.5 text-[11px] text-muted-foreground">
                         {activeSubRole ? activeSubRole.tagline : role.tagline}
                       </p>
                     </div>
                   </div>
-                  <span className="rounded-full bg-card px-3.5 py-1.5 text-xs font-semibold text-primary border border-border shadow-sm">
-                    {activeSubRole ? activeSubRole.badge : role.title}
+                  <span className="rounded-sm bg-muted/30 px-2.5 py-1 text-[10px] font-mono font-bold text-primary border border-border/60">
+                    ROL: {role.name.toUpperCase()}
                   </span>
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2 sm:gap-3 lg:grid-cols-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
                   {role.stats.map((stat) => (
                     <div
                       key={stat.label}
-                      className="rounded-xl border border-border bg-card p-4"
+                      className="rounded-sm border border-border/60 bg-card p-3 space-y-1"
                     >
-                      <p className="text-xs font-medium text-muted-foreground">{stat.label}</p>
+                      <p className="text-[10px] font-mono text-muted-foreground uppercase">{stat.label}</p>
                       <p
-                        className={`mt-1 text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight font-semibold tracking-tight ${TONE_STYLES[stat.tone]}`}
+                        className={`text-base font-bold font-mono ${TONE_STYLES[stat.tone]}`}
                       >
                         {stat.value}
                       </p>
-                      <p className="mt-0.5 text-xs text-muted-foreground">{stat.hint}</p>
+                      <p className="text-[9px] text-muted-foreground font-mono">{stat.hint}</p>
                     </div>
                   ))}
                 </div>
@@ -350,22 +339,16 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
               currentRole={roleId}
               activeView={activeView}
               currentSubRole={subRoleId}
-              onSelectSubRole={(newSubRole) => setSubRoleId(newSubRole)}
+              onSelectSubRole={(newSubRole) => {
+                setSubRoleId(newSubRole)
+                setActiveView("inicio")
+              }}
             />
           </div>
         </main>
       </div>
 
-      {simModalOpen && (
-        <SessionSimulatorModal
-          subRole={subRoleId}
-          onClose={() => setSimModalOpen(false)}
-          onExpireSession={() => {
-            setSimModalOpen(false)
-            onLogout()
-          }}
-        />
-      )}
+
 
       <CarnetDigitalModal
         isOpen={carnetOpen}

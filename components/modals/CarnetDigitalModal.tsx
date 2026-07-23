@@ -14,13 +14,13 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-sm rounded-xl border border-border bg-card shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-sm rounded-sm border border-border bg-card shadow-2xl overflow-hidden">
         {/* Encabezado Carnet - Franja Azul Institucional */}
-        <div className="bg-[#0F2043] p-4 text-white text-center space-y-1 relative">
+        <div className="bg-[#0F2043] p-3 text-white text-center space-y-1 relative">
           <button
             onClick={onClose}
-            className="absolute right-3 top-3 rounded-full p-1 text-white/70 hover:bg-white/10 hover:text-white"
+            className="absolute right-3 top-3 rounded-sm p-1 text-white/70 hover:bg-white/10 hover:text-white"
             aria-label="Cerrar modal"
           >
             <X className="size-4" />
@@ -34,13 +34,13 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
         </div>
 
         {/* Cuerpo del Carnet */}
-        <div className="p-4 space-y-4 text-center">
+        <div className="p-3 space-y-2.5 text-center">
           {/* Avatar y Badge */}
-          <div className="relative mx-auto size-20 rounded-full bg-gradient-to-tr from-primary to-accent p-1 shadow-md">
-            <div className="flex size-full items-center justify-center rounded-full bg-card text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight font-bold">
+          <div className="relative mx-auto size-20 rounded-sm bg-gradient-to-tr from-primary to-accent p-1 shadow-md">
+            <div className="flex size-full items-center justify-center rounded-sm bg-card text-xs sm:text-sm sm:text-lg font-medium sm:text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold tracking-tight font-bold">
               {subRoleInfo.avatar}
             </div>
-            <span className="absolute bottom-0 right-0 rounded-full bg-zinc-700 p-1 text-white shadow-xs">
+            <span className="absolute bottom-0 right-0 rounded-sm bg-zinc-700 p-1 text-white shadow-xs">
               <ShieldCheck className="size-3.5" />
             </span>
           </div>
@@ -51,7 +51,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
             <p className="text-[11px] text-muted-foreground mt-0.5">{subRoleInfo.title}</p>
           </div>
 
-          <div className="rounded-lg bg-muted/40 p-3 space-y-1 text-xs text-left border border-border">
+          <div className="rounded-sm bg-muted/40 p-3 space-y-1 text-xs text-left border border-border">
             <div className="flex justify-between">
               <span className="text-muted-foreground">ID / Código:</span>
               <span className="font-mono font-bold text-foreground">2024100982</span>
@@ -67,7 +67,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
           </div>
 
           {/* Código QR Verificador */}
-          <div className="rounded-lg border border-border/60 bg-primary/5 p-3 space-y-1 flex flex-col items-center">
+          <div className="rounded-sm border border-border/60 bg-primary/5 p-3 space-y-1 flex flex-col items-center">
             <QrCode className="size-16 text-primary" />
             <p className="font-mono text-[10px] text-muted-foreground">QR-ID-{subRoleInfo.id.toUpperCase()}-2026</p>
             <span className="text-[9px] text-zinc-800 dark:text-zinc-200 font-semibold flex items-center gap-1">
@@ -75,7 +75,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
             </span>
           </div>
 
-          <Button onClick={onClose} className="w-full rounded-full text-xs font-bold">
+          <Button onClick={onClose} className="w-full rounded-sm text-xs font-bold">
             Cerrar Carnet
           </Button>
         </div>

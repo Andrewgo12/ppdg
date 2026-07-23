@@ -1,141 +1,145 @@
 "use client"
 
-import { BarChart3, TrendingUp, Clock, ShieldCheck, Zap, BookOpen, Users, CheckCircle2 } from "lucide-react"
+import { BarChart3, TrendingUp, Clock, ShieldCheck, Zap, BookOpen } from "lucide-react"
 
 export function IndicadoresKpiView() {
   return (
-    <section className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+    <section className="space-y-4 text-xs font-sans">
+      <div className="flex items-center justify-between border-b border-border/60 pb-3">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-            <BarChart3 className="size-5 text-primary" />
-            Panel de Indicadores Institucionales & KPIs de Gestión
+          <h2 className="text-[13px] font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
+            <BarChart3 className="size-4 text-primary" />
+            Cuadro de Mando Ejecutivo & Telemetría KPI
           </h2>
-          <p className="text-xs text-muted-foreground">
-            Cuadro de mando ejecutivo: rendimiento operativo, uso de campus e indicadores bibliotecarios.
+          <p className="text-[10px] text-muted-foreground font-mono">
+            MÉTRICAS EN TIEMPO REAL // RENDIMIENTO OPERATIVO CAMPUS
           </p>
         </div>
       </div>
 
-      {/* Primary Top Executive Cards */}
-      <div className="grid gap-2 sm:gap-3 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-muted-foreground">Disponibilidad Campus</span>
-            <Zap className="size-4 text-emerald-500" />
+      {/* Top Telemetry Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 font-mono">
+        <div className="border border-border/60 rounded-sm bg-card p-2.5 space-y-1">
+          <div className="flex justify-between items-center text-[9px] text-muted-foreground">
+            <span>DISPONIBILIDAD</span>
+            <Zap className="size-3 text-emerald-500" />
           </div>
-          <p className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold text-foreground">94.2%</p>
-          <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
-            <div className="h-full bg-zinc-700" style={{ width: "94.2%" }} />
+          <p className="text-base font-bold text-foreground">94.2%</p>
+          <div className="h-1 w-full rounded-xs bg-muted overflow-hidden">
+            <div className="h-full bg-emerald-500" style={{ width: "94.2%" }} />
           </div>
-          <p className="text-[10px] text-muted-foreground">113 de 120 salones operativos</p>
+          <p className="text-[8px] text-muted-foreground">113/120 SALONES OK</p>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-muted-foreground">Tiempo Respuesta MTTR</span>
-            <Clock className="size-4 text-primary" />
+        <div className="border border-border/60 rounded-sm bg-card p-2.5 space-y-1">
+          <div className="flex justify-between items-center text-[9px] text-muted-foreground">
+            <span>MTTR RESPUESTA</span>
+            <Clock className="size-3 text-primary" />
           </div>
-          <p className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold text-foreground">1.4 Horas</p>
-          <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+          <p className="text-base font-bold text-foreground">1.4 HRS</p>
+          <div className="h-1 w-full rounded-xs bg-muted overflow-hidden">
             <div className="h-full bg-primary" style={{ width: "85%" }} />
           </div>
-          <p className="text-[10px] text-zinc-800 dark:text-zinc-200 font-semibold">⚡ Meta de 2.0h superada</p>
+          <p className="text-[8px] text-emerald-600 font-bold">META 2.0H SUPERADA</p>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-muted-foreground">Prestamos UniBiblio</span>
-            <BookOpen className="size-4 text-purple-500" />
+        <div className="border border-border/60 rounded-sm bg-card p-2.5 space-y-1">
+          <div className="flex justify-between items-center text-[9px] text-muted-foreground">
+            <span>UNIBIBLIO LOANS</span>
+            <BookOpen className="size-3 text-purple-500" />
           </div>
-          <p className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold text-foreground">1,420</p>
-          <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+          <p className="text-base font-bold text-foreground">1,420</p>
+          <div className="h-1 w-full rounded-xs bg-muted overflow-hidden">
             <div className="h-full bg-purple-500" style={{ width: "78%" }} />
           </div>
-          <p className="text-[10px] text-muted-foreground">99.1% con Paz y Salvo al día</p>
+          <p className="text-[8px] text-muted-foreground">99.1% AL DÍA</p>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-muted-foreground">Firmas Criptográficas</span>
-            <ShieldCheck className="size-4 text-amber-500" />
+        <div className="border border-border/60 rounded-sm bg-card p-2.5 space-y-1">
+          <div className="flex justify-between items-center text-[9px] text-muted-foreground">
+            <span>FIRMA CRIPTO</span>
+            <ShieldCheck className="size-3 text-amber-500" />
           </div>
-          <p className="text-lg sm:text-xs sm:text-sm sm:text-lg font-medium font-semibold tracking-tight font-bold text-foreground">100%</p>
-          <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
-            <div className="h-full bg-zinc-700" style={{ width: "100%" }} />
+          <p className="text-base font-bold text-foreground">100%</p>
+          <div className="h-1 w-full rounded-xs bg-muted overflow-hidden">
+            <div className="h-full bg-amber-500" style={{ width: "100%" }} />
           </div>
-          <p className="text-[10px] text-muted-foreground">Transacciones con hash SHA-256</p>
+          <p className="text-[8px] text-muted-foreground">HASH SHA-256 REGISTRADO</p>
         </div>
       </div>
 
       {/* Analytics Breakdown Grid */}
-      <div className="grid gap-2 sm:gap-3 md:grid-cols-1 sm:grid-cols-2">
-        <div className="rounded-xl border border-border bg-card p-4 space-y-4">
-          <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-            <TrendingUp className="size-4 text-primary" />
-            Consumo de Insumos por Facultad (Último Semestre)
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="border border-border/60 rounded-sm bg-card p-3 space-y-3">
+          <h3 className="text-[11px] font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5 border-b border-border/40 pb-2">
+            <TrendingUp className="size-3.5 text-primary" /> Consumo por Facultad
           </h3>
-          <div className="space-y-3 text-xs">
+          <div className="space-y-2 font-mono text-[10px]">
             <div>
-              <div className="flex justify-between font-semibold mb-1">
-                <span>Facultad de Ingeniería (Sede Principal)</span>
-                <span>45% (450 Cables & Conectores)</span>
+              <div className="flex justify-between text-muted-foreground mb-1">
+                <span>Facultad de Ingeniería</span>
+                <span className="font-bold text-foreground">45% (450 Unid)</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+              <div className="h-1.5 w-full bg-muted rounded-xs overflow-hidden">
                 <div className="h-full bg-primary" style={{ width: "45%" }} />
               </div>
             </div>
 
             <div>
-              <div className="flex justify-between font-semibold mb-1">
-                <span>Facultad de Ciencias Empresariales</span>
-                <span>30% (300 Insumos)</span>
+              <div className="flex justify-between text-muted-foreground mb-1">
+                <span>Ciencias Empresariales</span>
+                <span className="font-bold text-foreground">30% (300 Unid)</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
-                <div className="h-full bg-zinc-700" style={{ width: "30%" }} />
+              <div className="h-1.5 w-full bg-muted rounded-xs overflow-hidden">
+                <div className="h-full bg-primary/70" style={{ width: "30%" }} />
               </div>
             </div>
 
             <div>
-              <div className="flex justify-between font-semibold mb-1">
-                <span>Educación a Distancia & Virtual</span>
-                <span>25% (250 Insumos)</span>
+              <div className="flex justify-between text-muted-foreground mb-1">
+                <span>Derecho y Humanidades</span>
+                <span className="font-bold text-foreground">25% (250 Unid)</span>
               </div>
-              <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
-                <div className="h-full bg-purple-500" style={{ width: "25%" }} />
+              <div className="h-1.5 w-full bg-muted rounded-xs overflow-hidden">
+                <div className="h-full bg-primary/40" style={{ width: "25%" }} />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-4 space-y-4">
-          <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-            <Users className="size-4 text-primary" />
-            Satisfacción Institucional y Cumplimiento RETIE
+        <div className="border border-border/60 rounded-sm bg-card p-3 space-y-3">
+          <h3 className="text-[11px] font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5 border-b border-border/40 pb-2">
+            <BarChart3 className="size-3.5 text-primary" /> Ocupación por Bloque
           </h3>
-          <div className="space-y-2 text-xs">
-            <div className="p-3 rounded-lg bg-muted/40 flex items-center justify-between">
-              <div>
-                <p className="font-bold text-foreground">Aulas con Certificación Eléctrica RETIE</p>
-                <p className="text-[11px] text-muted-foreground">Inspección de enchufes y tableros</p>
+          <div className="space-y-2 font-mono text-[10px]">
+            <div>
+              <div className="flex justify-between text-muted-foreground mb-1">
+                <span>Bloque A (Aulas Generales)</span>
+                <span className="font-bold text-foreground">88%</span>
               </div>
-              <span className="font-bold text-zinc-800 dark:text-zinc-200 bg-zinc-700/10 px-2.5 py-1 rounded-full text-xs">100% Cumplido</span>
+              <div className="h-1.5 w-full bg-muted rounded-xs overflow-hidden">
+                <div className="h-full bg-emerald-500" style={{ width: "88%" }} />
+              </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-muted/40 flex items-center justify-between">
-              <div>
-                <p className="font-bold text-foreground">Tiempo Emisión Paz y Salvo Grado</p>
-                <p className="text-[11px] text-muted-foreground">Promedio de generación instantánea</p>
+            <div>
+              <div className="flex justify-between text-muted-foreground mb-1">
+                <span>Bloque C (Laboratorios IT)</span>
+                <span className="font-bold text-foreground">92%</span>
               </div>
-              <span className="font-bold text-primary bg-muted/40 px-2.5 py-1 rounded-full text-xs">0.5 Segundos</span>
+              <div className="h-1.5 w-full bg-muted rounded-xs overflow-hidden">
+                <div className="h-full bg-emerald-500" style={{ width: "92%" }} />
+              </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-muted/40 flex items-center justify-between">
-              <div>
-                <p className="font-bold text-foreground">Efectividad Solicitudes Express</p>
-                <p className="text-[11px] text-muted-foreground">Atención de insumos en clase</p>
+            <div>
+              <div className="flex justify-between text-muted-foreground mb-1">
+                <span>Biblioteca UniBiblio</span>
+                <span className="font-bold text-foreground">64%</span>
               </div>
-              <span className="font-bold text-zinc-800 dark:text-zinc-200 bg-zinc-700/10 px-2.5 py-1 rounded-full text-xs">98.4% Entregados</span>
+              <div className="h-1.5 w-full bg-muted rounded-xs overflow-hidden">
+                <div className="h-full bg-emerald-500/60" style={{ width: "64%" }} />
+              </div>
             </div>
           </div>
         </div>

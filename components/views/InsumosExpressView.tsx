@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { PackageSearch, Send } from "lucide-react"
+import { PackageSearch, Send, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface InsumosExpressViewProps {
@@ -12,60 +12,78 @@ export function InsumosExpressView({ onRequestExpressSupply }: InsumosExpressVie
   const [expressItem, setExpressItem] = useState("Cable HDMI 3m")
   const [expressSalon, setExpressSalon] = useState("Aula A-203")
 
+  const quickItems = [
+    { name: "Cable HDMI 3m", icon: "🔌" },
+    { name: "Caja Marcadores & Borrador", icon: "✏️" },
+    { name: "Adaptador USB-C a VGA", icon: "💻" },
+    { name: "Extensión Eléctrica 5m", icon: "⚡" },
+  ]
+
   return (
-    <section className="space-y-4">
-      <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <PackageSearch className="size-5" />
+    <section className="space-y-4 text-xs font-sans max-w-2xl mx-auto">
+      <div className="border border-border/60 rounded-sm bg-card p-4 space-y-4 shadow-sm">
+        <div className="flex items-center gap-2.5 border-b border-border/40 pb-3">
+          <div className="p-1.5 rounded-sm bg-primary/10 text-primary">
+            <PackageSearch className="size-4" />
           </div>
           <div>
-            <h2 className="text-xs sm:text-sm font-semibold text-foreground">
-              Solicitud Express de Insumos para Clase (Just-in-Time)
+            <h2 className="text-[13px] font-bold uppercase tracking-wider text-foreground">
+              Despacho Express Just-in-Time
             </h2>
-            <p className="text-xs text-muted-foreground">
-              ¿Falta un cable HDMI o marcadores durante tu clase? Solicítalo en un clic y el técnico irá en camino.
+            <p className="text-[10px] text-muted-foreground font-mono">
+              SOLICITUD INMEDIATA PARA DOCENTES EN CLASE
             </p>
           </div>
         </div>
 
-        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-3">
           <div>
-            <label className="text-xs font-medium text-foreground">Insumo Requerido</label>
-            <select
-              value={expressItem}
-              onChange={(e) => setExpressItem(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
-            >
-              <option value="Cable HDMI 3m">Cable HDMI 3m</option>
-              <option value="Caja Marcadores y Borrador">Caja Marcadores & Borrador</option>
-              <option value="Adaptador USB-C a VGA">Adaptador USB-C a VGA</option>
-              <option value="Extensión Eléctrica 5m">Extensión Eléctrica 5m</option>
-            </select>
+            <label className="text-[10px] font-mono font-bold uppercase text-muted-foreground block mb-1.5">
+              1. SELECCIONAR INSUMO REQUERIDO
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {quickItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => setExpressItem(item.name)}
+                  className={`p-2 rounded-sm border text-left flex items-center gap-2 font-mono transition-colors ${
+                    expressItem === item.name
+                      ? "border-primary bg-primary/10 text-primary font-bold"
+                      : "border-border/50 bg-background text-muted-foreground hover:bg-muted/20"
+                  }`}
+                >
+                  <span className="text-sm">{item.icon}</span>
+                  <span className="text-[10px] truncate">{item.name}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div>
-            <label className="text-xs font-medium text-foreground">Salón de Clase</label>
-            <select
-              value={expressSalon}
-              onChange={(e) => setExpressSalon(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
-            >
-              <option value="Aula A-203">Aula A-203</option>
-              <option value="Aula A-101">Aula A-101</option>
-              <option value="Lab. Electrónica 1">Lab. Electrónica 1</option>
-              <option value="Lab. Sistemas 3">Lab. Sistemas 3</option>
-            </select>
-          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div>
+              <label className="text-[10px] font-mono font-bold uppercase text-muted-foreground block mb-1">
+                2. UBICACIÓN / SALÓN
+              </label>
+              <select
+                value={expressSalon}
+                onChange={(e) => setExpressSalon(e.target.value)}
+                className="w-full h-8 rounded-sm border border-border/60 bg-background px-2 text-[10px] font-mono outline-none"
+              >
+                <option value="Aula A-203">Aula A-203</option>
+                <option value="Aula A-101">Aula A-101</option>
+                <option value="Lab. Electrónica 1">Lab. Electrónica 1</option>
+                <option value="Lab. Sistemas 3">Lab. Sistemas 3</option>
+              </select>
+            </div>
 
-          <div className="flex items-end">
-            <Button
-              onClick={() => onRequestExpressSupply(expressItem, expressSalon)}
-              className="w-full h-8 sm:h-9 rounded-full text-xs gap-2"
-            >
-              <Send className="size-4" />
-              Solicitar Insumo Inmediato
-            </Button>
+            <div className="flex items-end">
+              <Button
+                onClick={() => onRequestExpressSupply(expressItem, expressSalon)}
+                className="w-full h-8 text-[10px] font-mono uppercase rounded-sm bg-primary text-primary-foreground font-bold gap-1.5"
+              >
+                <Send className="size-3" /> Despachar AHORA
+              </Button>
+            </div>
           </div>
         </div>
       </div>

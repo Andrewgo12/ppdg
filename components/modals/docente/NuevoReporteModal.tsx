@@ -40,19 +40,19 @@ export function NuevoReporteModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl max-h-[90vh] overflow-y-auto space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-sm border border-border bg-card p-3 shadow-2xl max-h-[90vh] overflow-y-auto space-y-2.5">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="absolute right-4 top-3 rounded-sm p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           aria-label="Cerrar modal"
         >
           <X className="size-5" />
         </button>
 
-        <form onSubmit={handleCreateTicket} className="space-y-4">
+        <form onSubmit={handleCreateTicket} className="space-y-2.5">
           <div className="flex items-center gap-3 border-b border-border pb-3">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-zinc-700/10 text-amber-600">
+            <div className="flex size-10 items-center justify-center rounded-sm bg-zinc-700/10 text-amber-600">
               <Camera className="size-5" />
             </div>
             <div>
@@ -66,7 +66,7 @@ export function NuevoReporteModal({
             <select
               value={reportSalonId}
               onChange={(e) => setReportSalonId(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+              className="mt-1 w-full rounded-sm border border-input bg-card p-2.5 text-xs text-foreground outline-none"
             >
               {salones.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -84,7 +84,7 @@ export function NuevoReporteModal({
                 onChange={(e) =>
                   setReportCategory(e.target.value as "infraestructura" | "electrico" | "it" | "aseo")
                 }
-                className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+                className="mt-1 w-full rounded-sm border border-input bg-card p-2.5 text-xs text-foreground outline-none"
               >
                 <option value="it">Soporte IT / Videobeam</option>
                 <option value="electrico">Red Eléctrica / Luces</option>
@@ -100,7 +100,7 @@ export function NuevoReporteModal({
                 onChange={(e) =>
                   setReportPriority(e.target.value as "alta" | "media" | "baja" | "express")
                 }
-                className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+                className="mt-1 w-full rounded-sm border border-input bg-card p-2.5 text-xs text-foreground outline-none"
               >
                 <option value="alta">Alta (Impide la Clase)</option>
                 <option value="express">Express (Inmediato)</option>
@@ -117,12 +117,12 @@ export function NuevoReporteModal({
               value={reportDesc}
               onChange={(e) => setReportDesc(e.target.value)}
               placeholder="Describe la falla observada (ej. Videobeam no enciende, aire botando agua...)"
-              className="mt-1 w-full rounded-lg border border-input bg-card p-3 text-xs text-foreground outline-none"
+              className="mt-1 w-full rounded-sm border border-input bg-card p-3 text-xs text-foreground outline-none"
               required
             />
           </div>
 
-          <div className="rounded-lg border border-dashed border-primary/40 bg-primary/5 p-4 text-center space-y-2">
+          <div className="rounded-sm border border-dashed border-primary/40 bg-primary/5 p-3 text-center space-y-2">
             <Camera className="size-6 text-primary mx-auto" />
             <p className="text-xs font-bold text-foreground">Evidencia Fotográfica / Video Requerida</p>
             <p className="text-[11px] text-muted-foreground">
@@ -134,7 +134,7 @@ export function NuevoReporteModal({
                 type="button"
                 variant="outline"
                 onClick={() => setEvidenceUploaded(true)}
-                className="rounded-full text-xs gap-1.5 mt-1"
+                className="rounded-sm text-xs gap-1.5 mt-1"
               >
                 <Upload className="size-3.5" /> Capturar Foto/Video con Cámara
               </Button>
@@ -146,10 +146,10 @@ export function NuevoReporteModal({
           </div>
 
           <div className="flex gap-2">
-            <Button type="button" variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
+            <Button type="button" variant="outline" onClick={onClose} className="w-1/2 rounded-sm text-xs">
               Cancelar
             </Button>
-            <Button type="submit" className="w-1/2 h-8 sm:h-9 rounded-full text-xs font-bold gap-2">
+            <Button type="submit" className="w-1/2 h-8 sm:h-9 rounded-sm text-xs font-bold gap-2">
               <Send className="size-4" /> Enviar Reporte
             </Button>
           </div>

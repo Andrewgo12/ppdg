@@ -96,6 +96,7 @@ export interface NavItem {
 
 export interface SubRoleInfo {
   isTecnico?: boolean;
+  nav?: NavItem[];
   id: SubRoleId
   parentRole: RoleId
   category: "A. Estudiantes" | "B. Docentes y Personal" | "C. Mantenimiento" | "D. Almacén" | "E. Administración"
@@ -141,6 +142,13 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Reservar libros y consultar catálogo",
       "Descargar Pre-Paz y Salvo de biblioteca",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Mapa de Salones", icon: MapPin, view: "mapa" },
+      { label: "Reservar Cubículo", icon: CalendarCheck, view: "reservas" },
+      { label: "Catálogo Biblioteca", icon: BookOpen, view: "biblioteca" },
+    ]
   },
   estudiante_representante: {
     id: "estudiante_representante",
@@ -159,6 +167,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Solicitar insumos logísticos (sonido, silletería)",
       "Entregar espacios comunitarios con evidencia de aseo",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Reservar Plazoleta / Auditorio", icon: CalendarCheck, view: "espacios" },
+      { label: "Solicitud Logística", icon: PackageSearch, view: "insumos" },
+    ]
   },
   estudiante_monitor: {
     id: "estudiante_monitor",
@@ -177,6 +191,13 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Reportar fallas rápidas de hardware en laboratorio",
       "Validar entregas y devoluciones de material",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Asistencia Lab QR", icon: QrCode, view: "asistencia" },
+      { label: "Validar Préstamos QR", icon: BookOpen, view: "biblioteca" },
+      { label: "Reportar Falla Rapida", icon: AlertTriangle, view: "reportar" },
+    ]
   },
   estudiante_grado: {
     id: "estudiante_grado",
@@ -195,6 +216,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Generar Paz y Salvo digital con QR criptográfico",
       "Verificar estado cero deudas bibliotecarias",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Trámite Grado & Paz y Salvo", icon: FileCheck2, view: "grado" },
+      { label: "Consulta Biblioteca", icon: BookOpen, view: "biblioteca" },
+    ]
   },
 
   // B. Docentes
@@ -215,6 +242,13 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Reservar salones para recuperaciones y talleres",
       "Ver estado técnico de aulas asignadas",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Reportar Falla de Aula", icon: AlertTriangle, view: "reportar" },
+      { label: "Insumos Express Just-In-Time", icon: PackageSearch, view: "insumos" },
+      { label: "Mapa 2D Salones", icon: MapPin, view: "mapa" },
+    ]
   },
   director_programa: {
     id: "director_programa",
@@ -233,6 +267,13 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Avalar proyectos culturales estudiantiles",
       "Consultar MTTR y disponibilidad por facultad",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Indicadores KPIs & MTTR", icon: BarChart3, view: "indicadores" },
+      { label: "Aprobaciones de Eventos", icon: CheckSquare, view: "aprobaciones" },
+      { label: "Mapa & Ocupación", icon: MapPin, view: "mapa" },
+    ]
   },
   funcionario_eventos: {
     id: "funcionario_eventos",
@@ -251,6 +292,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Asignar órdenes a servicios generales y logística",
       "Gestionar silletería y montaje de eventos",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Aprobación Espacios Comunes", icon: CheckSquare, view: "aprobaciones" },
+      { label: "Calendario de Eventos", icon: CalendarCheck, view: "espacios" },
+    ]
   },
 
   // C. Mantenimiento
@@ -271,6 +318,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Cierre de ticket con foto/video obligatorios",
       "Cambiar estado de aula a 'En Mantenimiento'",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Tablero Kanban Tickets", icon: ClipboardList, view: "tickets" },
+      { label: "Atención Infraestructura", icon: Wrench, view: "atencion" },
+    ]
   },
   tecnico_electrico: {
     id: "tecnico_electrico",
@@ -289,6 +342,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Comprobar parámetros de voltaje e iluminancia",
       "Generar certificado de cumplimiento RETIE",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Tablero Kanban Eléctrico", icon: ClipboardList, view: "tickets" },
+      { label: "Emergencia RETIE", icon: Zap, view: "atencion" },
+    ]
   },
   tecnico_it: {
     id: "tecnico_it",
@@ -307,6 +366,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Pruebas de velocidad de red y calibración A/V",
       "Cierre con foto de prueba de proyección",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Tablero Kanban IT / Proyección", icon: ClipboardList, view: "tickets" },
+      { label: "Atender Insumos Express", icon: PackageSearch, view: "insumos" },
+    ]
   },
   tecnico_servicios: {
     id: "tecnico_servicios",
@@ -325,6 +390,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Reportar insumos de aseo consumidos",
       "Escalar daños de pintura o infraestructura",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Estado Aseo Salones", icon: Layers, view: "mapa" },
+      { label: "Confirmar Montajes", icon: CheckSquare, view: "aprobaciones" },
+    ]
   },
 
   // D. Almacén
@@ -345,6 +416,12 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Alertas automáticas de ítems bajo mínimo",
       "Registrar arqueos de inventario mensuales",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Data Grid Inventario", icon: Warehouse, view: "inventario" },
+      { label: "Aprobar Despachos (Ticket ID)", icon: Truck, view: "despachos" },
+    ]
   },
 
   // E. Admin
@@ -365,6 +442,13 @@ export const SUB_ROLES: Record<SubRoleId, SubRoleInfo> = {
       "Bloqueo y cierre de emergencia de bloques y salones",
       "Visor inalterable de Logs de Auditoría",
     ],
+
+    nav: [
+      { label: "Inicio", icon: LayoutDashboard, view: "inicio" },
+      { label: "Matriz RBAC & Seguridad", icon: Users, view: "usuarios" },
+      { label: "Indicadores KPIs Globales", icon: BarChart3, view: "indicadores" },
+      { label: "Bitácora de Auditoría", icon: FileText, view: "auditoria" },
+    ]
   },
 }
 

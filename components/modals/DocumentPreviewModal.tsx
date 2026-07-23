@@ -21,11 +21,11 @@ export function DocumentPreviewModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg w-[95vw] max-h-[85vh] overflow-y-auto rounded-sm border border-border bg-card p-3 shadow-2xl space-y-2.5">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="absolute right-4 top-3 rounded-sm p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
           aria-label="Cerrar modal"
         >
           <X className="size-5" />
@@ -40,7 +40,7 @@ export function DocumentPreviewModal({
         </div>
 
         {/* Simulación del PDF impreso oficial */}
-        <div className="rounded-lg border border-border bg-slate-50 dark:bg-slate-900 p-4 space-y-4 font-sans text-xs text-slate-800 dark:text-slate-200 shadow-inner">
+        <div className="rounded-sm border border-border bg-slate-50 dark:bg-slate-900 p-3 space-y-2.5 font-sans text-xs text-slate-800 dark:text-slate-200 shadow-inner">
           {/* Header oficial */}
           <div className="text-center border-b border-slate-300 dark:border-slate-700 pb-3 space-y-0.5">
             <p className="font-extrabold text-sm text-[#0F2043] dark:text-blue-400">INSTITUCIÓN UNIVERSITARIA ANTONIO JOSÉ CAMACHO</p>
@@ -49,7 +49,7 @@ export function DocumentPreviewModal({
           </div>
 
           {/* Datos Estudiante */}
-          <div className="space-y-1 bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+          <div className="space-y-1 bg-white dark:bg-slate-800 p-3 rounded-sm border border-slate-200 dark:border-slate-700">
             <p><span className="font-bold">Graduando:</span> {studentName}</p>
             <p><span className="font-bold">Programa:</span> Ingeniería de Sistemas</p>
             <p><span className="font-bold">Código:</span> 2024100982 | Cédula: 1.144.109.823</p>
@@ -59,10 +59,10 @@ export function DocumentPreviewModal({
           <div className="space-y-1">
             <p className="font-bold text-[11px] text-primary">Verificación de Paz y Salvos:</p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
-              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Biblioteca UniBiblio: Cero Deudas</li>
-              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Tesorería: Paz y Salvo Matrícula</li>
-              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Decanatura: Plan Aprobado</li>
-              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Laboratorios: Insumos al Día</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-sm font-semibold">✓ Biblioteca UniBiblio: Cero Deudas</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-sm font-semibold">✓ Tesorería: Paz y Salvo Matrícula</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-sm font-semibold">✓ Decanatura: Plan Aprobado</li>
+              <li className="bg-zinc-700/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-sm font-semibold">✓ Laboratorios: Insumos al Día</li>
             </ul>
           </div>
 
@@ -79,12 +79,12 @@ export function DocumentPreviewModal({
         </div>
 
         <div className="flex gap-2 pt-2">
-          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-full text-xs">
+          <Button variant="outline" onClick={onClose} className="w-1/2 rounded-sm text-xs">
             Cerrar Vista Previa
           </Button>
           <Button
             onClick={onConfirmDownload}
-            className="w-1/2 rounded-full text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white gap-1"
+            className="w-1/2 rounded-sm text-xs font-bold bg-zinc-800 hover:bg-emerald-700 text-white gap-1"
           >
             <Download className="size-3.5" />
             Descargar PDF Oficial
