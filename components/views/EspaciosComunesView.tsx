@@ -50,7 +50,7 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
   )
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
@@ -88,7 +88,7 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
       {/* Spaces Grid */}
       <div className="grid gap-6 md:grid-cols-3">
         {filteredEspacios.map((esp) => (
-          <div key={esp.id} className="group rounded-3xl border border-border bg-card overflow-hidden flex flex-col justify-between transition-all hover:border-primary/50 hover:shadow-xl">
+          <div key={esp.id} className="group rounded-xl border border-border bg-card overflow-hidden flex flex-col justify-between transition-all hover:border-primary/50 hover:shadow-xl">
             <div>
               <div className="relative h-44 w-full overflow-hidden bg-muted">
                 <img
@@ -105,8 +105,8 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
                 </span>
               </div>
 
-              <div className="p-5 space-y-2">
-                <span className="text-[10px] font-bold uppercase text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+              <div className="p-4 space-y-2">
+                <span className="text-[10px] font-bold uppercase text-primary bg-muted/40 px-2 py-0.5 rounded-full">
                   {esp.tipo}
                 </span>
                 <h3 className="text-base font-bold text-foreground">{esp.nombre}</h3>
@@ -128,7 +128,7 @@ export function EspaciosComunesView({ onOpenReservaModal }: EspaciosComunesViewP
               </div>
             </div>
 
-            <div className="p-5 pt-0">
+            <div className="p-4 pt-0">
               <Button
                 onClick={() => {
                   toast.success(`📅 Espacio "${esp.nombre}" Seleccionado`, {

@@ -20,7 +20,7 @@ export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioV
   }
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
@@ -39,7 +39,7 @@ export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioV
       </div>
 
       {/* Insumos Inventory Table */}
-      <div className="rounded-3xl border border-border bg-card p-5 space-y-3">
+      <div className="rounded-xl border border-border bg-card p-4 space-y-3">
         <h3 className="text-sm font-semibold text-foreground">Inventario de Componentes & Insumos</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-foreground">
@@ -85,7 +85,7 @@ export function AlmacenInventarioView({ insumos, despachos }: AlmacenInventarioV
       </div>
 
       {/* Despachos Table */}
-      <div className="rounded-3xl border border-border bg-card p-5 space-y-3">
+      <div className="rounded-xl border border-border bg-card p-4 space-y-3">
         <h3 className="text-sm font-semibold text-foreground">Historial de Despachos para Mantenimiento</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-foreground">

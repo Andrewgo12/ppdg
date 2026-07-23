@@ -12,7 +12,7 @@ interface StatProps {
 
 export function Stat({ label, value, change, icon }: StatProps) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-4 transition-all hover:shadow-md">
+    <div className="rounded-lg border border-border bg-card p-4 transition-all hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-xs font-medium text-muted-foreground">{label}</p>

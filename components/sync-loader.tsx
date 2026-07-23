@@ -48,22 +48,22 @@ export function SyncLoader({ roleId, subRoleId, onComplete }: SyncLoaderProps) {
   }, [subRoleId, subInfo])
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background p-6 text-foreground">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background p-4 text-foreground">
       {/* Background ambient glow */}
-      <div className="pointer-events-none absolute size-96 rounded-full bg-primary/10 blur-3xl animate-pulse" />
+      <div className="pointer-events-none absolute size-96 rounded-full bg-muted/40 blur-3xl animate-pulse" />
 
-      <div className="relative z-10 flex w-full max-w-md flex-col items-center text-center space-y-6">
+      <div className="relative z-10 flex w-full max-w-md flex-col items-center text-center space-y-4">
         {/* Animated Brand Logo */}
         <div className="relative flex items-center justify-center">
-          <div className="absolute size-24 rounded-3xl bg-primary/20 blur-md animate-ping opacity-30" />
-          <div className="relative flex size-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-xl">
+          <div className="absolute size-24 rounded-xl bg-primary/20 blur-md animate-ping opacity-30" />
+          <div className="relative flex size-16 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xl">
             <Building2 className="size-8 animate-pulse" />
           </div>
         </div>
 
         {/* Brand & User info */}
         <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-0.5 text-[11px] font-semibold text-primary">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-muted/40 px-3 py-0.5 text-[11px] font-semibold text-primary">
             <Sparkles className="size-3.5" />
             <span>SmartCampus Core Engine</span>
           </div>
@@ -74,9 +74,9 @@ export function SyncLoader({ roleId, subRoleId, onComplete }: SyncLoaderProps) {
         </div>
 
         {/* User Card */}
-        <div className="w-full rounded-2xl border border-border bg-card/80 p-3.5 shadow-sm backdrop-blur">
+        <div className="w-full rounded-lg border border-border bg-card/80 p-3.5 shadow-sm backdrop-blur">
           <div className="flex items-center gap-3">
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary font-bold text-sm">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-muted/40 text-primary font-bold text-sm">
               <ShieldCheck className="size-5" />
             </div>
             <div className="min-w-0 flex-1 text-left">

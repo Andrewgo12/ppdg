@@ -11,7 +11,7 @@ interface CardProps {
 export function Card({ title, subtitle, children, footer, highlighted }: CardProps) {
   return (
     <div
-      className={`rounded-2xl border p-5 transition-all ${
+      className={`rounded-lg border p-4 transition-all ${
         highlighted
           ? "border-primary bg-primary/5 shadow-md"
           : "border-border bg-card hover:border-primary/40"

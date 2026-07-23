@@ -10,7 +10,7 @@ interface AvatarProps {
 const SIZES = {
   sm: "size-8",
   md: "size-10",
-  lg: "size-12",
+  lg: "size-10",
 }
 
 export function Avatar({ src, initials, size = "md", status }: AvatarProps) {

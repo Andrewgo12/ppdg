@@ -55,12 +55,12 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <div className="w-full max-w-2xl rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-5 animate-in zoom-in-95 duration-200">
+      <div className="w-full max-w-2xl rounded-xl border border-border bg-card p-4 shadow-2xl space-y-3 animate-in zoom-in-95 duration-200">
         
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border/60 pb-4">
           <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary font-bold">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-muted/40 text-primary font-bold">
               <Cpu className="size-5" />
             </div>
             <div>
@@ -130,7 +130,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
             <p className="text-xs text-muted-foreground">
               Lista de acciones específicas otorgadas al sub-perfil <span className="font-bold text-foreground">{subRole}</span>:
             </p>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-1 sm:grid-cols-2">
               {permissions.map((pKey) => {
                 const def = PERMISSION_CATALOG[pKey]
                 return (
@@ -174,7 +174,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
         {/* Tab 3: Backup & LocalStorage */}
         {activeTab === "backup" && (
           <div className="space-y-4 text-xs">
-            <div className="rounded-2xl border border-border p-4 bg-background/80 space-y-3">
+            <div className="rounded-lg border border-border p-4 bg-background/80 space-y-3">
               <h3 className="font-bold text-foreground flex items-center gap-2">
                 <Download className="size-4 text-primary" />
                 Exportar Respaldo en JSON
@@ -187,7 +187,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
               </Button>
             </div>
 
-            <div className="rounded-2xl border border-border p-4 bg-background/80 space-y-3">
+            <div className="rounded-lg border border-border p-4 bg-background/80 space-y-3">
               <h3 className="font-bold text-foreground flex items-center gap-2">
                 <Upload className="size-4 text-primary" />
                 Restaurar o Cargar Respaldo JSON
@@ -196,12 +196,12 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
                 type="file"
                 accept=".json"
                 onChange={handleImportFile}
-                className="block w-full text-xs text-muted-foreground file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                className="block w-full text-xs text-muted-foreground file:mr-4 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-muted/40 file:text-primary hover:file:bg-primary/20"
               />
               {importStatus && <p className="text-xs font-bold text-primary">{importStatus}</p>}
             </div>
 
-            <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-4 space-y-2">
+            <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 space-y-2">
               <h3 className="font-bold text-destructive flex items-center gap-2">
                 <RefreshCw className="size-4" />
                 Restablecer Datos de Fabrica
@@ -219,7 +219,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
         {/* Tab 4: Security & Session Expire Simulator */}
         {activeTab === "security" && (
           <div className="space-y-4 text-xs">
-            <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 space-y-2 text-amber-800 dark:text-amber-200">
+            <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 space-y-2 text-amber-800 dark:text-amber-200">
               <h3 className="font-bold flex items-center gap-2">
                 <ShieldAlert className="size-4" />
                 Simulador de Expiración de Token JWT
@@ -232,7 +232,7 @@ export function SessionSimulatorModal({ subRole, onClose, onExpireSession }: Ses
               </Button>
             </div>
 
-            <div className="rounded-2xl border border-border p-4 bg-background/80 space-y-2">
+            <div className="rounded-lg border border-border p-4 bg-background/80 space-y-2">
               <h3 className="font-bold text-foreground">Información de Cabeceras HTTP simuladas</h3>
               <div className="space-y-1 font-mono text-[11px] text-muted-foreground bg-muted p-2.5 rounded-xl">
                 <p>Authorization: Bearer smartcampus_sim_token_9843209423</p>

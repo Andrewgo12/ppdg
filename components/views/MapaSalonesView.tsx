@@ -66,8 +66,8 @@ export function MapaSalonesView({ salones, onSelectSalon }: MapaSalonesViewProps
       </div>
 
       {/* Real-time Campus Metrics */}
-      <div className="grid gap-3 sm:grid-cols-4">
-        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
           <p className="text-[11px] font-semibold text-muted-foreground">Tasa de Ocupación</p>
           <div className="flex items-baseline gap-2">
             <span className="text-xl font-bold text-foreground">{tasaOcupacion}%</span>
@@ -78,26 +78,26 @@ export function MapaSalonesView({ salones, onSelectSalon }: MapaSalonesViewProps
           </div>
         </div>
 
-        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
           <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">Aulas Libres</p>
           <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">{disponibles} Disponibles</p>
           <p className="text-[10px] text-emerald-600 dark:text-emerald-400">Listas para clases o estudio</p>
         </div>
 
-        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3 space-y-1">
+        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 space-y-1">
           <p className="text-[11px] font-semibold text-amber-800 dark:text-amber-300">En Mantenimiento</p>
           <p className="text-xl font-bold text-amber-700 dark:text-amber-400">{mantenimiento} Salones</p>
           <p className="text-[10px] text-amber-600 dark:text-amber-400">Intervención técnica activa</p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
           <p className="text-[11px] font-semibold text-muted-foreground">Aforo Total Acumulado</p>
           <p className="text-xl font-bold text-foreground">{aforoTotal} Personas</p>
           <p className="text-[10px] text-muted-foreground">Capacidad en zonas seleccionadas</p>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 rounded-2xl bg-card border border-border p-3 text-xs">
+      <div className="flex flex-wrap gap-3 rounded-lg bg-card border border-border p-3 text-xs">
         <div className="flex items-center gap-1.5"><span className="size-3 rounded-full bg-emerald-500" /><span>Verde: Libre/Disponible</span></div>
         <div className="flex items-center gap-1.5"><span className="size-3 rounded-full bg-rose-500" /><span>Rojo: Clase en Curso</span></div>
         <div className="flex items-center gap-1.5"><span className="size-3 rounded-full bg-amber-500" /><span>Gris: En Mantenimiento</span></div>
@@ -105,7 +105,7 @@ export function MapaSalonesView({ salones, onSelectSalon }: MapaSalonesViewProps
         <div className="flex items-center gap-1.5"><span className="size-3 rounded-full bg-purple-600 animate-pulse" /><span>⚡ Púrpura: Riesgo Eléctrico</span></div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {filteredSalones.map((salon) => {
           const isDisp = salon.estado === "disponible"
           const isOcup = salon.estado === "ocupado"
@@ -116,7 +116,7 @@ export function MapaSalonesView({ salones, onSelectSalon }: MapaSalonesViewProps
             <div
               key={salon.id}
               onClick={() => onSelectSalon(salon)}
-              className={`group relative flex flex-col justify-between rounded-3xl border p-4 transition-all cursor-pointer hover:shadow-lg ${
+              className={`group relative flex flex-col justify-between rounded-xl border p-4 transition-all cursor-pointer hover:shadow-lg ${
                 isDisp ? "border-emerald-500/30 bg-emerald-500/5 hover:border-emerald-500" :
                 isOcup ? "border-rose-500/30 bg-rose-500/5 hover:border-rose-500" :
                 isMant ? "border-amber-500/30 bg-amber-500/5 hover:border-amber-500" :

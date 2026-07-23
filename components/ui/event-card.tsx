@@ -22,7 +22,7 @@ const STATUS_LABEL = {
 }
 
 const STATUS_COLOR = {
-  upcoming: "bg-primary/10 text-primary",
+  upcoming: "bg-muted/40 text-primary",
   ongoing: "bg-accent/10 text-accent",
   finished: "bg-muted text-muted-foreground",
 }
@@ -31,7 +31,7 @@ export function EventCard({ title, date, time, location, organizer, capacity, im
   return (
     <button
       onClick={onClick}
-      className="w-full overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary hover:shadow-md text-left"
+      className="w-full overflow-hidden rounded-lg border border-border bg-card transition-all hover:border-primary hover:shadow-md text-left"
     >
       {image && (
         <div className="h-32 w-full overflow-hidden bg-muted">

@@ -29,7 +29,7 @@ export function CerrarTicketModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -39,7 +39,7 @@ export function CerrarTicketModal({
         </button>
 
         <div className="flex items-center gap-3 border-b border-border pb-3">
-          <div className="flex size-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600">
+          <div className="flex size-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600">
             <CheckCircle2 className="size-5" />
           </div>
           <div>
@@ -59,11 +59,11 @@ export function CerrarTicketModal({
             value={cierreComentario}
             onChange={(e) => setCierreComentario(e.target.value)}
             placeholder="Describe la labor realizada y repuestos utilizados..."
-            className="mt-1 w-full rounded-2xl border border-input bg-card p-3 text-xs text-foreground outline-none"
+            className="mt-1 w-full rounded-lg border border-input bg-card p-3 text-xs text-foreground outline-none"
           />
         </div>
 
-        <div className="rounded-2xl border border-dashed border-emerald-500/40 bg-emerald-500/5 p-4 text-center space-y-2">
+        <div className="rounded-lg border border-dashed border-emerald-500/40 bg-emerald-500/5 p-4 text-center space-y-2">
           <Camera className="size-6 text-emerald-600 mx-auto" />
           <p className="text-xs font-bold text-foreground">Foto Evidencia de Reparación Final</p>
           <p className="text-[11px] text-muted-foreground">

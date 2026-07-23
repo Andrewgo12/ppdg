@@ -13,10 +13,10 @@ export function InsumosExpressView({ onRequestExpressSupply }: InsumosExpressVie
   const [expressSalon, setExpressSalon] = useState("Aula A-203")
 
   return (
-    <section className="space-y-6">
-      <div className="rounded-3xl border border-primary/30 bg-primary/5 p-6 space-y-4">
+    <section className="space-y-4">
+      <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+          <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <PackageSearch className="size-5" />
           </div>
           <div>
@@ -29,13 +29,13 @@ export function InsumosExpressView({ onRequestExpressSupply }: InsumosExpressVie
           </div>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           <div>
             <label className="text-xs font-medium text-foreground">Insumo Requerido</label>
             <select
               value={expressItem}
               onChange={(e) => setExpressItem(e.target.value)}
-              className="mt-1 w-full rounded-2xl border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+              className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
             >
               <option value="Cable HDMI 3m">Cable HDMI 3m</option>
               <option value="Caja Marcadores y Borrador">Caja Marcadores & Borrador</option>
@@ -49,7 +49,7 @@ export function InsumosExpressView({ onRequestExpressSupply }: InsumosExpressVie
             <select
               value={expressSalon}
               onChange={(e) => setExpressSalon(e.target.value)}
-              className="mt-1 w-full rounded-2xl border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+              className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
             >
               <option value="Aula A-203">Aula A-203</option>
               <option value="Aula A-101">Aula A-101</option>

@@ -25,7 +25,7 @@ export function TicketsMantenimientoView({
   const resueltos = tickets.filter((t) => t.estado === "resuelto").length
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
@@ -44,8 +44,8 @@ export function TicketsMantenimientoView({
       </div>
 
       {/* MTTR & Maintenance Statistics Bar */}
-      <div className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
           <p className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5">
             <Clock className="size-3.5 text-primary" />
             Tiempo Medio de Respuesta (MTTR)
@@ -54,14 +54,14 @@ export function TicketsMantenimientoView({
           <p className="text-[10px] text-emerald-600 font-medium">⚡ 25% más rápido que la meta de campus</p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
           <p className="text-[11px] font-semibold text-muted-foreground">Tickets Pendientes</p>
           <p className="text-xl font-bold text-amber-600 dark:text-amber-400">{pendientes} Incidencias</p>
 
           <p className="text-[10px] text-muted-foreground">Esperando intervención técnica</p>
         </div>
 
-        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
           <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">Tasa de Solución</p>
           <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
             {tickets.length > 0 ? Math.round((resueltos / tickets.length) * 100) : 100}%
@@ -79,12 +79,12 @@ export function TicketsMantenimientoView({
           return (
             <div
               key={tk.id}
-              className="rounded-3xl border border-border bg-card p-5 flex flex-wrap items-start justify-between gap-4 transition-all hover:border-primary/50"
+              className="rounded-xl border border-border bg-card p-4 flex flex-wrap items-start justify-between gap-4 transition-all hover:border-primary/50"
             >
               <div className="space-y-1 max-w-xl">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-bold text-primary">{tk.id}</span>
-                  <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase text-primary">
+                  <span className="rounded-full bg-muted/40 px-2.5 py-0.5 text-[10px] font-semibold uppercase text-primary">
                     {tk.categoria}
                   </span>
                   <span className="text-xs text-muted-foreground">· {tk.fecha}</span>

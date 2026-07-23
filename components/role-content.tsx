@@ -266,7 +266,7 @@ export function RoleContent({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* RENDER DEDICATED INDIVIDUAL SUB-PROFILE PANEL */}
       {activeView === "inicio" && (
         <>

@@ -15,7 +15,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-sm rounded-3xl border border-border bg-card shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-sm rounded-xl border border-border bg-card shadow-2xl overflow-hidden">
         {/* Encabezado Carnet - Franja Azul Institucional */}
         <div className="bg-[#0F2043] p-4 text-white text-center space-y-1 relative">
           <button
@@ -34,7 +34,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
         </div>
 
         {/* Cuerpo del Carnet */}
-        <div className="p-5 space-y-4 text-center">
+        <div className="p-4 space-y-4 text-center">
           {/* Avatar y Badge */}
           <div className="relative mx-auto size-20 rounded-full bg-gradient-to-tr from-primary to-accent p-1 shadow-md">
             <div className="flex size-full items-center justify-center rounded-full bg-card text-3xl font-bold">
@@ -51,7 +51,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
             <p className="text-[11px] text-muted-foreground mt-0.5">{subRoleInfo.title}</p>
           </div>
 
-          <div className="rounded-2xl bg-muted/40 p-3 space-y-1 text-xs text-left border border-border">
+          <div className="rounded-lg bg-muted/40 p-3 space-y-1 text-xs text-left border border-border">
             <div className="flex justify-between">
               <span className="text-muted-foreground">ID / Código:</span>
               <span className="font-mono font-bold text-foreground">2024100982</span>
@@ -67,7 +67,7 @@ export function CarnetDigitalModal({ isOpen, onClose, subRoleInfo }: CarnetDigit
           </div>
 
           {/* Código QR Verificador */}
-          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-3 space-y-1 flex flex-col items-center">
+          <div className="rounded-lg border border-border/60 bg-primary/5 p-3 space-y-1 flex flex-col items-center">
             <QrCode className="size-16 text-primary" />
             <p className="font-mono text-[10px] text-muted-foreground">QR-ID-{subRoleInfo.id.toUpperCase()}-2026</p>
             <span className="text-[9px] text-emerald-600 font-semibold flex items-center gap-1">

@@ -45,7 +45,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectResult }: GlobalSea
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-xl rounded-3xl border border-border bg-card shadow-2xl overflow-hidden space-y-3 p-4">
+      <div className="relative w-full max-w-xl rounded-xl border border-border bg-card shadow-2xl overflow-hidden space-y-3 p-4">
         {/* Input Bar */}
         <div className="flex items-center gap-3 border-b border-border pb-3 px-2">
           <Search className="size-5 text-primary shrink-0" />
@@ -79,7 +79,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectResult }: GlobalSea
                     onSelectResult(item.view)
                     onClose()
                   }}
-                  className="flex items-center justify-between p-3 rounded-2xl hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer group"
+                  className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/40 hover:text-primary transition-colors cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-muted group-hover:bg-primary/20 text-primary">

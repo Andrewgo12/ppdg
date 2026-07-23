@@ -22,7 +22,7 @@ export function CubiculoModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4 text-center">
+      <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4 text-center">
         <Clock className="size-10 text-primary mx-auto" />
         <h3 className="text-base font-bold text-foreground">Reserva Express Cubículo de Estudio</h3>
         <p className="text-xs text-muted-foreground">
@@ -32,7 +32,7 @@ export function CubiculoModal({
         <select
           value={cubiculoDuration}
           onChange={(e) => setCubiculoDuration(e.target.value)}
-          className="w-full rounded-2xl border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+          className="w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
         >
           <option value="1 Hora">1 Hora</option>
           <option value="2 Horas">2 Horas (Máximo Estándar)</option>

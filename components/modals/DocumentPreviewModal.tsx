@@ -22,7 +22,7 @@ export function DocumentPreviewModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -40,7 +40,7 @@ export function DocumentPreviewModal({
         </div>
 
         {/* Simulación del PDF impreso oficial */}
-        <div className="rounded-2xl border border-border bg-slate-50 dark:bg-slate-900 p-5 space-y-4 font-sans text-xs text-slate-800 dark:text-slate-200 shadow-inner">
+        <div className="rounded-lg border border-border bg-slate-50 dark:bg-slate-900 p-4 space-y-4 font-sans text-xs text-slate-800 dark:text-slate-200 shadow-inner">
           {/* Header oficial */}
           <div className="text-center border-b border-slate-300 dark:border-slate-700 pb-3 space-y-0.5">
             <p className="font-extrabold text-sm text-[#0F2043] dark:text-blue-400">INSTITUCIÓN UNIVERSITARIA ANTONIO JOSÉ CAMACHO</p>
@@ -58,7 +58,7 @@ export function DocumentPreviewModal({
           {/* Lista Dependencias */}
           <div className="space-y-1">
             <p className="font-bold text-[11px] text-primary">Verificación de Paz y Salvos:</p>
-            <ul className="grid grid-cols-2 gap-2 text-[10px]">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10px]">
               <li className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Biblioteca UniBiblio: Cero Deudas</li>
               <li className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Tesorería: Paz y Salvo Matrícula</li>
               <li className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 p-2 rounded-lg font-semibold">✓ Decanatura: Plan Aprobado</li>

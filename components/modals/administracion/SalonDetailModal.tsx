@@ -19,7 +19,7 @@ export function SalonDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -36,12 +36,12 @@ export function SalonDetailModal({
               <p className="text-xs text-muted-foreground">{selectedSalon.sede} · {selectedSalon.bloque} - {selectedSalon.piso}</p>
             </div>
           </div>
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase text-primary">
+          <span className="rounded-full bg-muted/40 px-3 py-1 text-xs font-bold uppercase text-primary">
             {selectedSalon.estado}
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 text-xs bg-muted/20 p-4 rounded-2xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-muted/20 p-4 rounded-lg">
           <div>
             <p className="text-muted-foreground">Capacidad Máxima</p>
             <p className="font-semibold text-foreground">{selectedSalon.capacidad} Personas</p>

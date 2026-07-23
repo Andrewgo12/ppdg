@@ -16,10 +16,10 @@ export function EstudianteMonitorPanel({
   onOpenAsistenciaLabModal,
 }: EstudianteMonitorPanelProps) {
   return (
-    <div className="rounded-3xl border border-primary/20 bg-card p-5 space-y-4 shadow-sm">
+    <div className="rounded-xl border border-border/60 bg-card p-4 space-y-4 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
         <div className="flex items-center gap-2.5">
-          <div className="flex size-9 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+          <div className="flex size-9 items-center justify-center rounded-lg bg-muted/40 text-primary">
             <UserCheck className="size-5" />
           </div>
           <div>
@@ -27,7 +27,7 @@ export function EstudianteMonitorPanel({
             <p className="text-xs text-muted-foreground">{subRoleInfo.title}</p>
           </div>
         </div>
-        <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+        <span className="rounded-full bg-muted/40 px-3 py-1 text-xs font-semibold text-primary">
           {subRoleInfo.badge}
         </span>
       </div>
@@ -57,7 +57,7 @@ export function EstudianteMonitorPanel({
         </Button>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 text-[11px] bg-muted/30 p-3 rounded-2xl pt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] bg-muted/30 p-3 rounded-lg pt-2">
         {subRoleInfo.permissions.map((perm, idx) => (
           <div key={idx} className="flex items-center gap-1.5 text-muted-foreground">
             <CheckCircle2 className="size-3 text-emerald-500 shrink-0" />

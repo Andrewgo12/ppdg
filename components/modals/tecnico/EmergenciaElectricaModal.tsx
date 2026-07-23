@@ -18,7 +18,7 @@ export function EmergenciaElectricaModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-3xl border border-amber-500/50 bg-card p-6 shadow-2xl space-y-4 text-center">
+      <div className="relative w-full max-w-md rounded-xl border border-amber-500/50 bg-card p-4 shadow-2xl space-y-4 text-center">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -27,7 +27,7 @@ export function EmergenciaElectricaModal({
           <X className="size-5" />
         </button>
 
-        <Zap className="size-12 text-amber-500 mx-auto animate-bounce" />
+        <Zap className="size-10 text-amber-500 mx-auto animate-bounce" />
         <h3 className="text-base font-bold text-foreground">Protocolo Aislamiento RETIE (Riesgo Alto)</h3>
         <p className="text-xs text-muted-foreground">
           Consola Técnico Eléctrico · Desconexión preventiva de la zona y bloqueo de seguridad del aula.

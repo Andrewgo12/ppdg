@@ -43,7 +43,7 @@ export function Dropdown({ label, options, onSelect }: DropdownProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-2xl border border-border bg-card shadow-lg">
+        <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-lg border border-border bg-card shadow-lg">
           <ul className="divide-y divide-border py-1">
             {options.map((option) => (
               <li key={option.id}>

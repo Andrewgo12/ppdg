@@ -14,7 +14,7 @@ export function Collapsible({ title, children, defaultOpen = false, icon }: Coll
   const [isOpen, setIsOpen] = useState(defaultOpen)
 
   return (
-    <div className="border border-border rounded-2xl overflow-hidden">
+    <div className="border border-border rounded-lg overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between gap-3 p-4 hover:bg-muted transition-colors"

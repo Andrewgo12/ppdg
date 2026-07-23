@@ -26,7 +26,7 @@ export function Input({ label, helperText, error, ...props }: InputProps) {
       {label && <Label required={props.required}>{label}</Label>}
       <input
         {...props}
-        className={`w-full rounded-2xl border px-4 py-2.5 text-sm outline-none transition-colors ${
+        className={`w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition-colors ${
           error
             ? "border-destructive focus:border-destructive focus:ring-destructive/20"
             : "border-input bg-card focus:border-ring focus:ring-2 focus:ring-ring/20"
@@ -53,7 +53,7 @@ export function Textarea({ label, helperText, error, ...props }: TextareaProps) 
       {label && <Label required={props.required}>{label}</Label>}
       <textarea
         {...props}
-        className={`w-full rounded-2xl border px-4 py-2.5 text-sm outline-none transition-colors ${
+        className={`w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition-colors ${
           error
             ? "border-destructive focus:border-destructive focus:ring-destructive/20"
             : "border-input bg-card focus:border-ring focus:ring-2 focus:ring-ring/20"
@@ -81,7 +81,7 @@ export function Select({ label, helperText, error, options, ...props }: SelectPr
       {label && <Label required={props.required}>{label}</Label>}
       <select
         {...props}
-        className={`w-full rounded-2xl border px-4 py-2.5 text-sm outline-none transition-colors ${
+        className={`w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition-colors ${
           error
             ? "border-destructive focus:border-destructive focus:ring-destructive/20"
             : "border-input bg-card focus:border-ring focus:ring-2 focus:ring-ring/20"

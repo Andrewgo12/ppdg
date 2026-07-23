@@ -4,7 +4,7 @@ import { BarChart3, TrendingUp, Clock, ShieldCheck, Zap, BookOpen, Users, CheckC
 
 export function IndicadoresKpiView() {
   return (
-    <section className="space-y-6">
+    <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
@@ -18,8 +18,8 @@ export function IndicadoresKpiView() {
       </div>
 
       {/* Primary Top Executive Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-3xl border border-border bg-card p-5 space-y-2">
+      <div className="grid gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-muted-foreground">Disponibilidad Campus</span>
             <Zap className="size-4 text-emerald-500" />
@@ -31,7 +31,7 @@ export function IndicadoresKpiView() {
           <p className="text-[10px] text-muted-foreground">113 de 120 salones operativos</p>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-5 space-y-2">
+        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-muted-foreground">Tiempo Respuesta MTTR</span>
             <Clock className="size-4 text-primary" />
@@ -43,7 +43,7 @@ export function IndicadoresKpiView() {
           <p className="text-[10px] text-emerald-600 font-semibold">⚡ Meta de 2.0h superada</p>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-5 space-y-2">
+        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-muted-foreground">Prestamos UniBiblio</span>
             <BookOpen className="size-4 text-purple-500" />
@@ -55,7 +55,7 @@ export function IndicadoresKpiView() {
           <p className="text-[10px] text-muted-foreground">99.1% con Paz y Salvo al día</p>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-5 space-y-2">
+        <div className="rounded-xl border border-border bg-card p-4 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-muted-foreground">Firmas Criptográficas</span>
             <ShieldCheck className="size-4 text-amber-500" />
@@ -69,8 +69,8 @@ export function IndicadoresKpiView() {
       </div>
 
       {/* Analytics Breakdown Grid */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-3xl border border-border bg-card p-5 space-y-4">
+      <div className="grid gap-4 md:grid-cols-1 sm:grid-cols-2">
+        <div className="rounded-xl border border-border bg-card p-4 space-y-4">
           <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
             <TrendingUp className="size-4 text-primary" />
             Consumo de Insumos por Facultad (Último Semestre)
@@ -108,13 +108,13 @@ export function IndicadoresKpiView() {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-5 space-y-4">
+        <div className="rounded-xl border border-border bg-card p-4 space-y-4">
           <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
             <Users className="size-4 text-primary" />
             Satisfacción Institucional y Cumplimiento RETIE
           </h3>
           <div className="space-y-2 text-xs">
-            <div className="p-3 rounded-2xl bg-muted/40 flex items-center justify-between">
+            <div className="p-3 rounded-lg bg-muted/40 flex items-center justify-between">
               <div>
                 <p className="font-bold text-foreground">Aulas con Certificación Eléctrica RETIE</p>
                 <p className="text-[11px] text-muted-foreground">Inspección de enchufes y tableros</p>
@@ -122,15 +122,15 @@ export function IndicadoresKpiView() {
               <span className="font-bold text-emerald-600 bg-emerald-500/10 px-2.5 py-1 rounded-full text-xs">100% Cumplido</span>
             </div>
 
-            <div className="p-3 rounded-2xl bg-muted/40 flex items-center justify-between">
+            <div className="p-3 rounded-lg bg-muted/40 flex items-center justify-between">
               <div>
                 <p className="font-bold text-foreground">Tiempo Emisión Paz y Salvo Grado</p>
                 <p className="text-[11px] text-muted-foreground">Promedio de generación instantánea</p>
               </div>
-              <span className="font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full text-xs">0.5 Segundos</span>
+              <span className="font-bold text-primary bg-muted/40 px-2.5 py-1 rounded-full text-xs">0.5 Segundos</span>
             </div>
 
-            <div className="p-3 rounded-2xl bg-muted/40 flex items-center justify-between">
+            <div className="p-3 rounded-lg bg-muted/40 flex items-center justify-between">
               <div>
                 <p className="font-bold text-foreground">Efectividad Solicitudes Express</p>
                 <p className="text-[11px] text-muted-foreground">Atención de insumos en clase</p>

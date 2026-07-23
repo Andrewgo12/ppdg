@@ -22,7 +22,7 @@ export function Modal({ isOpen, onClose, title, children, actions, size = "md" }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className={`w-full rounded-3xl border border-border bg-card p-6 shadow-lg ${SIZES[size]}`}>
+      <div className={`w-full rounded-xl border border-border bg-card p-4 shadow-lg ${SIZES[size]}`}>
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-foreground">{title}</h2>
           <button

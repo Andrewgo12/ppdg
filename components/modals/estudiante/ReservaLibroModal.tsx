@@ -21,7 +21,7 @@ export function ReservaLibroModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -38,7 +38,7 @@ export function ReservaLibroModal({
           </div>
         </div>
 
-        <div className="bg-muted/30 p-4 rounded-2xl space-y-1 text-xs">
+        <div className="bg-muted/30 p-4 rounded-lg space-y-1 text-xs">
           <p className="font-bold text-foreground text-sm">{selectedBook.titulo}</p>
           <p className="text-muted-foreground">Autor: {selectedBook.autor}</p>
           <p className="text-muted-foreground">Ubicación: {selectedBook.ubicacion}</p>

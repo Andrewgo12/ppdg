@@ -4,7 +4,7 @@ export function Spinner({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
   const sizes = {
     sm: "size-4",
     md: "size-8",
-    lg: "size-12",
+    lg: "size-10",
   }
 
   return (

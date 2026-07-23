@@ -34,7 +34,7 @@ export function ReservaEventoModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4">
+      <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -45,7 +45,7 @@ export function ReservaEventoModal({
 
         <form onSubmit={handleCreateReserva} className="space-y-4">
           <div className="flex items-center gap-3 border-b border-border pb-3">
-            <div className="flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+            <div className="flex size-10 items-center justify-center rounded-lg bg-muted/40 text-primary">
               <CalendarCheck className="size-5" />
             </div>
             <div>
@@ -59,7 +59,7 @@ export function ReservaEventoModal({
             <select
               value={eventSpace}
               onChange={(e) => setEventSpace(e.target.value)}
-              className="mt-1 w-full rounded-2xl border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+              className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
             >
               <option value="Plazoleta Central">Plazoleta Central</option>
               <option value="Auditorio Sede Principal">Auditorio Sede Principal</option>
@@ -68,14 +68,14 @@ export function ReservaEventoModal({
             </select>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="text-xs font-semibold text-foreground">Fecha del Evento</label>
               <input
                 type="date"
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
-                className="mt-1 w-full rounded-2xl border border-input bg-card p-2 text-xs text-foreground outline-none"
+                className="mt-1 w-full rounded-lg border border-input bg-card p-2 text-xs text-foreground outline-none"
               />
             </div>
 
@@ -85,7 +85,7 @@ export function ReservaEventoModal({
                 type="number"
                 value={eventAforo}
                 onChange={(e) => setEventAforo(Number(e.target.value))}
-                className="mt-1 w-full rounded-2xl border border-input bg-card p-2 text-xs text-foreground outline-none"
+                className="mt-1 w-full rounded-lg border border-input bg-card p-2 text-xs text-foreground outline-none"
               />
             </div>
           </div>
@@ -97,7 +97,7 @@ export function ReservaEventoModal({
               value={eventLogistics}
               onChange={(e) => setEventLogistics(e.target.value)}
               placeholder="Ej. 20 Sillas, 2 Mesas, Sonido..."
-              className="mt-1 w-full rounded-2xl border border-input bg-card p-2.5 text-xs text-foreground outline-none"
+              className="mt-1 w-full rounded-lg border border-input bg-card p-2.5 text-xs text-foreground outline-none"
             />
           </div>
 

@@ -17,7 +17,7 @@ export function ScanQrModal({ isOpen, onClose, onConfirmScanQr }: ScanQrModalPro
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4 text-center">
+      <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-4 shadow-2xl space-y-4 text-center">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -37,7 +37,7 @@ export function ScanQrModal({ isOpen, onClose, onConfirmScanQr }: ScanQrModalPro
         </div>
 
         {/* Viewfinder Box with Laser Animation */}
-        <div className="relative mx-auto w-56 h-56 rounded-2xl border-2 border-primary/40 bg-slate-950/90 overflow-hidden flex flex-col items-center justify-center">
+        <div className="relative mx-auto w-56 h-56 rounded-lg border-2 border-primary/40 bg-slate-950/90 overflow-hidden flex flex-col items-center justify-center">
           {/* Corner Markers */}
           <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-primary" />
           <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-primary" />

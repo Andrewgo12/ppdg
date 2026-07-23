@@ -28,7 +28,7 @@ export function SearchBox({ placeholder = "Buscar...", onSearch, onClear }: Sear
           setValue(e.target.value)
           onSearch?.(e.target.value)
         }}
-        className="w-full rounded-2xl border border-input bg-card pl-10 pr-10 py-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
+        className="w-full rounded-lg border border-input bg-card pl-10 pr-10 py-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
       />
       {value && (
         <button

@@ -12,7 +12,7 @@ export function CodeBlock({ code, language = "javascript", showLineNumbers = fal
   const lines = code.split("\n")
 
   return (
-    <div className="rounded-2xl border border-border bg-card overflow-hidden">
+    <div className="rounded-lg border border-border bg-card overflow-hidden">
       <div className="flex items-center justify-between bg-muted px-4 py-3">
         <span className="text-xs font-medium text-muted-foreground">{language}</span>
         <div className="flex gap-2">

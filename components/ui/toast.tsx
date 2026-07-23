@@ -20,7 +20,7 @@ const ICONS = {
 const STYLES = {
   success: "bg-accent/10 text-accent border-accent/20",
   error: "bg-destructive/10 text-destructive border-destructive/20",
-  info: "bg-primary/10 text-primary border-primary/20",
+  info: "bg-muted/40 text-primary border-border/60",
   warning: "bg-chart-3/15 text-chart-3 border-chart-3/20",
 }
 
@@ -42,7 +42,7 @@ export function Toast({ type = "info", message, onClose, autoClose = 4000 }: Toa
   const Icon = ICONS[type]
 
   return (
-    <div className={`flex items-center gap-3 rounded-2xl border p-4 ${STYLES[type]}`}>
+    <div className={`flex items-center gap-3 rounded-lg border p-4 ${STYLES[type]}`}>
       <Icon className="size-5 shrink-0" />
       <p className="flex-1 text-sm font-medium">{message}</p>
       <button

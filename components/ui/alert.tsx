@@ -14,8 +14,8 @@ interface AlertProps {
 
 const STYLES = {
   info: {
-    bg: "bg-primary/10",
-    border: "border-primary/20",
+    bg: "bg-muted/40",
+    border: "border-border/60",
     text: "text-primary",
     icon: Info,
   },
@@ -44,7 +44,7 @@ export function Alert({ type = "info", title, message, action }: AlertProps) {
   const Icon = style.icon
 
   return (
-    <div className={`rounded-2xl border p-4 ${style.bg} ${style.border}`}>
+    <div className={`rounded-lg border p-4 ${style.bg} ${style.border}`}>
       <div className="flex items-start gap-3">
         <Icon className={`size-5 shrink-0 ${style.text} mt-0.5`} />
         <div className="flex-1">

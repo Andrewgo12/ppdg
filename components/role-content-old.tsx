@@ -16,7 +16,7 @@ function Panel({
   className?: string
 }) {
   return (
-    <section className={`rounded-3xl border border-border bg-card p-5 sm:p-6 ${className}`}>
+    <section className={`rounded-xl border border-border bg-card p-4 sm:p-4 ${className}`}>
       <div className="mb-5 flex items-center justify-between gap-3">
         <h2 className="text-base font-semibold tracking-tight text-foreground">{title}</h2>
         {action && (
@@ -36,7 +36,7 @@ function StatusChip({ label, tone }: { label: string; tone: Tone }) {
   const styles: Record<Tone, string> = {
     free: "bg-accent/10 text-accent",
     busy: "bg-destructive/10 text-destructive",
-    reserved: "bg-primary/10 text-primary",
+    reserved: "bg-muted/40 text-primary",
     maint: "bg-chart-3/15 text-chart-3",
   }
   return (
@@ -82,7 +82,7 @@ function GhostBtn({ children }: { children: React.ReactNode }) {
 /* Access note reused across role pages */
 function AccessNote({ children }: { children: React.ReactNode }) {
   return (
-    <p className="rounded-2xl bg-secondary px-4 py-3 text-xs leading-relaxed text-secondary-foreground">
+    <p className="rounded-lg bg-secondary px-4 py-3 text-xs leading-relaxed text-secondary-foreground">
       {children}
     </p>
   )
@@ -103,9 +103,9 @@ function StudentHome() {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
       <Panel title="Salones disponibles ahora" action="Ver mapa" className="lg:col-span-2">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {ROOMS.map((r) => (
-            <div key={r.code} className="rounded-2xl border border-border p-4">
+            <div key={r.code} className="rounded-lg border border-border p-4">
               <span className="font-semibold text-foreground">{r.code}</span>
               <div className="mt-2">
                 <StatusChip label={r.label} tone={r.tone} />
@@ -121,7 +121,7 @@ function StudentHome() {
             { t: "Cálculo de una variable", s: "Vence en 3 días", warn: true },
             { t: "Física universitaria", s: "Recoger hoy", warn: false },
           ].map((b) => (
-            <li key={b.t} className="rounded-2xl border border-border p-4">
+            <li key={b.t} className="rounded-lg border border-border p-4">
               <p className="text-sm font-medium text-foreground">{b.t}</p>
               <p className={`mt-1 text-xs ${b.warn ? "text-chart-3" : "text-muted-foreground"}`}>
                 {b.s}
@@ -142,14 +142,14 @@ function StudentMapa() {
         subtitle="Ocupación en tiempo real de la Sede Principal. Toca un salón para ver el detalle."
       />
       <Panel title="Bloque A · Bloque B">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4">
           {ROOMS.concat([
             { code: "A-108", tone: "free", label: "Libre", detail: "Cap. 35" },
             { code: "B-210", tone: "busy", label: "Ocupado", detail: "Química" },
           ]).map((r) => (
             <div
               key={r.code}
-              className="flex flex-col gap-2 rounded-2xl border border-border p-4 transition-colors hover:border-primary/40"
+              className="flex flex-col gap-2 rounded-lg border border-border p-4 transition-colors hover:border-primary/40"
             >
               <span className="font-semibold text-foreground">{r.code}</span>
               <StatusChip label={r.label} tone={r.tone} />
@@ -178,7 +178,7 @@ function StudentReservas() {
                 key={s}
                 type="button"
                 disabled={i === 2}
-                className="rounded-2xl border border-border py-3 text-sm font-medium text-foreground transition-colors enabled:hover:border-primary enabled:hover:text-primary disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
+                className="rounded-lg border border-border py-3 text-sm font-medium text-foreground transition-colors enabled:hover:border-primary enabled:hover:text-primary disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
               >
                 {s}
               </button>
@@ -194,7 +194,7 @@ function StudentReservas() {
               { t: "Sala-E1 · Hoy 14:00", s: "Estudio grupal" },
               { t: "Libro reservado", s: "Recoger en biblioteca" },
             ].map((r) => (
-              <li key={r.t} className="rounded-2xl border border-border p-4">
+              <li key={r.t} className="rounded-lg border border-border p-4">
                 <p className="text-sm font-medium text-foreground">{r.t}</p>
                 <p className="mt-1 text-xs text-muted-foreground">{r.s}</p>
               </li>
@@ -220,11 +220,11 @@ function StudentBiblioteca() {
         subtitle="Reserva libros y recibe tu código QR para el préstamo digital."
       />
       <Panel title="Catálogo" action="Buscar">
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-1 sm:grid-cols-2">
           {books.map((b) => (
             <div
               key={b.t}
-              className="flex items-center justify-between gap-3 rounded-2xl border border-border p-4"
+              className="flex items-center justify-between gap-3 rounded-lg border border-border p-4"
             >
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium text-foreground">{b.t}</p>
@@ -288,7 +288,7 @@ function TeacherHome() {
             { t: "Marcadores x3", s: "Aprobado · Recoger" },
             { t: "Cable HDMI", s: "Pendiente de despacho" },
           ].map((i) => (
-            <li key={i.t} className="rounded-2xl border border-border p-4">
+            <li key={i.t} className="rounded-lg border border-border p-4">
               <p className="text-sm font-medium text-foreground">{i.t}</p>
               <p className="mt-1 text-xs text-muted-foreground">{i.s}</p>
             </li>
@@ -313,7 +313,7 @@ function TeacherReportar() {
               <label className="mb-1.5 block text-sm font-medium text-foreground">Salón</label>
               <input
                 defaultValue="A-203"
-                className="w-full rounded-2xl border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
+                className="w-full rounded-lg border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
               />
             </div>
             <div>
@@ -340,7 +340,7 @@ function TeacherReportar() {
               <textarea
                 rows={3}
                 defaultValue="El videobeam no proyecta señal desde el HDMI 1."
-                className="w-full rounded-2xl border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
+                className="w-full rounded-lg border border-input bg-card px-4 py-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/20"
               />
             </div>
             <PrimaryBtn>Enviar reporte</PrimaryBtn>
@@ -361,14 +361,14 @@ function TeacherInsumos() {
         title="Solicitar insumos"
         subtitle="Pide materiales directamente al almacén; requieren aprobación."
       />
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-1 sm:grid-cols-2">
         <Panel title="Solicitud rápida">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {["Marcadores", "Cable HDMI", "Borrador", "Adaptador VGA"].map((i) => (
               <button
                 key={i}
                 type="button"
-                className="rounded-2xl border border-border p-4 text-left text-sm font-medium text-foreground transition-colors hover:border-primary/40"
+                className="rounded-lg border border-border p-4 text-left text-sm font-medium text-foreground transition-colors hover:border-primary/40"
               >
                 {i}
               </button>
@@ -387,7 +387,7 @@ function TeacherInsumos() {
             ].map((i) => (
               <li
                 key={i.t}
-                className="flex items-center justify-between gap-3 rounded-2xl border border-border p-4"
+                className="flex items-center justify-between gap-3 rounded-lg border border-border p-4"
               >
                 <span className="text-sm font-medium text-foreground">{i.t}</span>
                 <StatusChip label={i.s} tone={i.tone} />
@@ -408,11 +408,11 @@ function TeacherReservas() {
         subtitle="Aparta espacios para tutorías o clases de recuperación."
       />
       <Panel title="Salones disponibles" action="Filtrar">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {ROOMS.filter((r) => r.tone === "free").concat([
             { code: "B-110", tone: "free", label: "Libre", detail: "Cap. 30" },
           ]).map((r) => (
-            <div key={r.code + r.detail} className="rounded-2xl border border-border p-4">
+            <div key={r.code + r.detail} className="rounded-lg border border-border p-4">
               <span className="font-semibold text-foreground">{r.code}</span>
               <p className="mt-1 text-xs text-muted-foreground">{r.detail}</p>
               <button
@@ -444,7 +444,7 @@ function TicketList({ items }: { items: typeof TICKETS }) {
       {items.map((t) => (
         <li
           key={t.id}
-          className="flex flex-wrap items-center gap-3 rounded-2xl border border-border p-4"
+          className="flex flex-wrap items-center gap-3 rounded-lg border border-border p-4"
         >
           <span className="font-semibold text-foreground">{t.id}</span>
           <span className="text-sm text-muted-foreground">{t.room}</span>
@@ -495,7 +495,7 @@ function TechnicianAtencion() {
       <Panel title="Trabajos activos">
         <ul className="space-y-3">
           {TICKETS.filter((t) => t.tone === "busy").map((t) => (
-            <li key={t.id} className="rounded-2xl border border-border p-4">
+            <li key={t.id} className="rounded-lg border border-border p-4">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="font-semibold text-foreground">{t.id}</span>
                 <span className="text-sm text-muted-foreground">{t.room}</span>
@@ -568,7 +568,7 @@ function WarehouseHome() {
             { t: "Cable HDMI · #1042", s: "Con ticket · Autorizar" },
             { t: "Marcadores · Prof. Gil", s: "Requiere aprobación" },
           ].map((d) => (
-            <li key={d.t} className="rounded-2xl border border-border p-4">
+            <li key={d.t} className="rounded-lg border border-border p-4">
               <p className="text-sm font-medium text-foreground">{d.t}</p>
               <p className="mt-1 text-xs text-muted-foreground">{d.s}</p>
               <button
@@ -613,7 +613,7 @@ function WarehouseDespachos() {
             { t: "Marcadores · Prof. Gil", s: "Requiere aprobación", tone: "maint" as Tone },
             { t: "Tóner · Secretaría", s: "Sin ticket · revisar", tone: "busy" as Tone },
           ].map((d) => (
-            <li key={d.t} className="rounded-2xl border border-border p-4">
+            <li key={d.t} className="rounded-lg border border-border p-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-sm font-medium text-foreground">{d.t}</p>
@@ -646,7 +646,7 @@ function WarehouseAlertas() {
           {low.map((i) => (
             <li
               key={i.name}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border p-4"
+              className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border p-4"
             >
               <div>
                 <p className="text-sm font-medium text-foreground">{i.name}</p>
@@ -699,7 +699,7 @@ function ApprovalList() {
   return (
     <ul className="space-y-3">
       {APPROVALS.map((a) => (
-        <li key={a.who} className="rounded-2xl border border-border p-4">
+        <li key={a.who} className="rounded-lg border border-border p-4">
           <p className="text-sm font-medium text-foreground">{a.who}</p>
           <p className="mt-0.5 text-xs text-muted-foreground">{a.what}</p>
           <div className="mt-3 flex gap-2">
@@ -738,9 +738,9 @@ function AdminIndicadores() {
         title="Indicadores institucionales"
         subtitle="Tiempos de respuesta, uso de salones y recurrencia de fallas."
       />
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:grid-cols-4">
         {kpis.map((k) => (
-          <div key={k.l} className="rounded-3xl border border-border bg-card p-5">
+          <div key={k.l} className="rounded-xl border border-border bg-card p-4">
             <p className="text-xs font-medium text-muted-foreground">{k.l}</p>
             <p className="mt-1 text-2xl font-semibold tracking-tight text-foreground">{k.v}</p>
             <p className="mt-0.5 text-xs text-muted-foreground">{k.h}</p>
@@ -817,9 +817,9 @@ function AdminEspacios() {
         subtitle="Controla salones libres, ocupados o en mantenimiento."
       />
       <Panel title="Todos los salones">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4">
           {ROOMS.map((r) => (
-            <div key={r.code} className="rounded-2xl border border-border p-4">
+            <div key={r.code} className="rounded-lg border border-border p-4">
               <span className="font-semibold text-foreground">{r.code}</span>
               <div className="mt-2">
                 <StatusChip label={r.label} tone={r.tone} />

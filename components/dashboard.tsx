@@ -69,7 +69,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
   const sidebar = (
     <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex items-center gap-3 px-5 py-5">
-        <div className="flex size-9 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
+        <div className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
           <Building2 className="size-5" aria-hidden="true" />
         </div>
         <div className="min-w-0">
@@ -99,7 +99,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                 setMobileOpen(false)
               }}
               aria-current={isActive ? "page" : undefined}
-              className={`flex w-full items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-medium transition-colors ${
+              className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
@@ -116,13 +116,13 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
         <button
           type="button"
           onClick={() => setCarnetOpen(true)}
-          className="flex w-full items-center gap-2 rounded-xl bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition-colors"
+          className="flex w-full items-center gap-2 rounded-xl bg-muted/40 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition-colors"
         >
           <CreditCard className="size-4" />
           <span>Ver Mi Carnet Digital</span>
         </button>
 
-        <div className="flex items-center gap-3 rounded-2xl px-2 py-1.5">
+        <div className="flex items-center gap-3 rounded-lg px-2 py-1.5">
           <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
             {activeSubRole ? activeSubRole.avatar : role.avatar}
           </div>
@@ -205,7 +205,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
             <button
               type="button"
               onClick={() => setSimModalOpen(true)}
-              className="flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary/20 transition-all shadow-2xs"
+              className="flex items-center gap-1.5 rounded-full bg-muted/40 border border-border/60 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary/20 transition-all shadow-2xs"
             >
               <Cpu className="size-3.5" />
               <span className="hidden sm:inline">Consola RBAC & BD</span>
@@ -228,7 +228,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
 
             {/* Notification Popover Panel */}
             {notifOpen && (
-              <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 rounded-3xl border border-border bg-card p-4 shadow-2xl space-y-3">
+              <div className="absolute right-0 top-12 z-50 w-80 sm:w-96 rounded-xl border border-border bg-card p-4 shadow-2xl space-y-3">
                 <div className="flex items-center justify-between border-b border-border pb-2">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-1.5">
                     <Sparkles className="size-4 text-primary" /> Notificaciones Push Campus
@@ -247,7 +247,7 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                   {notificaciones.map((n) => (
                     <div
                       key={n.id}
-                      className={`p-3 rounded-2xl border text-xs space-y-1 transition-all ${
+                      className={`p-3 rounded-lg border text-xs space-y-1 transition-all ${
                         !n.leida ? "bg-primary/5 border-primary/30" : "bg-muted/20 border-border"
                       }`}
                     >
@@ -276,13 +276,13 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
 
         {/* Content */}
         <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-10">
-          <div className="mx-auto max-w-6xl space-y-6">
+          <div className="mx-auto max-w-6xl space-y-4">
             {isHome && (
               <>
                 {/* Greeting */}
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted/40 text-primary">
                       <RoleIcon className="size-6" aria-hidden="true" />
                     </span>
                     <div>
@@ -300,11 +300,11 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
                   {role.stats.map((stat) => (
                     <div
                       key={stat.label}
-                      className="rounded-3xl border border-border bg-card p-5"
+                      className="rounded-xl border border-border bg-card p-4"
                     >
                       <p className="text-xs font-medium text-muted-foreground">{stat.label}</p>
                       <p
@@ -322,15 +322,15 @@ export function Dashboard({ roleId, initialSubRoleId, onLogout }: DashboardProps
                   <h2 className="mb-3 text-sm font-semibold tracking-tight text-foreground">
                     Tus Módulos de Operación
                   </h2>
-                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid gap-3 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {role.modules.map((mod) => {
                       const Icon = mod.icon
                       return (
                         <div
                           key={mod.title}
-                          className="group flex flex-col items-start gap-3 rounded-3xl border border-border bg-card p-5 text-left transition-all hover:-translate-y-0.5 hover:shadow-md"
+                          className="group flex flex-col items-start gap-3 rounded-xl border border-border bg-card p-4 text-left transition-all hover:-translate-y-0.5 hover:shadow-md"
                         >
-                          <span className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                          <span className="flex size-9 items-center justify-center rounded-lg bg-muted/40 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                             <Icon className="size-5" aria-hidden="true" />
                           </span>
                           <span className="font-medium text-foreground">{mod.title}</span>

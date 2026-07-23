@@ -79,7 +79,7 @@ export function SignaturePad({ onSaveSignature, label = "Firma Digital en Pantal
   }
 
   return (
-    <div className="space-y-2 rounded-2xl border border-border bg-card p-3">
+    <div className="space-y-2 rounded-lg border border-border bg-card p-3">
       <div className="flex items-center justify-between">
         <label className="text-xs font-semibold text-foreground flex items-center gap-1.5">
           <PenTool className="size-3.5 text-primary" />

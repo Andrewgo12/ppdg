@@ -18,7 +18,7 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
   const tarifaMultaPorDia = 2500
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
@@ -32,8 +32,8 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
       </div>
 
       {/* Real-time Fine & Loan Statistics */}
-      <div className="grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
           <p className="text-[11px] font-semibold text-muted-foreground flex items-center gap-1.5">
             <Calculator className="size-3.5 text-primary" />
             Tarifa de Sanción / Mora por Día
@@ -42,13 +42,13 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
           <p className="text-[10px] text-muted-foreground">Calculado automáticamente sobre préstamos vencidos</p>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-3 space-y-1">
+        <div className="rounded-lg border border-border bg-card p-3 space-y-1">
           <p className="text-[11px] font-semibold text-muted-foreground">Préstamos Activos en Sistema</p>
           <p className="text-xl font-bold text-primary">{totalReservas} Ejemplares</p>
           <p className="text-[10px] text-muted-foreground">Con firma digital registrada</p>
         </div>
 
-        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
+        <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 space-y-1">
           <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">Estado de Paz y Salvo</p>
           <p className="text-xl font-bold text-emerald-700 dark:text-emerald-400">
             {morosos === 0 ? "100% CERO DEUDAS" : `$${morosos * tarifaMultaPorDia} COP PENDIENTE`}
@@ -60,11 +60,11 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
       </div>
 
       {/* Libros Catalog Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {libros.map((libro) => (
-          <div key={libro.id} className="rounded-3xl border border-border bg-card p-5 flex flex-col justify-between">
+          <div key={libro.id} className="rounded-xl border border-border bg-card p-4 flex flex-col justify-between">
             <div>
-              <span className="text-[10px] font-bold uppercase text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold uppercase text-primary bg-muted/40 px-2 py-0.5 rounded-full">
                 {libro.categoria}
               </span>
               <h3 className="text-sm font-semibold text-foreground mt-2">{libro.titulo}</h3>
@@ -89,7 +89,7 @@ export function UniBiblioView({ libros, prestamos, onReserveBook }: UniBiblioVie
       </div>
 
       {/* Active Loans Table */}
-      <div className="rounded-3xl border border-border bg-card p-5 space-y-3">
+      <div className="rounded-xl border border-border bg-card p-4 space-y-3">
         <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
           <QrCode className="size-4 text-primary" />
           Tus Préstamos y Tickets QR Activos

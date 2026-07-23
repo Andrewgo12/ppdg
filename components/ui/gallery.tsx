@@ -11,11 +11,11 @@ interface GalleryProps {
 
 export function Gallery({ images, columns = 3 }: GalleryProps) {
   return (
-    <div className={`grid gap-3 sm:grid-cols-2 lg:grid-cols-${columns}`}>
+    <div className={`grid gap-3 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-${columns}`}>
       {images.map((image, index) => (
         <div
           key={index}
-          className="group relative overflow-hidden rounded-2xl border border-border bg-muted aspect-square cursor-pointer"
+          className="group relative overflow-hidden rounded-lg border border-border bg-muted aspect-square cursor-pointer"
         >
           <img
             src={image.src}

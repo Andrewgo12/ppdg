@@ -54,7 +54,7 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
   }
 
   return (
-    <section className="space-y-6">
+    <section className="space-y-4">
       <input
         type="file"
         ref={fileInputRef}
@@ -90,7 +90,7 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {Object.values(SUB_ROLES).map((s) => {
           const isSel = currentSubRoleId === s.id
           const pKeys = getRolePermissions(s.id)
@@ -98,14 +98,14 @@ export function UsuariosRbacView({ currentSubRoleId, onSelectSubRole }: Usuarios
             <div
               key={s.id}
               onClick={() => onSelectSubRole(s.id)}
-              className={`rounded-3xl border p-5 transition-all cursor-pointer ${
+              className={`rounded-xl border p-4 transition-all cursor-pointer ${
                 isSel
-                  ? "border-primary bg-primary/10 shadow-md ring-2 ring-primary/20"
+                  ? "border-primary bg-muted/40 shadow-md ring-2 ring-primary/20"
                   : "border-border bg-card hover:border-primary/50"
               }`}
             >
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold uppercase text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold uppercase text-primary bg-muted/40 px-2 py-0.5 rounded-full">
                   {s.category}
                 </span>
                 {isSel && (

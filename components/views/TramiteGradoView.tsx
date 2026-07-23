@@ -34,8 +34,8 @@ export function TramiteGradoView({
     })
   }
   return (
-    <section className="space-y-6">
-      <div className="rounded-3xl border border-border bg-card p-6 space-y-4">
+    <section className="space-y-4">
+      <div className="rounded-xl border border-border bg-card p-4 space-y-4">
         <div className="flex items-center gap-3">
           <FileCheck2 className="size-6 text-primary" />
           <div>
@@ -49,8 +49,8 @@ export function TramiteGradoView({
         </div>
 
         {/* Steps Timeline */}
-        <div className="grid gap-4 sm:grid-cols-3 pt-2">
-          <div className="rounded-2xl border border-border p-4 bg-muted/20">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 pt-2">
+          <div className="rounded-lg border border-border p-4 bg-muted/20">
             <p className="text-xs font-bold text-primary">Paso 1: Tesis Digital</p>
             <p className="text-xs text-muted-foreground mt-1">
               {tesisCargada ? "✅ Tesis cargada en repositorio." : "Pendiente subir PDF de tesis."}
@@ -66,7 +66,7 @@ export function TramiteGradoView({
             </Button>
           </div>
 
-          <div className="rounded-2xl border border-border p-4 bg-muted/20">
+          <div className="rounded-lg border border-border p-4 bg-muted/20">
             <p className="text-xs font-bold text-primary">Paso 2: Verificación de Deudas</p>
             <p className="text-xs text-muted-foreground mt-1">
               Préstamos activos: 0 · Multas activas: $0 COP.
@@ -76,7 +76,7 @@ export function TramiteGradoView({
             </span>
           </div>
 
-          <div className="rounded-2xl border border-border p-4 bg-muted/20">
+          <div className="rounded-lg border border-border p-4 bg-muted/20">
             <p className="text-xs font-bold text-primary">Paso 3: Emisión Paz y Salvo</p>
             <p className="text-xs text-muted-foreground mt-1">
               Firma criptográfica registrada.
@@ -93,7 +93,7 @@ export function TramiteGradoView({
         </div>
 
         {pazSalvoGenerado && (
-          <div className="mt-4 p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 space-y-2">
+          <div className="mt-4 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/30 space-y-2">
             <div className="flex items-center justify-between">
               <p className="text-sm font-bold text-emerald-800 dark:text-emerald-300">
                 📜 CERTIFICADO DE PAZ Y SALVO REGISTRADO

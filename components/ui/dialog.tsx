@@ -44,7 +44,7 @@ export function Dialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-sm rounded-3xl border border-border bg-card p-6 shadow-lg">
+      <div className="w-full max-w-sm rounded-xl border border-border bg-card p-4 shadow-lg">
         <div className="mb-4 flex items-start gap-3">
           <Icon className={`size-6 shrink-0 ${colorClass}`} />
           <div>

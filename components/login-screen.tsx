@@ -91,7 +91,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
   }
 
   return (
-    <main className="min-h-dvh w-full bg-background lg:grid lg:grid-cols-2">
+    <main className="min-h-dvh w-full bg-background lg:grid lg:grid-cols-1 sm:grid-cols-2">
       {/* Visual Editorial Hero Side (Left) */}
       <section className="relative hidden flex-col justify-between overflow-hidden p-12 lg:flex">
         <Image
@@ -104,7 +104,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
 
         <div className="relative flex items-center gap-3">
-          <div className="flex size-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg">
+          <div className="flex size-10 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-lg">
             <Building2 className="size-5" aria-hidden="true" />
           </div>
           <div>
@@ -114,7 +114,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
         </div>
 
         <div className="relative max-w-md space-y-3">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary backdrop-blur">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-muted/40 px-3 py-1 text-xs font-semibold text-primary backdrop-blur">
             <ShieldCheck className="size-3.5" />
             <span>Autenticación Granular · 13 Perfiles</span>
           </div>
@@ -129,7 +129,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
 
       {/* Login Form Panel (Right) */}
       <section className="flex min-h-dvh items-center justify-center px-6 py-10">
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-md space-y-4">
           
           {/* Unified Single Title Header */}
           <div className="space-y-1.5 text-left border-b border-border/60 pb-5">
@@ -146,7 +146,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
 
           {/* STEP 1: EMAIL INPUT & DIRECT QUICK ACCOUNT SELECT */}
           {step === "email" && (
-            <div className="space-y-5 animate-in fade-in duration-200">
+            <div className="space-y-3 animate-in fade-in duration-200">
               <form onSubmit={handleEmailSubmit} className="space-y-3">
                 <div className="space-y-1.5">
                   <label htmlFor="email" className="text-xs font-semibold text-foreground">
@@ -164,12 +164,12 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                       onChange={(e) => setEmailInput(e.target.value)}
                       placeholder="usuario@smartcampus.edu.co"
                       required
-                      className="w-full rounded-2xl border border-input bg-background py-2.5 pl-10 pr-4 text-xs font-medium text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm"
+                      className="w-full rounded-lg border border-input bg-background py-2.5 pl-10 pr-4 text-xs font-medium text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 shadow-sm"
                     />
                   </div>
                 </div>
 
-                <Button type="submit" className="h-11 w-full rounded-2xl text-xs font-semibold shadow" size="lg">
+                <Button type="submit" className="h-11 w-full rounded-lg text-xs font-semibold shadow" size="lg">
                   <span>Ingresar con Correo</span>
                   <ArrowRight className="size-4 ml-1.5" />
                 </Button>
@@ -182,12 +182,12 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                     <UserCheck className="size-3.5 text-primary" />
                     Perfiles de Prueba (Ingreso Directo):
                   </span>
-                  <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-md">
+                  <span className="text-[10px] font-bold text-primary bg-muted/40 px-2 py-0.5 rounded-md">
                     13 Sub-Roles RBAC
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 max-h-64 overflow-y-auto pr-1">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-1 sm:grid-cols-2 max-h-64 overflow-y-auto pr-1">
                   {INITIAL_USUARIOS_RBAC.map((usr) => {
                     const subInfo = SUB_ROLES[usr.subRole]
                     return (
@@ -195,9 +195,9 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                         key={usr.id}
                         type="button"
                         onClick={() => handleSelectQuickAccount(usr.email)}
-                        className="flex items-center gap-2.5 rounded-2xl border border-border/80 bg-card p-2 text-left hover:border-primary hover:bg-primary/5 transition-all group shadow-xs"
+                        className="flex items-center gap-2.5 rounded-lg border border-border/80 bg-card p-2 text-left hover:border-primary hover:bg-primary/5 transition-all group shadow-xs"
                       >
-                        <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-xs font-bold">
+                        <div className="flex size-7 shrink-0 items-center justify-center rounded-xl bg-muted/40 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-xs font-bold">
                           {usr.nombre.split(' ').map(n=>n[0]).join('').slice(0,2)}
                         </div>
                         <div className="min-w-0 flex-1">
@@ -216,7 +216,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                 <button
                   type="button"
                   onClick={() => setStep("manual")}
-                  className="w-full py-2.5 text-center text-xs font-semibold text-primary hover:underline flex items-center justify-center gap-1.5 bg-primary/5 rounded-xl border border-primary/20"
+                  className="w-full py-2.5 text-center text-xs font-semibold text-primary hover:underline flex items-center justify-center gap-1.5 bg-primary/5 rounded-xl border border-border/60"
                 >
                   <Layers className="size-3.5" />
                   <span>Ver Todos los Perfiles por Categoría (Catálogo)</span>
@@ -250,9 +250,9 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                       key={id}
                       type="button"
                       onClick={() => handleManualRoleSelect(id)}
-                      className={`flex flex-col items-center gap-1 rounded-2xl border p-2 text-center transition-all ${
+                      className={`flex flex-col items-center gap-1 rounded-lg border p-2 text-center transition-all ${
                         isActive
-                          ? "border-primary bg-primary/10 text-primary font-bold shadow-xs"
+                          ? "border-primary bg-muted/40 text-primary font-bold shadow-xs"
                           : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
                       }`}
                     >
@@ -277,7 +277,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
                         key={sub.id}
                         type="button"
                         onClick={() => setSelectedSubRole(sub.id)}
-                        className={`w-full flex items-center gap-3 rounded-2xl p-2.5 text-left border text-xs transition-all ${
+                        className={`w-full flex items-center gap-3 rounded-lg p-2.5 text-left border text-xs transition-all ${
                           isSelected
                             ? "border-primary bg-primary/5 text-foreground ring-1 ring-primary font-semibold"
                             : "border-border/60 bg-card/60 text-muted-foreground hover:bg-muted"
@@ -298,7 +298,7 @@ export function LoginScreen({ onLogin }: LoginScreenProps) {
               <Button
                 type="button"
                 onClick={() => onLogin(selectedRole, selectedSubRole)}
-                className="h-11 w-full rounded-2xl text-xs font-semibold shadow" size="lg"
+                className="h-11 w-full rounded-lg text-xs font-semibold shadow" size="lg"
               >
                 Ingresar como {SUB_ROLES[selectedSubRole].name}
               </Button>
